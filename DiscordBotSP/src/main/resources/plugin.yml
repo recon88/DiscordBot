@@ -7,6 +7,12 @@ commands:
   discordbot:
     description: Display plugin information.
     usage: /<command>
+  discordchat:
+    description: Send message to Discord.
+    usage: /<command>
+  dcc:
+    description: Send message to Discord.
+    usage: /<command>
 permissions:
   DiscordBot.Chat:
     description: Allows Discord Chat.
