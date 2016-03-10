@@ -23,7 +23,7 @@ public class DiscordBot extends Plugin {
 	public static Configuration config;
 	public static DiscordBot instance;
 	public static JDA api;
-	public static String dbversion = "0.2.0 ('Benmore')";
+	public static String dbversion = "0.3.0 ('Canterbury')";
 	public static String apiversion = "JDA v1.3.0, Build 188";
 	
 	@Override
