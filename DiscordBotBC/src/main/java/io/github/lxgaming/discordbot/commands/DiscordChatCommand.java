@@ -24,7 +24,14 @@ public class DiscordChatCommand extends Command {
 		for (String arg : args) {
 			message = message + arg + " ";
 		}
-		DiscordBot.api.getTextChannelById(botTextChannel).sendMessage(sender.getName() + ": " + message.trim());
+		
+		try {
+			DiscordBot.api.getTextChannelById(botTextChannel).sendMessage(sender.getName() + ": " + message.trim());
+		} catch (Exception ex) {
+			DiscordBot.instance.getLogger().severe("Unable to send message!");
+			DiscordBot.instance.getLogger().severe("Make sure 'DiscordBot.TextChannels.Bot' is using an ID and not a name!");
+		}
+		
 		for (ProxiedPlayer player : ProxyServer.getInstance().getPlayers()) {
 			if (player.hasPermission("DiscordBot.Chat")) {
 				player.sendMessage(new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', ingameFormat).replace("%author%", player.getName())).append(ChatColor.translateAlternateColorCodes('&', " " + message.trim())).create());
