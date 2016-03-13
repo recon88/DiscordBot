@@ -34,7 +34,7 @@ public class DiscordChatCommand extends Command {
 		
 		for (ProxiedPlayer player : ProxyServer.getInstance().getPlayers()) {
 			if (player.hasPermission("DiscordBot.Chat")) {
-				player.sendMessage(new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', ingameFormat).replace("%author%", player.getName())).append(ChatColor.translateAlternateColorCodes('&', " " + message.trim())).create());
+				player.sendMessage(new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', ingameFormat).replace("%author%", sender.getName())).append(ChatColor.translateAlternateColorCodes('&', " " + message.trim())).create());
 			}
 		}
 		if (consoleOutput == true) {
