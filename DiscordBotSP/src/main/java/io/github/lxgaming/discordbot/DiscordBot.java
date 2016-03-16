@@ -20,7 +20,7 @@ public class DiscordBot extends JavaPlugin {
 	public static DiscordBot instance;
 	public static FileConfiguration config;
 	public static JDA api;
-	public static String dbversion = "0.2.0 ('Benmore')";
+	public static String dbversion = "0.3.2 ('Canterbury')";
 	public static String apiversion = "JDA v1.3.0, Build 188";
 	
 	@Override

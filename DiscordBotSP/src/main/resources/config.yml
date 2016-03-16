@@ -12,6 +12,8 @@ DiscordBot:
     InGameFormat: '&c[Discord] &f%author%:'
   Listeners:
     MainBot: true
+    SendInGame: true
+    SendDiscord: true
     InGameChat: true
     UserNameUpdate: true
     UserGameUpdate: true

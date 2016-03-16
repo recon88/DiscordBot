@@ -39,16 +39,16 @@ public class MessageListener extends ListenerAdapter {
 			FC.Fun(channel, command, author);
 			LC.Love(channel, command, author);
 		} else {
-			if (channel.getId().equals(ingameTextChannel) && !author.getId().equals(botID) && inGameChat == true) {
+			if ((channel.getId().equals(ingameTextChannel) && inGameChat == true) && (!author.getId().equals(botID))) {
 				for (ProxiedPlayer player : ProxyServer.getInstance().getPlayers()) {
 					if (player.hasPermission("DiscordBot.Chat")) {
 						player.sendMessage(new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', ingameFormat).replace("%author%", MR.getAuthor().getUsername())).append(ChatColor.translateAlternateColorCodes('&', " " + message.getContent())).create());
 					}
 				}
+				
 				if (consoleOutput == true) {
 					DiscordBot.instance.getLogger().info(author.getUsername() + ": " + message.getContent());
 				}
-				return;
 			}
 		}
 		return;

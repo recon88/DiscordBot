@@ -13,11 +13,12 @@ public class ReadyListener extends ListenerAdapter {
 	
 	public void onEvent(Event event) {
 		if (event instanceof ReadyEvent) {
-			if (botTextChannel.equals("")) {
-				DiscordBot.instance.getLogger().severe("BotTextChannelID is null in the config!");
+			if (botTextChannel.equals("") || botTextChannel.contains("[a-zA-Z]+") == true) {
+				DiscordBot.instance.getLogger().severe("Please make sure you are using the Channel ID in the config");
 				DiscordBot.instance.getLogger().info("List of available TextChannels " + event.getJDA().getTextChannels());
 				return;
 			}
+			
 			if (DiscordBot.config.getBoolean("DiscordBot.Listeners.MainBot") == true) {
 				DiscordBot.api.addEventListener(new MessageListener());
 				DiscordBot.api.addEventListener(new UserListener());
