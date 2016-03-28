@@ -16,16 +16,16 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class MessageListener extends ListenerAdapter {
 	
-	String ingameTextChannel = DiscordBot.config.getString("DiscordBot.TextChannels.InGame");
-	String commandPrefix = DiscordBot.config.getString("DiscordBot.Messages.CommandPrefix");
-	Boolean consoleOutput = DiscordBot.config.getBoolean("DiscordBot.Messages.ConsoleOutput");
-	String ingameFormat = DiscordBot.config.getString("DiscordBot.Messages.InGameFormat");
-	Boolean inGameChat = DiscordBot.config.getBoolean("DiscordBot.Listeners.InGameChat");
-	Boolean mainBot = DiscordBot.config.getBoolean("DiscordBot.Listeners.MainBot");
-	String botID = DiscordBot.api.getSelfInfo().getId();
-	BotCommand BC = new BotCommand();
-	FunCommand FC = new FunCommand();
-	LoveCommand LC = new LoveCommand();
+	private static String ingameTextChannel = DiscordBot.config.getString("DiscordBot.TextChannels.InGame");
+	private static String commandPrefix = DiscordBot.config.getString("DiscordBot.Messages.CommandPrefix");
+	private static Boolean consoleOutput = DiscordBot.config.getBoolean("DiscordBot.Messages.ConsoleOutput");
+	private static String ingameFormat = DiscordBot.config.getString("DiscordBot.Messages.InGameFormat");
+	private static Boolean inGameChat = DiscordBot.config.getBoolean("DiscordBot.Listeners.InGameChat");
+	private static Boolean mainBot = DiscordBot.config.getBoolean("DiscordBot.Listeners.MainBot");
+	private static String botID = DiscordBot.api.getSelfInfo().getId();
+	private static BotCommand BC = new BotCommand();
+	private static FunCommand FC = new FunCommand();
+	private static LoveCommand LC = new LoveCommand();
 	
 	@Override
 	public void onMessageReceived(MessageReceivedEvent MR) {
@@ -33,12 +33,22 @@ public class MessageListener extends ListenerAdapter {
 		Message message = MR.getMessage();
 		User author = MR.getAuthor();
 		
+		if (channel == null || message == null || author == null) {
+			DiscordBot.instance.getLogger().severe("Channel, Message or Author was Null, Please report this!");
+			return;
+		}
+		
+		if (message.getContent() == null || author.getId() == null) {
+			DiscordBot.instance.getLogger().severe("Message content or Author ID was Null, Please report this!");
+			return;
+		}
+		
 		if ((message.getContent().startsWith(commandPrefix) || message.getContent().startsWith("/")) && (!author.getId().equals(botID) && mainBot == true)) {
 			String command = message.getContent().substring(commandPrefix.length());
 			BC.Bot(channel, command, author);
 			FC.Fun(channel, command, author);
 			LC.Love(channel, command, author);
-		} else {
+			
 			if ((channel.getId().equals(ingameTextChannel) && inGameChat == true) && (!author.getId().equals(botID))) {
 				for (ProxiedPlayer player : ProxyServer.getInstance().getPlayers()) {
 					if (player.hasPermission("DiscordBot.Chat")) {
