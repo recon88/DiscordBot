@@ -20,7 +20,7 @@ public class MessageListener extends ListenerAdapter {
 	private static String commandPrefix = DiscordBot.config.getString("DiscordBot.Messages.CommandPrefix");
 	private static Boolean consoleOutput = DiscordBot.config.getBoolean("DiscordBot.Messages.ConsoleOutput");
 	private static String ingameFormat = DiscordBot.config.getString("DiscordBot.Messages.InGameFormat");
-	private static Boolean inGameChat = DiscordBot.config.getBoolean("DiscordBot.Listeners.InGameChat");
+	private static Boolean inGameChat = DiscordBot.config.getBoolean("DiscordBot.Messages.InGameChat");
 	private static Boolean mainBot = DiscordBot.config.getBoolean("DiscordBot.Listeners.MainBot");
 	private static String botID = DiscordBot.api.getSelfInfo().getId();
 	private static BotCommand BC = new BotCommand();
@@ -33,13 +33,7 @@ public class MessageListener extends ListenerAdapter {
 		Message message = MR.getMessage();
 		User author = MR.getAuthor();
 		
-		if (channel == null || message == null || author == null) {
-			DiscordBot.instance.getLogger().severe("Channel, Message or Author was Null, Please report this!");
-			return;
-		}
-		
-		if (message.getContent() == null || author.getId() == null) {
-			DiscordBot.instance.getLogger().severe("Message content or Author ID was Null, Please report this!");
+		if (MR.isPrivate()) {
 			return;
 		}
 		
@@ -48,17 +42,18 @@ public class MessageListener extends ListenerAdapter {
 			BC.Bot(channel, command, author);
 			FC.Fun(channel, command, author);
 			LC.Love(channel, command, author);
+			return;
+		}
+		
+		if ((channel.getId().equals(ingameTextChannel) && inGameChat == true) && (!author.getId().equals(botID))) {
+			for (ProxiedPlayer player : ProxyServer.getInstance().getPlayers()) {
+				if (player.hasPermission("DiscordBot.Chat")) {
+					player.sendMessage(new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', ingameFormat).replace("%author%", MR.getAuthor().getUsername())).append(ChatColor.translateAlternateColorCodes('&', " " + message.getContent())).create());
+				}
+			}
 			
-			if ((channel.getId().equals(ingameTextChannel) && inGameChat == true) && (!author.getId().equals(botID))) {
-				for (ProxiedPlayer player : ProxyServer.getInstance().getPlayers()) {
-					if (player.hasPermission("DiscordBot.Chat")) {
-						player.sendMessage(new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', ingameFormat).replace("%author%", MR.getAuthor().getUsername())).append(ChatColor.translateAlternateColorCodes('&', " " + message.getContent())).create());
-					}
-				}
-				
-				if (consoleOutput == true) {
-					DiscordBot.instance.getLogger().info(author.getUsername() + ": " + message.getContent());
-				}
+			if (consoleOutput == true) {
+				DiscordBot.instance.getLogger().info(author.getUsername() + ": " + message.getContent());
 			}
 		}
 		return;

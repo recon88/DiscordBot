@@ -8,8 +8,8 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 
 public class ReadyListener extends ListenerAdapter {
 	
-	String botTextChannel = DiscordBot.config.getString("DiscordBot.TextChannels.Bot");
-	MessageSender ms = new MessageSender();
+	private static String botTextChannel = DiscordBot.config.getString("DiscordBot.TextChannels.Bot");
+	private static MessageSender ms = new MessageSender();
 	
 	public void onEvent(Event event) {
 		if (event instanceof ReadyEvent) {
@@ -25,7 +25,6 @@ public class ReadyListener extends ListenerAdapter {
 				DiscordBot.api.addEventListener(new VoiceListener());
 				ms.sendMessage("DiscordBot Connected!");
 				DiscordBot.instance.getLogger().info("DiscordBot Connected!");
-				
 			} else {
 				DiscordBot.instance.getLogger().info("DiscordBot Connected!");
 				DiscordBot.instance.getLogger().info("Running as secondary!");

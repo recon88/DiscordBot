@@ -5,16 +5,16 @@ DiscordBot:
   TextChannels:
     Bot: ''
     InGame: ''
-    General: ''
   Messages:
     CommandPrefix: '!'
     ConsoleOutput: true
     InGameFormat: '&c[Discord] &f%author%:'
+    InGameChat: true
+    SyncChat: false
   Listeners:
     MainBot: true
-    SendInGame: true
+    SendInGame: false
     SendDiscord: true
-    InGameChat: true
     UserNameUpdate: true
     UserGameUpdate: true
     UserOnlineStatusUpdate: true

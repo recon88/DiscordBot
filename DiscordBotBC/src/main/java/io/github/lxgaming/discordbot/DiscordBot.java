@@ -10,6 +10,7 @@ import com.google.common.io.ByteStreams;
 
 import io.github.lxgaming.discordbot.commands.DiscordBotCommand;
 import io.github.lxgaming.discordbot.commands.DiscordChatCommand;
+import io.github.lxgaming.discordbot.listeners.ChatListener;
 import io.github.lxgaming.discordbot.listeners.ReadyListener;
 import net.dv8tion.jda.JDA;
 import net.dv8tion.jda.JDABuilder;
@@ -23,7 +24,7 @@ public class DiscordBot extends Plugin {
 	public static Configuration config;
 	public static DiscordBot instance;
 	public static JDA api;
-	public static String dbversion = "0.3.4 ('Canterbury')";
+	public static String dbversion = "0.4.0 ('Dunedin')";
 	public static String apiversion = "JDA v1.3.0, Build 188";
 	
 	@Override
@@ -31,8 +32,10 @@ public class DiscordBot extends Plugin {
 		instance = this;
 		loadConfig();
 		getProxy().getPluginManager().registerCommand(this, new DiscordBotCommand());
-		if (DiscordBot.config.getBoolean("DiscordBot.Listeners.InGameChat") == true) {
-			getProxy().getPluginManager().registerCommand(this, new DiscordChatCommand());
+		getProxy().getPluginManager().registerCommand(this, new DiscordChatCommand());
+		
+		if (DiscordBot.config.getBoolean("DiscordBot.Messages.SyncChat") == true) {
+			getProxy().getPluginManager().registerListener(this, new ChatListener());
 		}
 		loadDiscord();
 	}

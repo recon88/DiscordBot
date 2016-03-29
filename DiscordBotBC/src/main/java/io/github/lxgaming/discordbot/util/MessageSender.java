@@ -27,7 +27,7 @@ public class MessageSender {
 				DiscordBot.api.getTextChannelById(botTextChannel).sendMessage(message);
 			} catch (Exception ex) {
 				DiscordBot.instance.getLogger().severe("Unable to send message!");
-				DiscordBot.instance.getLogger().severe("Make sure 'DiscordBot.TextChannels.Bot' is using an ID and not a name!");
+				DiscordBot.instance.getLogger().severe("Make sure 'DiscordBot.TextChannels.Bot' Is using an ID and not a name!");
 				DiscordBot.instance.getLogger().info("List of available TextChannels " + DiscordBot.api.getTextChannels());
 			}
 		}
