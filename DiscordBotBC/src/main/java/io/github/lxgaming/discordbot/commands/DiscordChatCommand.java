@@ -1,6 +1,7 @@
 package io.github.lxgaming.discordbot.commands;
 
 import io.github.lxgaming.discordbot.DiscordBot;
+import io.github.lxgaming.discordbot.util.Date;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
@@ -26,7 +27,7 @@ public class DiscordChatCommand extends Command {
 		}
 		
 		try {
-			DiscordBot.api.getTextChannelById(botTextChannel).sendMessage(sender.getName() + ": " + message.trim());
+			DiscordBot.api.getTextChannelById(botTextChannel).sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + sender.getName() + ":** " + message.trim());
 		} catch (Exception ex) {
 			DiscordBot.instance.getLogger().severe("Unable to send message!");
 			DiscordBot.instance.getLogger().severe("Make sure 'DiscordBot.TextChannels.Bot' is using an ID and not a name!");
