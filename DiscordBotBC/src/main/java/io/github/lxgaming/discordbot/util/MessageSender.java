@@ -8,12 +8,12 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class MessageSender {
 	
-	private String botTextChannel = DiscordBot.config.getString("DiscordBot.TextChannels.Bot");
-	private String ingameFormat = DiscordBot.config.getString("DiscordBot.Messages.InGameFormat");
-	private Boolean sendInGame = DiscordBot.config.getBoolean("DiscordBot.Listeners.SendInGame");
-	private Boolean sendDiscord = DiscordBot.config.getBoolean("DiscordBot.Listeners.SendDiscord");
+	private static String botTextChannel = DiscordBot.config.getString("DiscordBot.TextChannels.Bot");
+	private static String ingameFormat = DiscordBot.config.getString("DiscordBot.Messages.InGameFormat");
+	private static Boolean sendInGame = DiscordBot.config.getBoolean("DiscordBot.Listeners.SendInGame");
+	private static Boolean sendDiscord = DiscordBot.config.getBoolean("DiscordBot.Listeners.SendDiscord");
 	
-	public void sendMessage(String message) {
+	public static void sendMessage(String message) {
 		if (sendInGame == true) {
 			for (ProxiedPlayer player : ProxyServer.getInstance().getPlayers()) {
 				if (player.hasPermission("DiscordBot.Chat")) {

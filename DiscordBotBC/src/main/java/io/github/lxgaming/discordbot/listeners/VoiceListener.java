@@ -1,6 +1,6 @@
 package io.github.lxgaming.discordbot.listeners;
 
-import io.github.lxgaming.discordbot.DiscordBot;
+import io.github.lxgaming.discordbot.util.Date;
 import io.github.lxgaming.discordbot.util.MessageSender;
 import net.dv8tion.jda.events.voice.VoiceServerDeafEvent;
 import net.dv8tion.jda.events.voice.VoiceServerMuteEvent;
@@ -8,15 +8,12 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 
 public class VoiceListener extends ListenerAdapter {
 	
-	String botTextChannel = DiscordBot.config.getString("DiscordBot.TextChannels.Bot");
-	MessageSender ms = new MessageSender();
-	
 	@Override
 	public void onVoiceServerMute(VoiceServerMuteEvent VSM) {
 		if (VSM.getVoiceStatus().isServerMuted() == true) {
-			ms.sendMessage(VSM.getUser().getUsername() + " has been muted.");
+			MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + VSM.getUser().getUsername() + "** ``Voice:`` **Muted**");
 		} else {
-			ms.sendMessage(VSM.getUser().getUsername() + " has been unmuted.");
+			MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + VSM.getUser().getUsername() + "** ``Voice:`` **Unmuted**");
 		}
 		return;
 	}
@@ -24,9 +21,9 @@ public class VoiceListener extends ListenerAdapter {
 	@Override
 	public void onVoiceServerDeaf(VoiceServerDeafEvent VSD) {
 		if (VSD.getVoiceStatus().isServerDeaf() == true) {
-			ms.sendMessage(VSD.getUser().getUsername() + " has been deafened.");
+			MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + VSD.getUser().getUsername() + "** ``Voice:`` **Deafened**");
 		} else {
-			ms.sendMessage(VSD.getUser().getUsername() + " has been undeafened.");
+			MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + VSD.getUser().getUsername() + "** ``Voice:`` **Undeafened**");
 		}
 		return;
 	}

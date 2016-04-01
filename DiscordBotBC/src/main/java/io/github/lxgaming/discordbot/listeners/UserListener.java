@@ -1,6 +1,7 @@
 package io.github.lxgaming.discordbot.listeners;
 
 import io.github.lxgaming.discordbot.DiscordBot;
+import io.github.lxgaming.discordbot.util.Date;
 import io.github.lxgaming.discordbot.util.MessageSender;
 import net.dv8tion.jda.events.user.UserGameUpdateEvent;
 import net.dv8tion.jda.events.user.UserNameUpdateEvent;
@@ -9,16 +10,14 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 
 public class UserListener extends ListenerAdapter {
 	
-	String botTextChannel = DiscordBot.config.getString("DiscordBot.TextChannels.Bot");
-	Boolean userNameUpdate = DiscordBot.config.getBoolean("DiscordBot.Listeners.UserNameUpdate");
-	Boolean userGameUpdate = DiscordBot.config.getBoolean("DiscordBot.Listeners.UserGameUpdate");
-	Boolean userOnlineStatusUpdate = DiscordBot.config.getBoolean("DiscordBot.Listeners.UserOnlineStatusUpdate");
-	MessageSender ms = new MessageSender();
+	private static Boolean userNameUpdate = DiscordBot.config.getBoolean("DiscordBot.Listeners.UserNameUpdate");
+	private static Boolean userGameUpdate = DiscordBot.config.getBoolean("DiscordBot.Listeners.UserGameUpdate");
+	private static Boolean userOnlineStatusUpdate = DiscordBot.config.getBoolean("DiscordBot.Listeners.UserOnlineStatusUpdate");
 	
 	@Override
 	public void onUserNameUpdate(UserNameUpdateEvent UNU) {
 		if (userNameUpdate == true) {
-			ms.sendMessage(UNU.getPreviousUsername() + " name has changed to " + UNU.getUser().getUsername());
+			MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UNU.getPreviousUsername() + "** ``New name:`` **" + UNU.getUser().getUsername() + "**");
 		}
 		return;
 	}
@@ -26,7 +25,7 @@ public class UserListener extends ListenerAdapter {
 	@Override
 	public void onUserGameUpdate(UserGameUpdateEvent UGU) {
 		if ((userGameUpdate == true) && !(UGU.getUser().getCurrentGame() == null)) {
-			ms.sendMessage(UGU.getUser().getUsername() + " is now playing " + UGU.getUser().getCurrentGame());
+			MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UGU.getUser().getUsername() + "** ``Game:`` **" + UGU.getUser().getCurrentGame() + "**");
 		}
 		return;
 	}
@@ -35,13 +34,13 @@ public class UserListener extends ListenerAdapter {
 	public void onUserOnlineStatusUpdate(UserOnlineStatusUpdateEvent UOSU) {
 		if (userOnlineStatusUpdate == true) {
 			if (UOSU.getUser().getOnlineStatus().toString().equals("ONLINE")) {
-				ms.sendMessage(UOSU.getUser().getUsername() + " is now Online.");
+				MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UOSU.getUser().getUsername() + "** ``Status:`` **Online**");
 			}
 			if (UOSU.getUser().getOnlineStatus().toString().equals("AWAY")) {
-				ms.sendMessage(UOSU.getUser().getUsername() + " is now Away.");
+				MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UOSU.getUser().getUsername() + "** ``Status:`` **Away**");
 			}
 			if (UOSU.getUser().getOnlineStatus().toString().equals("OFFLINE")) {
-				ms.sendMessage(UOSU.getUser().getUsername() + " is now Offline.");
+				MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UOSU.getUser().getUsername() + "** ``Status:`` **Offline**");
 			}
 		}
 		return;

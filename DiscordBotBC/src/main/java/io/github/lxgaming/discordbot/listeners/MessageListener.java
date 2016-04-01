@@ -23,9 +23,6 @@ public class MessageListener extends ListenerAdapter {
 	private static Boolean inGameChat = DiscordBot.config.getBoolean("DiscordBot.Messages.InGameChat");
 	private static Boolean mainBot = DiscordBot.config.getBoolean("DiscordBot.Listeners.MainBot");
 	private static String botID = DiscordBot.api.getSelfInfo().getId();
-	private static BotCommand BC = new BotCommand();
-	private static FunCommand FC = new FunCommand();
-	private static LoveCommand LC = new LoveCommand();
 	
 	@Override
 	public void onMessageReceived(MessageReceivedEvent MR) {
@@ -39,9 +36,9 @@ public class MessageListener extends ListenerAdapter {
 		
 		if ((message.getContent().startsWith(commandPrefix) || message.getContent().startsWith("/")) && (!author.getId().equals(botID) && mainBot == true)) {
 			String command = message.getContent().substring(commandPrefix.length());
-			BC.Bot(channel, command, author);
-			FC.Fun(channel, command, author);
-			LC.Love(channel, command, author);
+			BotCommand.bot(channel, command, author);
+			FunCommand.fun(channel, command, author);
+			LoveCommand.love(channel, command, author);
 			return;
 		}
 		

@@ -24,7 +24,7 @@ public class DiscordBot extends Plugin {
 	public static Configuration config;
 	public static DiscordBot instance;
 	public static JDA api;
-	public static String dbversion = "0.4.0 ('Dunedin')";
+	public static String dbversion = "0.4.1 ('Dunedin')";
 	public static String apiversion = "JDA v1.3.0, Build 188";
 	
 	@Override
@@ -45,7 +45,7 @@ public class DiscordBot extends Plugin {
 		instance = null;
 	}
 	
-	public void loadDiscord() {
+	private void loadDiscord() {
 		this.getProxy().getScheduler().runAsync(this, new Runnable() {
 			@Override
 			public void run() {
@@ -64,7 +64,7 @@ public class DiscordBot extends Plugin {
 		});
 	}
 	
-	public void loadConfig() {
+	private void loadConfig() {
 		if (!getDataFolder().exists()) {
 			getDataFolder().mkdir();
 		}
@@ -90,7 +90,7 @@ public class DiscordBot extends Plugin {
 		saveConfig();
 	}
 	
-	public void saveConfig() {
+	private void saveConfig() {
 		try {
 			ConfigurationProvider.getProvider(YamlConfiguration.class).save(config, new File(getDataFolder(), "config.yml"));
 		} catch (IOException ex) {
