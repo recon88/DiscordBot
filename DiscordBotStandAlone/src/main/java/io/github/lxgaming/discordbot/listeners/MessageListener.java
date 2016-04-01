@@ -17,6 +17,7 @@ public class MessageListener extends ListenerAdapter {
 		Message message = MR.getMessage();
 		User author = MR.getAuthor();
 		
-		System.out.println(channel + " - " + author.getUsername() + ": " + message.getContent());
+		System.out.println(author.getUsername() + ": " + message.getContent());
+		return;
 	}
 }

@@ -15,20 +15,24 @@ public class DiscordBot {
 	public static String apiversion = "JDA v1.3.0, Build 188";
 	
 	public static void main(String[] args) {
+		
 		System.out.println("DiscordBot");
 		System.out.println("Version - " + dbversion);
 		System.out.println("API - " + apiversion);
 		System.out.println("Author - Alex Thomson");
 		System.out.println("Starting...");
 		config.config();
-		
+		loadDiscord();
+	}
+	
+	public static void loadDiscord() {
 		try {
 			api = new JDABuilder()
 					.setEmail(config.props.getProperty("Email"))
 					.setPassword(config.props.getProperty("Password"))
 					.addListener(new MessageListener())
-					.addListener(new UserListener())
 					.addListener(new ReadyListener())
+					.addListener(new UserListener())
 					.addListener(new VoiceListener())
 					.buildAsync();
 		} catch (Exception ex) {
@@ -36,9 +40,5 @@ public class DiscordBot {
 			return;
 		}
 		System.out.println("Successfully started!");
-		while (true) {
-			String message = System.console().readLine("");
-			api.getTextChannelById(config.props.getProperty("BotChannel")).sendMessage("CONSOLE: " + message);
-		}
 	}
 }

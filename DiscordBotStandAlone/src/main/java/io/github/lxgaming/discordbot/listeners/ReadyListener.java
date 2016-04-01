@@ -19,5 +19,6 @@ public class ReadyListener extends ListenerAdapter {
 			event.getJDA().getTextChannelById(botTC).sendMessage("Discord Bot has Started!");
 			System.out.println("Discord Bot has Started!");
 		}
+		return;
 	}
 }
