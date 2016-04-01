@@ -11,17 +11,14 @@ public class DiscordBot {
 	
 	public static Configuration config = new Configuration();
 	public static JDA api;
-	public static String dbversion = "0.4.0 ('Dunedin')";
+	public static String dbversion = "0.4.1 ('Dunedin')";
 	public static String apiversion = "JDA v1.3.0, Build 188";
 	
 	public static void main(String[] args) {
-		
-		System.out.println("DiscordBot");
-		System.out.println("Version - " + dbversion);
+		System.out.println("DiscordBot v" + dbversion);
 		System.out.println("API - " + apiversion);
 		System.out.println("Author - Alex Thomson");
-		System.out.println("Starting...");
-		config.config();
+		config.loadConfig();
 		loadDiscord();
 	}
 	
@@ -39,6 +36,5 @@ public class DiscordBot {
 			System.out.println("Connection Failed! Invaild Username/Password");
 			return;
 		}
-		System.out.println("Successfully started!");
 	}
 }

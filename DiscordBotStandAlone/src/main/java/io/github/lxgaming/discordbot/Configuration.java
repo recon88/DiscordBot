@@ -10,14 +10,11 @@ public class Configuration {
 	File configFile = new File("config.properties");
 	public Properties props = new Properties();
 	
-	public void config() {
+	public void loadConfig() {
 		if (!configFile.exists()) {
 			saveConfig();
 		}
-		loadConfig();
-	}
-	
-	public void loadConfig() {
+		
 		try {
 			FileReader reader = new FileReader(configFile);
 			props.load(reader);
@@ -28,7 +25,7 @@ public class Configuration {
 		}
 	}
 	
-	public void saveConfig() {
+	private void saveConfig() {
 		try {
 			props.setProperty("Email", "");
 			props.setProperty("Password", "");

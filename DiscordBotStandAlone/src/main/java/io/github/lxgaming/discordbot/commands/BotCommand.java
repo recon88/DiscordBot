@@ -6,9 +6,9 @@ import net.dv8tion.jda.entities.User;
 
 public class BotCommand {
 	
-	String commandPrefix = DiscordBot.config.props.getProperty("CommandPrefix");
+	private static String commandPrefix = DiscordBot.config.props.getProperty("CommandPrefix");
 	
-	public void Bot(TextChannel channel, String command, User author) {
+	public static void bot(TextChannel channel, String command, User author) {
 		if (command.equalsIgnoreCase("ping")) {
 			channel.sendMessage("Pong!");
 		}

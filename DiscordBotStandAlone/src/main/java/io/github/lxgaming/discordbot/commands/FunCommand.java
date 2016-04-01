@@ -7,9 +7,9 @@ import net.dv8tion.jda.entities.User;
 
 public class FunCommand {
 	
-	Random rand = new Random();
+	private static Random rand = new Random();
 	
-	public void Fun(TextChannel channel, String command, User author) {
+	public static void fun(TextChannel channel, String command, User author) {
 		if (command.equalsIgnoreCase("number")) {
 			int number = rand.nextInt(100) + 1;
 			channel.sendMessage("Your lucky number is " + number + "/100!");

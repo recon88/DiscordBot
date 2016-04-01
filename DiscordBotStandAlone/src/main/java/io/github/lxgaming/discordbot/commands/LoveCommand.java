@@ -7,9 +7,9 @@ import net.dv8tion.jda.entities.User;
 
 public class LoveCommand {
 	
-	Random rand = new Random();
+	private static Random rand = new Random();
 	
-	public void Love(TextChannel channel, String command, User author) {
+	public static void love(TextChannel channel, String command, User author) {
 		
 		String sender = author.getUsername();
 		String name = "";
