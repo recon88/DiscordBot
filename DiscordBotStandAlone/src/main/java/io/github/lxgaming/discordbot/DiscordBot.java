@@ -1,7 +1,7 @@
 package io.github.lxgaming.discordbot;
 
+import io.github.lxgaming.discordbot.listeners.BotListener;
 import io.github.lxgaming.discordbot.listeners.MessageListener;
-import io.github.lxgaming.discordbot.listeners.ReadyListener;
 import io.github.lxgaming.discordbot.listeners.UserListener;
 import io.github.lxgaming.discordbot.listeners.VoiceListener;
 import net.dv8tion.jda.JDA;
@@ -11,7 +11,7 @@ public class DiscordBot {
 	
 	public static Configuration config = new Configuration();
 	public static JDA api;
-	public static String dbversion = "0.4.1 ('Dunedin')";
+	public static String dbversion = "0.5.0 ('East')";
 	public static String apiversion = "JDA v1.3.0, Build 188";
 	
 	public static void main(String[] args) {
@@ -27,8 +27,8 @@ public class DiscordBot {
 			api = new JDABuilder()
 					.setEmail(config.props.getProperty("Email"))
 					.setPassword(config.props.getProperty("Password"))
+					.addListener(new BotListener())
 					.addListener(new MessageListener())
-					.addListener(new ReadyListener())
 					.addListener(new UserListener())
 					.addListener(new VoiceListener())
 					.buildAsync();

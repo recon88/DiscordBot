@@ -21,6 +21,10 @@ public class MessageListener extends ListenerAdapter {
 		User author = MR.getAuthor();
 		String command = message.getContent().substring(commandPrefix.length());
 		
+		if (author.getId().equals(DiscordBot.api.getSelfInfo().getId())) {
+			return;
+		}
+		
 		BotCommand.bot(channel, command, author);
 		FunCommand.fun(channel, command, author);
 		LoveCommand.love(channel, command, author);

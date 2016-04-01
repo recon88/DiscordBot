@@ -32,10 +32,12 @@ public class Configuration {
 			props.setProperty("BotChannel", "");
 			props.setProperty("CommandPrefix", "!");
 			props.setProperty("ConsoleOutput", "true");
-			props.setProperty("UserNameUpdate", "true");
+			props.setProperty("UserAvatarUpdate", "true");
 			props.setProperty("UserGameUpdate", "true");
+			props.setProperty("UserNameUpdate", "true");
 			props.setProperty("UserOnlineStatusUpdate", "true");
-			
+			props.setProperty("VoiceServerDeaf", "true");
+			props.setProperty("VoiceServerMute", "true");
 			FileWriter writer = new FileWriter(configFile);
 			props.store(writer, "DiscordBot Config.");
 			writer.close();
