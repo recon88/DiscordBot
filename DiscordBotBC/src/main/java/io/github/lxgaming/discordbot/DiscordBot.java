@@ -10,8 +10,8 @@ import com.google.common.io.ByteStreams;
 
 import io.github.lxgaming.discordbot.commands.DiscordBotCommand;
 import io.github.lxgaming.discordbot.commands.DiscordChatCommand;
+import io.github.lxgaming.discordbot.listeners.BotListener;
 import io.github.lxgaming.discordbot.listeners.ChatListener;
-import io.github.lxgaming.discordbot.listeners.ReadyListener;
 import net.dv8tion.jda.JDA;
 import net.dv8tion.jda.JDABuilder;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -24,7 +24,7 @@ public class DiscordBot extends Plugin {
 	public static Configuration config;
 	public static DiscordBot instance;
 	public static JDA api;
-	public static String dbversion = "0.4.1 ('Dunedin')";
+	public static String dbversion = "0.5.0 ('East')";
 	public static String apiversion = "JDA v1.3.0, Build 188";
 	
 	@Override
@@ -53,7 +53,7 @@ public class DiscordBot extends Plugin {
 					api = new JDABuilder()
 							.setEmail(config.getString("DiscordBot.Credentials.Email"))
 							.setPassword(config.getString("DiscordBot.Credentials.Password"))
-							.addListener(new ReadyListener())
+							.addListener(new BotListener())
 							.buildAsync();
 				} catch (Exception ex) {
 					ex.printStackTrace();

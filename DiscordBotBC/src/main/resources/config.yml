@@ -15,6 +15,9 @@ DiscordBot:
     MainBot: true
     SendInGame: false
     SendDiscord: true
-    UserNameUpdate: true
+    UserAvatarUpdate: true
     UserGameUpdate: true
+    UserNameUpdate: true
     UserOnlineStatusUpdate: true
+    VoiceServerDeaf: true
+    VoiceServerMute: true
