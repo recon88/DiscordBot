@@ -13,9 +13,8 @@ public class LoveCommand {
 		
 		String sender = author.getUsername();
 		String name = "";
-		command = command.toLowerCase();
 		
-		if (command.startsWith("kiss")) {
+		if (command.toLowerCase().startsWith("kiss")) {
 			if (command.length() > 4) {
 				name = command.substring(4);
 				int number = rand.nextInt(3);
@@ -31,7 +30,7 @@ public class LoveCommand {
 			}
 		}
 		
-		if (command.startsWith("hug")) {
+		if (command.toLowerCase().startsWith("hug")) {
 			if (command.length() > 3) {
 				name = command.substring(3);
 				channel.sendMessage(sender + " hugged" + name);
@@ -40,7 +39,7 @@ public class LoveCommand {
 			}
 		}
 		
-		if (command.startsWith("slap")) {
+		if (command.toLowerCase().startsWith("slap")) {
 			if (command.length() > 4) {
 				name = command.substring(4);
 				int number = rand.nextInt(2);
@@ -55,7 +54,7 @@ public class LoveCommand {
 			}
 		}
 		
-		if (command.startsWith("lick")) {
+		if (command.toLowerCase().startsWith("lick")) {
 			if (command.length() > 4) {
 				name = command.substring(4);
 				channel.sendMessage(sender + " licked" + name);
