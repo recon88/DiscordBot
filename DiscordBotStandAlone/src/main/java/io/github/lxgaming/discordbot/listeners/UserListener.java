@@ -2,6 +2,7 @@ package io.github.lxgaming.discordbot.listeners;
 
 import io.github.lxgaming.discordbot.DiscordBot;
 import io.github.lxgaming.discordbot.util.Date;
+import io.github.lxgaming.discordbot.util.MessageSender;
 import net.dv8tion.jda.events.user.UserAvatarUpdateEvent;
 import net.dv8tion.jda.events.user.UserGameUpdateEvent;
 import net.dv8tion.jda.events.user.UserNameUpdateEvent;
@@ -10,7 +11,6 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 
 public class UserListener extends ListenerAdapter {
 	
-	private String botTC = DiscordBot.config.props.getProperty("BotChannel");
 	private String userAvatarUpdate = DiscordBot.config.props.getProperty("UserAvatarUpdate");
 	private String userGameUpdate = DiscordBot.config.props.getProperty("UserGameUpdate");
 	private String userNameUpdate = DiscordBot.config.props.getProperty("UserNameUpdate");
@@ -19,7 +19,7 @@ public class UserListener extends ListenerAdapter {
 	@Override
 	public void onUserAvatarUpdate(UserAvatarUpdateEvent UAU) {
 		if (userAvatarUpdate.toLowerCase().equals("true")) {
-			UAU.getJDA().getTextChannelById(botTC).sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UAU.getUser().getUsername() + "** ``New Avatar:`` **" + UAU.getUser().getAvatarId() + "**");
+			MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UAU.getUser().getUsername() + "** ``New Avatar:`` **" + UAU.getUser().getAvatarId() + "**");
 		}
 		return;
 	}
@@ -27,7 +27,7 @@ public class UserListener extends ListenerAdapter {
 	@Override
 	public void onUserGameUpdate(UserGameUpdateEvent UGU) {
 		if (userGameUpdate.toLowerCase().equals("true") &&!(UGU.getUser().getCurrentGame() == null)) {
-			UGU.getJDA().getTextChannelById(botTC).sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UGU.getUser().getUsername() + "** ``Game:`` **" + UGU.getUser().getCurrentGame() + "**");
+			MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UGU.getUser().getUsername() + "** ``Game:`` **" + UGU.getUser().getCurrentGame() + "**");
 		}
 		return;
 	}
@@ -35,7 +35,7 @@ public class UserListener extends ListenerAdapter {
 	@Override
 	public void onUserNameUpdate(UserNameUpdateEvent UNU) {
 		if (userNameUpdate.toLowerCase().equals("true")) {
-			UNU.getJDA().getTextChannelById(botTC).sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UNU.getPreviousUsername() + "** ``New name:`` **" + UNU.getUser().getUsername() + "**");
+			MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UNU.getPreviousUsername() + "** ``New name:`` **" + UNU.getUser().getUsername() + "**");
 		}
 		return;
 	}
@@ -44,13 +44,13 @@ public class UserListener extends ListenerAdapter {
 	public void onUserOnlineStatusUpdate(UserOnlineStatusUpdateEvent UOSU) {
 		if (userOnlineStatusUpdate.toLowerCase().equals("true")) {
 			if (UOSU.getUser().getOnlineStatus().toString().equals("ONLINE")) {
-				UOSU.getJDA().getTextChannelById(botTC).sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UOSU.getUser().getUsername() + "** ``Status:`` **Online**");
+				MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UOSU.getUser().getUsername() + "** ``Status:`` **Online**");
 			}
 			if (UOSU.getUser().getOnlineStatus().toString().equals("AWAY")) {
-				UOSU.getJDA().getTextChannelById(botTC).sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UOSU.getUser().getUsername() + "** ``Status:`` **Away**");
+				MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UOSU.getUser().getUsername() + "** ``Status:`` **Away**");
 			}
 			if (UOSU.getUser().getOnlineStatus().toString().equals("OFFLINE")) {
-				UOSU.getJDA().getTextChannelById(botTC).sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UOSU.getUser().getUsername() + "** ``Status:`` **Offline**");
+				MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UOSU.getUser().getUsername() + "** ``Status:`` **Offline**");
 			}
 		}
 		return;

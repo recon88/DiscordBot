@@ -2,6 +2,7 @@ package io.github.lxgaming.discordbot.listeners;
 
 import io.github.lxgaming.discordbot.DiscordBot;
 import io.github.lxgaming.discordbot.util.Date;
+import io.github.lxgaming.discordbot.util.MessageSender;
 import net.dv8tion.jda.events.DisconnectEvent;
 import net.dv8tion.jda.events.ReadyEvent;
 import net.dv8tion.jda.events.ReconnectedEvent;
@@ -24,7 +25,7 @@ public class BotListener extends ListenerAdapter {
 			System.out.println("List of available TextChannels " + R.getJDA().getTextChannels());
 			System.exit(0);
 		}
-		R.getJDA().getTextChannelById(botTC).sendMessage("``Time:`` **" + Date.getTime() + "** ``DiscordBot`` **Connected!**");
+		MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``DiscordBot`` **Connected!**");
 		System.out.println("DiscordBot Connected!");
 	}
 	

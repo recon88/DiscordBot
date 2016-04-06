@@ -13,23 +13,28 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 public class MessageListener extends ListenerAdapter {
 	
 	private static String commandPrefix = DiscordBot.config.props.getProperty("CommandPrefix");
+	private static String consoleOutput = DiscordBot.config.props.getProperty("ConsoleOutput");
 	
 	@Override
 	public void onMessageReceived(MessageReceivedEvent MR) {
 		TextChannel channel = MR.getTextChannel();
 		Message message = MR.getMessage();
 		User author = MR.getAuthor();
-		String command = message.getContent().substring(commandPrefix.length());
 		
 		if (author.getId().equals(DiscordBot.api.getSelfInfo().getId())) {
 			return;
 		}
 		
-		BotCommand.bot(channel, command, author);
-		FunCommand.fun(channel, command, author);
-		LoveCommand.love(channel, command, author);
+		if ((message.getContent().startsWith(commandPrefix) || message.getContent().startsWith("/")) && !author.getId().equals(DiscordBot.api.getSelfInfo().getId())) {
+			String command = message.getContent().substring(commandPrefix.length());
+			BotCommand.bot(channel, command, author);
+			FunCommand.fun(channel, command, author);
+			LoveCommand.love(channel, command, author);
+		}
 		
-		System.out.println(author.getUsername() + ": " + message.getContent());
+		if (consoleOutput.equalsIgnoreCase("true")) {
+			System.out.println(author.getUsername() + ": " + message.getContent());
+		}
 		return;
 	}
 }
