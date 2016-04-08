@@ -1,6 +1,7 @@
 package io.github.lxgaming.discordbot.commands;
 
 import io.github.lxgaming.discordbot.DiscordBot;
+import io.github.lxgaming.discordbot.util.EnvironmentManager;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 
@@ -14,7 +15,15 @@ public class BotCommand {
 		}
 		
 		if (command.equalsIgnoreCase("botinfo")) {
-			channel.sendMessage("DiscordBC, Version " + DiscordBot.dbversion + ", Created by LX_Gaming\nAPI - " + DiscordBot.apiversion);
+			channel.sendMessage("DiscordStandAlone, Version " + DiscordBot.dbversion + ", Created by LX_Gaming\nAPI - " + DiscordBot.apiversion + "OS - " + EnvironmentManager.getOS() + ", Java - " + EnvironmentManager.getJavaVersion());
+		}
+		
+		if (command.equalsIgnoreCase("restartbot")) {
+			if (author.getId().equals("122600245480783874")) {
+				EnvironmentManager.restartBot();
+				return;
+			}
+			channel.sendMessage("You are not permitted to use this command!");
 		}
 		
 		if (command.equalsIgnoreCase("request")) {

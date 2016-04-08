@@ -11,7 +11,7 @@ public class DiscordBot {
 	
 	public static Configuration config = new Configuration();
 	public static JDA api;
-	public static String dbversion = "0.5.1 ('Happy Birthday Billy!')";
+	public static String dbversion = "0.5.3 ('East')";
 	public static String apiversion = "JDA v1.3.0, Build 188";
 	
 	public static void main(String[] args) {
