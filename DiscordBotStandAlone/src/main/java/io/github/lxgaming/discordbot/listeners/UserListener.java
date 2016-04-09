@@ -11,11 +11,10 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 
 public class UserListener extends ListenerAdapter {
 	
-	private String userAvatarUpdate = DiscordBot.config.props.getProperty("UserAvatarUpdate");
-	private String userGameUpdate = DiscordBot.config.props.getProperty("UserGameUpdate");
-	private String userNameUpdate = DiscordBot.config.props.getProperty("UserNameUpdate");
-	private String userOnlineStatusUpdate = DiscordBot.config.props.getProperty("UserOnlineStatusUpdate");
-	
+	private String userAvatarUpdate = DiscordBot.config.getString("UserAvatarUpdate");
+	private String userGameUpdate = DiscordBot.config.getString("UserGameUpdate");
+	private String userNameUpdate = DiscordBot.config.getString("UserNameUpdate");
+	private String userOnlineStatusUpdate = DiscordBot.config.getString("UserOnlineStatusUpdate");
 	@Override
 	public void onUserAvatarUpdate(UserAvatarUpdateEvent UAU) {
 		if (userAvatarUpdate.toLowerCase().equals("true")) {

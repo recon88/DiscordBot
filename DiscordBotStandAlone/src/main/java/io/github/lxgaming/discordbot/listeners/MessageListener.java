@@ -12,8 +12,8 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 
 public class MessageListener extends ListenerAdapter {
 	
-	private static String commandPrefix = DiscordBot.config.props.getProperty("CommandPrefix");
-	private static String consoleOutput = DiscordBot.config.props.getProperty("ConsoleOutput");
+	private static String commandPrefix = DiscordBot.config.getString("CommandPrefix");
+	private static String consoleOutput = DiscordBot.config.getString("ConsoleOutput");
 	
 	@Override
 	public void onMessageReceived(MessageReceivedEvent MR) {

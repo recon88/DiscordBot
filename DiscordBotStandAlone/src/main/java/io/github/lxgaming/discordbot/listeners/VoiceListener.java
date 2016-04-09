@@ -9,8 +9,8 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 
 public class VoiceListener extends ListenerAdapter {
 	
-	private String voiceServerDeaf = DiscordBot.config.props.getProperty("VoiceServerDeaf");
-	private String voiceServerMute = DiscordBot.config.props.getProperty("VoiceServerMute");
+	private String voiceServerDeaf = DiscordBot.config.getString("VoiceServerDeaf");
+	private String voiceServerMute = DiscordBot.config.getString("VoiceServerMute");
 	
 	@Override
 	public void onVoiceServerDeaf(VoiceServerDeafEvent VSD) {

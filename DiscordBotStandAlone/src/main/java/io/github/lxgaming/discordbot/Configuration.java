@@ -1,47 +1,46 @@
 package io.github.lxgaming.discordbot;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.Properties;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import org.json.JSONObject;
 
 public class Configuration {
 	
-	File configFile = new File("config.properties");
-	public Properties props = new Properties();
+	public static File config = new File("config.json");
 	
-	public void loadConfig() {
-		if (!configFile.exists()) {
+	public static JSONObject loadConfig() {
+		if (!config.exists()) {
 			saveConfig();
 		}
 		
 		try {
-			FileReader reader = new FileReader(configFile);
-			props.load(reader);
-			reader.close();
+			JSONObject object = new JSONObject(new String(Files.readAllBytes(Paths.get(config.getPath())), "UTF-8"));
 			System.out.println("Loaded config.");
+			return object;
 		} catch (Exception ex) {
 			System.out.println("Failed to load config!");
 		}
+		return null;
 	}
 	
-	private void saveConfig() {
+	private static void saveConfig() {
 		try {
-			props.setProperty("Email", "");
-			props.setProperty("Password", "");
-			props.setProperty("BotChannel", "");
-			props.setProperty("CommandPrefix", "!");
-			props.setProperty("ConsoleOutput", "true");
-			props.setProperty("UserAvatarUpdate", "true");
-			props.setProperty("UserGameUpdate", "true");
-			props.setProperty("UserNameUpdate", "true");
-			props.setProperty("UserOnlineStatusUpdate", "true");
-			props.setProperty("VoiceServerDeaf", "true");
-			props.setProperty("VoiceServerMute", "true");
-			FileWriter writer = new FileWriter(configFile);
-			props.store(writer, "DiscordBot Config.");
-			writer.close();
-			System.out.println("Created config.");
+			Files.write(Paths.get(config.getPath()), new JSONObject()
+					.put("Email", "")
+					.put("Password", "")
+					.put("BotChannel", "")
+					.put("CommandPrefix", "!")
+					.put("ConsoleOutput", "true")
+					.put("UserAvatarUpdate", "true")
+					.put("UserGameUpdate", "true")
+					.put("UserNameUpdate", "true")
+					.put("UserOnlineStatusUpdate", "true")
+					.put("VoiceServerDeaf", "true")
+					.put("VoiceServerMute", "true")
+					.toString(4).getBytes());
+			System.out.println("Saved config.");
 		} catch (Exception ex) {
 			System.out.println("Failed to save config!");
 		}

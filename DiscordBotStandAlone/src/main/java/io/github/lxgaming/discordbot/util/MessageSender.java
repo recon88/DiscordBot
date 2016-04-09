@@ -4,7 +4,7 @@ import io.github.lxgaming.discordbot.DiscordBot;
 
 public class MessageSender {
 	
-	private static String botTextChannel = DiscordBot.config.props.getProperty("BotChannel");
+	private static String botTextChannel = DiscordBot.config.getString("BotChannel");
 	
 	public static void sendMessage(String message) {
 		try {

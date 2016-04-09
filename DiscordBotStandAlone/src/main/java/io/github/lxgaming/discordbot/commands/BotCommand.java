@@ -7,7 +7,7 @@ import net.dv8tion.jda.entities.User;
 
 public class BotCommand {
 	
-	private static String commandPrefix = DiscordBot.config.props.getProperty("CommandPrefix");
+	private static String commandPrefix = DiscordBot.config.getString("CommandPrefix");
 	
 	public static void bot(TextChannel channel, String command, User author) {
 		if (command.equalsIgnoreCase("ping")) {
@@ -15,11 +15,12 @@ public class BotCommand {
 		}
 		
 		if (command.equalsIgnoreCase("botinfo")) {
-			channel.sendMessage("DiscordStandAlone, Version " + DiscordBot.dbversion + ", Created by LX_Gaming\nAPI - " + DiscordBot.apiversion + "OS - " + EnvironmentManager.getOS() + ", Java - " + EnvironmentManager.getJavaVersion());
+			channel.sendMessage("DiscordStandAlone, Version " + DiscordBot.dbversion + ", Created by LX_Gaming\nAPI - " + DiscordBot.apiversion + "\nOS - " + EnvironmentManager.getOS() + ", Java - " + EnvironmentManager.getJavaVersion());
 		}
 		
 		if (command.equalsIgnoreCase("restartbot")) {
 			if (author.getId().equals("122600245480783874")) {
+				channel.sendMessage("Attempting Restart...");
 				EnvironmentManager.restartBot();
 				return;
 			}

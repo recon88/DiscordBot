@@ -11,11 +11,11 @@ public class EnvironmentManager {
 	}
 	
 	public static void restartBot() {
-		if (!getOS().toLowerCase().equals("windows")) {
+		if (!getOS().toLowerCase().contains("windows")) {
+			MessageSender.sendMessage("Unsupported System!");
 			return;
 		}
 		try {
-			MessageSender.sendMessage("Attempting Restart...");
 			Runtime.getRuntime().exec("cmd /c restart.bat");
 		} catch (Exception ex) {
 			MessageSender.sendMessage("Restart Failed!");
