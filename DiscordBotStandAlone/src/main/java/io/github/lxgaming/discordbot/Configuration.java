@@ -31,6 +31,7 @@ public class Configuration {
 					.put("Email", "")
 					.put("Password", "")
 					.put("BotChannel", "")
+					.put("OwnerID", "")
 					.put("CommandPrefix", "!")
 					.put("ConsoleOutput", "true")
 					.put("UserAvatarUpdate", "true")

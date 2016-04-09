@@ -19,7 +19,7 @@ public class BotCommand {
 		}
 		
 		if (command.equalsIgnoreCase("restartbot")) {
-			if (author.getId().equals("122600245480783874")) {
+			if (author.getId().equals(DiscordBot.config.getString("OwnerID"))) {
 				channel.sendMessage("Attempting Restart...");
 				EnvironmentManager.restartBot();
 				return;
