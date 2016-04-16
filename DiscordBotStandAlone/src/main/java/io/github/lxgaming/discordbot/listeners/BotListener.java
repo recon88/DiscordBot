@@ -16,6 +16,7 @@ public class BotListener extends ListenerAdapter {
 	@Override
 	public void onDisconnect(DisconnectEvent D) {
 		System.out.println("DiscordBot Disconnected!");
+		return;
 	}
 	
 	@Override
@@ -27,15 +28,18 @@ public class BotListener extends ListenerAdapter {
 		}
 		MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``DiscordBot`` **Connected!**");
 		System.out.println("DiscordBot Connected!");
+		return;
 	}
 	
 	@Override
 	public void onReconnect(ReconnectedEvent R) {
 		System.out.println("DiscordBot Reconnected!");
+		return;
 	}
 	
 	@Override
 	public void onShutdown(ShutdownEvent S) {
 		System.out.println("DiscordBot Shutdown!");
+		return;
 	}
 }
