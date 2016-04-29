@@ -28,8 +28,6 @@ public class Configuration {
 	private static void saveConfig() {
 		try {
 			Files.write(Paths.get(config.getPath()), new JSONObject()
-					.put("Email", "")
-					.put("Password", "")
 					.put("BotToken", "")
 					.put("BotChannel", "")
 					.put("OwnerID", "")
