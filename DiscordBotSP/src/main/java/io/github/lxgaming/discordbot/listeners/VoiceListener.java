@@ -8,25 +8,29 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 
 public class VoiceListener extends ListenerAdapter {
 	
-	String botTextChannel = DiscordBot.config.getString("DiscordBot.TextChannels.Bot");
-	MessageSender ms = new MessageSender();
+	private static Boolean voiceServerDeaf = DiscordBot.config.getBoolean("DiscordBot.Listeners.VoiceServerDeaf");
+	private static Boolean voiceServerMute = DiscordBot.config.getBoolean("DiscordBot.Listeners.VoiceServerMute");
 	
 	@Override
-	public void onVoiceServerMute(VoiceServerMuteEvent VSM) {
-		if (VSM.getVoiceStatus().isServerMuted() == true) {
-			ms.sendMessage(VSM.getUser().getUsername() + " has been muted.");
-		} else {
-			ms.sendMessage(VSM.getUser().getUsername() + " has been unmuted.");
+	public void onVoiceServerDeaf(VoiceServerDeafEvent VSD) {
+		if (voiceServerDeaf == true) {
+			if (VSD.getVoiceStatus().isServerDeaf() == true) {
+				MessageSender.sendMessage("Deafened", VSD.getUser().getUsername(), "VoiceServerDeaf.Deafened", true, true, false);
+			} else {
+				MessageSender.sendMessage("Undeafened", VSD.getUser().getUsername(), "VoiceServerDeaf.Undeafened", true, true, false);
+			}
 		}
 		return;
 	}
 	
 	@Override
-	public void onVoiceServerDeaf(VoiceServerDeafEvent VSD) {
-		if (VSD.getVoiceStatus().isServerDeaf() == true) {
-			ms.sendMessage(VSD.getUser().getUsername() + " has been deafened.");
-		} else {
-			ms.sendMessage(VSD.getUser().getUsername() + " has been undeafened.");
+	public void onVoiceServerMute(VoiceServerMuteEvent VSM) {
+		if (voiceServerMute == true) {
+			if (VSM.getVoiceStatus().isServerMuted() == true) {
+				MessageSender.sendMessage("Muted", VSM.getUser().getUsername(), "VoiceServerMute.Muted", true, true, false);
+			} else {
+				MessageSender.sendMessage("Unmuted", VSM.getUser().getUsername(), "VoiceServerMute.Unmuted", true, true, false);
+			}
 		}
 		return;
 	}

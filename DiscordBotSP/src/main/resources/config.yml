@@ -1,20 +1,25 @@
 DiscordBot:
   Credentials:
-    Email: 
-    Password: 
+    BotToken: ''
   TextChannels:
     Bot: ''
     InGame: ''
-    General: ''
   Messages:
+    Locale: 'en'
     CommandPrefix: '!'
     ConsoleOutput: true
-    InGameFormat: '&c[Discord] &f%author%:'
-  Listeners:
-    MainBot: true
     SendInGame: true
     SendDiscord: true
-    InGameChat: true
-    UserNameUpdate: true
+  Listeners:
+    MainBot: true
+    UserAvatarUpdate: true
     UserGameUpdate: true
+    UserNameUpdate: true
     UserOnlineStatusUpdate: true
+    VoiceServerDeaf: true
+    VoiceServerMute: true
+  Events:
+    PlayerChat: true
+    PlayerJoin: true
+    PlayerQuit: true
+    PlayerDeath: true

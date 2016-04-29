@@ -1,0 +1,105 @@
+DiscordBot:
+  en:
+    Disconnect:
+      InGameFormat: '&6[&cDiscordBot&6] &cDisconnected!'
+      DiscordFormat: 'null'
+    Ready:
+      InGameFormat: '&6[&cDiscordBot&6] &2Connected!'
+      DiscordFormat: '``Time:`` **%time%** ``DiscordBot`` **Connected!**'
+    Reconnect:
+      InGameFormat: '&6[&cDiscordBot&6] &2Reconnected!'
+      DiscordFormat: '``Time:`` **%time%** ``DiscordBot`` **Reconnected!**'
+    Shutdown:
+      InGameFormat: 'null'
+      DiscordFormat: 'null'
+    UserAvatarUpdate:
+      InGameFormat: '&6[&cDiscordBot&6] &f%user%: New Avatar - %message%'
+      DiscordFormat: '``Time:`` **%time%** ``User:`` **%user%** ``New Avatar:`` **%message%**'
+    UserGameUpdate:
+      InGameFormat: '&6[&cDiscordBot&6] &f%user%: Game - %message%'
+      DiscordFormat: '``Time:`` **%time%** ``User:`` **%user%** ``Game:`` **%message%**'
+    UserNameUpdate:
+      InGameFormat: '&6[&cDiscordBot&6] &f%user%: Name - %message%'
+      DiscordFormat: '``Time:`` **%time%** ``User:`` **%user%** ``New name:`` **%message%**'
+    UserOnlineStatusUpdate:
+      Online:
+        InGameFormat: '&6[&cDiscordBot&6] &f%user%: is now &2Online'
+        DiscordFormat: '``Time:`` **%time%** ``User:`` **%user%** ``Status:`` **%message%**'
+      Away:
+        InGameFormat: '&6[&cDiscordBot&6] &f%user%: is now &6Away'
+        DiscordFormat: '``Time:`` **%time%** ``User:`` **%user%** ``Status:`` **%message%**'
+      Offline:
+        InGameFormat: '&6[&cDiscordBot&6] &f%user%: is now &cOffline'
+        DiscordFormat: '``Time:`` **%time%** ``User:`` **%user%** ``Status:`` **%message%**'
+    VoiceServerDeaf:
+      Deafened:
+        InGameFormat: '&6[&cDiscordBot&6] &f%user%: has been &cDeafened'
+        DiscordFormat: '``Time:`` **%time%** ``User:`` **%user%** ``Voice:`` **%message%**'
+      Undeafened:
+        InGameFormat: '&6[&cDiscordBot&6] &f%user%: has been &2Undeafened'
+        DiscordFormat: '``Time:`` **%time%** ``User:`` **%user%** ``Voice:`` **%message%**'
+    VoiceServerMute:
+      Muted:
+        InGameFormat: '&6[&cDiscordBot&6] &f%user%: has been &cMuted'
+        DiscordFormat: '``Time:`` **%time%** ``User:`` **%user%** ``Voice:`` **%message%**'
+      Unmuted:
+        InGameFormat: '&6[&cDiscordBot&6] &f%user%: has been &2Unmuted'
+        DiscordFormat: '``Time:`` **%time%** ``User:`` **%user%** ``Voice:`` **%message%**'
+    Message:
+      InGameFormat: '&6[&cDiscord&6] &f%user%: %message%'
+      DiscordFormat: '``User:`` **%user%:** %message%'
+    Player:
+      Join:
+        InGameFormat: 'null'
+        DiscordFormat: '``Time:`` **%time%** ``User:`` **%user%** ``Server:`` **%message%**'
+      Quit:
+        InGameFormat: 'null'
+        DiscordFormat: '``Time:`` **%time%** ``User:`` **%user%** ``Server:`` **%message%**'
+    Commands:
+      Bot:
+        BotInfo: 'botinfo'
+        Website: 'website'
+      Fun:
+        Number:
+          Command: 'number'
+          Message: 'Your lucky number is %number%/100!'
+        Roll:
+          Command: 'roll'
+          Message: 'You rolled a %number%'
+        Coin:
+          Command: 'coin'
+          MessageHeads: 'Heads - https://goo.gl/Pg5RQN'
+          MessageTails: 'Tails - https://goo.gl/wgHmwb'
+        Version:
+          Command: 'version'
+          Message: 'Version %number%'
+      Love:
+        Kiss:
+          Command: 'kiss'
+          Message1: '%sender% kissed%name%'
+          Message2: 'Awww %name% ran away, no kiss for you.'
+          Invaild: 'Got nobody to kiss?'
+        Hug:
+          Command: 'hug'
+          Message: '%sender% hugged%name%'
+          Invaild: 'Got nobody to hug?'
+        Slap:
+          Command: 'slap'
+          Message1: '%sender% slapped%name%'
+          Message2: '%name% got RKOD outta nowhere!'
+          Invaild: 'Got nobody to slap?'
+        Lick:
+          Command: 'lick'
+          Message: '%sender% licked%name%'
+          Invaild: 'Got nothing to lick?'
+      Server:
+        List:
+          Command: 'list'
+          Message: 'Online Players - %name%'
+        ServerInfo:
+          Command: 'serverinfo'
+          Message: 'Server - %name%, Version - %number%'
+      Custom:
+        ping: 'Pong!'
+        hello: 'World!'
+  fr:

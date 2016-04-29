@@ -7,31 +7,33 @@ import java.io.OutputStream;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import io.github.lxgaming.discordbot.commands.DiscordBotCommand;
 import io.github.lxgaming.discordbot.commands.DiscordChatCommand;
-import io.github.lxgaming.discordbot.listeners.ReadyListener;
+import io.github.lxgaming.discordbot.events.PlayerEvent;
+import io.github.lxgaming.discordbot.listeners.BotListener;
 import net.dv8tion.jda.JDA;
 import net.dv8tion.jda.JDABuilder;
 
 public class DiscordBot extends JavaPlugin {
 	
 	public static DiscordBot instance;
-	public static FileConfiguration config;
+	public static FileConfiguration config, messages;
 	public static JDA api;
-	public static String dbversion = "0.3.2 ('Canterbury')";
-	public static String apiversion = "JDA v1.3.0, Build 188";
+	public static String dbversion = "0.7.0 ('Global')";
+	public static String apiversion = "JDA v2.0.0, Build 242";
 	
 	@Override
 	public void onEnable() {
 		instance = this;
 		loadConfig();
-		this.getCommand("discordbot").setExecutor(new DiscordBotCommand(this));
-		if (DiscordBot.config.getBoolean("DiscordBot.Listeners.InGameChat") == true) {
-			this.getCommand("discordchat").setExecutor(new DiscordChatCommand(this));
-			this.getCommand("dcc").setExecutor(new DiscordChatCommand(this));
-		}
+		this.getCommand("discordbot").setExecutor(new DiscordBotCommand());
+		this.getCommand("discordchat").setExecutor(new DiscordChatCommand());
+		this.getCommand("dcc").setExecutor(new DiscordChatCommand());
+		PluginManager pm = getServer().getPluginManager();
+		pm.registerEvents(new PlayerEvent(), this);
 		loadDiscord();
 		getLogger().info("DiscordBot has started!");
 	}
@@ -39,20 +41,21 @@ public class DiscordBot extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		instance = null;
+		if (api != null) {
+			api.shutdown(true);
+		}
 		getLogger().info("DiscordBot has stopped!");
 	}
 	
 	public void loadDiscord() {
 		try {
 			api = new JDABuilder()
-					.setEmail(config.getString("DiscordBot.Credentials.Email"))
-					.setPassword(config.getString("DiscordBot.Credentials.Password"))
-					.addListener(new ReadyListener())
+					.setBotToken(config.getString("DiscordBot.Credentials.BotToken"))
+					.addListener(new BotListener())
 					.buildAsync();
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			getLogger().severe("Connection Failed! Invaild Username/Password");
-			getLogger().severe("Please check config file!");
+			getLogger().severe("Connection Failed! Invaild BotToken");
 		}
 	}
 	
@@ -61,16 +64,23 @@ public class DiscordBot extends JavaPlugin {
 			getDataFolder().mkdir();
 		}
 		File configFile = new File(getDataFolder(), "config.yml");
+		File messagesFile = new File(getDataFolder(), "messages.yml");
 		if (!configFile.exists()) {
 			copy(getResource("config.yml"), configFile);
 			getLogger().info("Config file created.");
 		}
+		if (!messagesFile.exists()) {
+			copy(getResource("messages.yml"), messagesFile);
+			getLogger().info("Messages file created.");
+		}
 		config = new YamlConfiguration();
+		messages = new YamlConfiguration();
 		try {
 			config.load(configFile);
+			messages.load(messagesFile);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			getLogger().severe("Failed to load config!");
+			getLogger().severe("Failed to load files!");
 		}
 	}
 	
@@ -86,7 +96,7 @@ public class DiscordBot extends JavaPlugin {
 			in.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			getLogger().severe("Failed to save config!");
+			getLogger().severe("Failed to save files!");
 		}
 	}
 }

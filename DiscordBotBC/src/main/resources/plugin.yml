@@ -14,5 +14,9 @@ commands:
     description: Send messages to Discord.
     usage: /<command> <message>
 permissions:
-  DiscordBot.Chat:
-    description: Allow players to message Discord.
+  DiscordBot.CommandChat:
+    description: Send messages to Discord via command.
+  DiscordBot.GlobalChat:
+    description: Send messages to Discord via global chat.
+  DiscordBot.ReceiveDiscordChat:
+    description: Receive Discord messages ingame.

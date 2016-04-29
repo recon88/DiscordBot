@@ -2,65 +2,63 @@ package io.github.lxgaming.discordbot.commands;
 
 import java.util.Random;
 
+import io.github.lxgaming.discordbot.DiscordBot;
+import io.github.lxgaming.discordbot.util.MessageSender;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 
 public class LoveCommand {
 	
-	Random rand = new Random();
+	private static Random rand = new Random();
 	
-	public void Love(TextChannel channel, String command, User author) {
+	public static void love(TextChannel channel, String command, User author) {
 		
-		String sender = author.getUsername();
 		String name = "";
-		command = command.toLowerCase();
 		
-		if (command.startsWith("kiss")) {
-			if (command.length() > 4) {
-				name = command.substring(4);
-				int number = rand.nextInt(3);
-				if (number == 0) {
-					channel.sendMessage(sender + " kissed" + name);
-				} else if (number == 1) {
-					channel.sendMessage("Awww" + name + " ran away, no kiss for you.");
-				} else if (number == 2) {
-					channel.sendMessage("Oh god, get a room you two!");
-				}
-			} else {
-				channel.sendMessage("Got nobody to kiss?");
-			}
-		}
-		
-		if (command.startsWith("hug")) {
-			if (command.length() > 3) {
-				name = command.substring(3);
-				channel.sendMessage(sender + " hugged" + name);
-			} else {
-				channel.sendMessage("Got nobody to hug?");
-			}
-		}
-		
-		if (command.startsWith("slap")) {
+		if (command.toLowerCase().startsWith(DiscordBot.messages.getString("DiscordBot." + DiscordBot.config.getString("DiscordBot.Messages.Locale") + ".Commands.Love.Kiss.Command"))) {
 			if (command.length() > 4) {
 				name = command.substring(4);
 				int number = rand.nextInt(2);
 				if (number == 0) {
-					channel.sendMessage(sender + " slapped" + name);
+					MessageSender.sendCommand(channel, author, "Love", "Kiss.Message1", "", name);
 				} else if (number == 1) {
-					name = command.substring(5);
-					channel.sendMessage(name + " got RKO'D outta nowhere!");
+					MessageSender.sendCommand(channel, author, "Love", "Kiss.Message2", "", name);
 				}
 			} else {
-				channel.sendMessage("Got nobody to slap?");
+				MessageSender.sendCommand(channel, author, "Love", "Kiss.Invaild", "", name);
 			}
 		}
 		
-		if (command.startsWith("lick")) {
+		if (command.toLowerCase().startsWith(DiscordBot.messages.getString("DiscordBot." + DiscordBot.config.getString("DiscordBot.Messages.Locale") + ".Commands.Love.Hug.Command"))) {
+			if (command.length() > 3) {
+				name = command.substring(3);
+				MessageSender.sendCommand(channel, author, "Love", "Hug.Message", "", name);
+			} else {
+				MessageSender.sendCommand(channel, author, "Love", "Hug.Invaild", "", name);
+			}
+		}
+		
+		if (command.toLowerCase().startsWith(DiscordBot.messages.getString("DiscordBot." + DiscordBot.config.getString("DiscordBot.Messages.Locale") + ".Commands.Love.Slap.Command"))) {
 			if (command.length() > 4) {
 				name = command.substring(4);
-				channel.sendMessage(sender + " licked" + name);
+				int number = rand.nextInt(2);
+				if (number == 0) {
+					MessageSender.sendCommand(channel, author, "Love", "Slap.Message1", "", name);
+				} else if (number == 1) {
+					name = command.substring(5);
+					MessageSender.sendCommand(channel, author, "Love", "Slap.Message2", "", name);
+				}
 			} else {
-				channel.sendMessage("Got nothing to lick?");
+				MessageSender.sendCommand(channel, author, "Love", "Slap.Invaild", "", name);
+			}
+		}
+		
+		if (command.toLowerCase().startsWith(DiscordBot.messages.getString("DiscordBot." + DiscordBot.config.getString("DiscordBot.Messages.Locale") + ".Commands.Love.Lick.Command"))) {
+			if (command.length() > 4) {
+				name = command.substring(4);
+				MessageSender.sendCommand(channel, author, "Love", "Lick.Message", "", name);
+			} else {
+				MessageSender.sendCommand(channel, author, "Love", "Lick.Invaild", "", name);
 			}
 		}
 		return;

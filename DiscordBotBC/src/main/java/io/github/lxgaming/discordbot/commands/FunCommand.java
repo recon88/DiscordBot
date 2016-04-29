@@ -2,6 +2,8 @@ package io.github.lxgaming.discordbot.commands;
 
 import java.util.Random;
 
+import io.github.lxgaming.discordbot.DiscordBot;
+import io.github.lxgaming.discordbot.util.MessageSender;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 
@@ -10,30 +12,25 @@ public class FunCommand {
 	private static Random rand = new Random();
 	
 	public static void fun(TextChannel channel, String command, User author) {
-		if (command.equalsIgnoreCase("number")) {
-			int number = rand.nextInt(100) + 1;
-			channel.sendMessage("Your lucky number is " + number + "/100!");
+		if (command.equalsIgnoreCase(DiscordBot.messages.getString("DiscordBot." + DiscordBot.config.getString("DiscordBot.Messages.Locale") + ".Commands.Fun.Number.Command"))) {
+			MessageSender.sendCommand(channel, author, "Fun", "Number.Message", String.valueOf(rand.nextInt(100) + 1), "");
 		}
 		
-		if (command.equalsIgnoreCase("roll")) {
-			int number = rand.nextInt(6) + 1;
-			channel.sendMessage("You rolled a " + number);
+		if (command.equalsIgnoreCase(DiscordBot.messages.getString("DiscordBot." + DiscordBot.config.getString("DiscordBot.Messages.Locale") + ".Commands.Fun.Roll.Command"))) {
+			MessageSender.sendCommand(channel, author, "Fun", "Roll.Message", String.valueOf(rand.nextInt(6) + 1), "");
 		}
 		
-		if (command.equalsIgnoreCase("coin")) {
+		if (command.equalsIgnoreCase(DiscordBot.messages.getString("DiscordBot." + DiscordBot.config.getString("DiscordBot.Messages.Locale") + ".Commands.Fun.Coin.Command"))) {
 			int number = rand.nextInt(2);
 			if (number == 0) {
-				channel.sendMessage("Heads\n" + "https://goo.gl/Pg5RQN");
+				MessageSender.sendCommand(channel, author, "Fun", "Coin.MessageHeads", "", "");
 			} else if (number == 1) {
-				channel.sendMessage("Tails\n" + "https://goo.gl/wgHmwb");
+				MessageSender.sendCommand(channel, author, "Fun", "Coin.MessageTails", "", "");
 			}
 		}
 		
-		if (command.equalsIgnoreCase("version")) {
-			int first = rand.nextInt(10);
-			int second = rand.nextInt(10);
-			int third = rand.nextInt(10);
-			channel.sendMessage("Version " + first + "." + second + "." + third);
+		if (command.equalsIgnoreCase(DiscordBot.messages.getString("DiscordBot." + DiscordBot.config.getString("DiscordBot.Messages.Locale") + ".Commands.Fun.Version.Command"))) {
+			MessageSender.sendCommand(channel, author, "Fun", "Version.Message", String.valueOf(rand.nextInt(10)) + "." + String.valueOf(rand.nextInt(10)) + "." + String.valueOf(rand.nextInt(10)), "");
 		}
 		return;
 	}

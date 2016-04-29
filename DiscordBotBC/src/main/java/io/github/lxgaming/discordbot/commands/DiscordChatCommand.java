@@ -1,12 +1,8 @@
 package io.github.lxgaming.discordbot.commands;
 
 import io.github.lxgaming.discordbot.DiscordBot;
-import io.github.lxgaming.discordbot.util.Date;
-import net.md_5.bungee.api.ChatColor;
+import io.github.lxgaming.discordbot.util.MessageSender;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
 public class DiscordChatCommand extends Command {
@@ -16,7 +12,7 @@ public class DiscordChatCommand extends Command {
 	Boolean consoleOutput = DiscordBot.config.getBoolean("DiscordBot.Messages.ConsoleOutput");
 	
 	public DiscordChatCommand() {
-		super("discordchat", "DiscordBot.Chat", "dcc");
+		super("discordchat", "DiscordBot.CommandChat", "dcc");
 	}
 	
 	@Override
@@ -25,22 +21,7 @@ public class DiscordChatCommand extends Command {
 		for (String arg : args) {
 			message = message + arg + " ";
 		}
-		
-		try {
-			DiscordBot.api.getTextChannelById(botTextChannel).sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + sender.getName() + ":** " + message.trim());
-		} catch (Exception ex) {
-			DiscordBot.instance.getLogger().severe("Unable to send message!");
-			DiscordBot.instance.getLogger().severe("Make sure 'DiscordBot.TextChannels.Bot' is using an ID and not a name!");
-		}
-		
-		for (ProxiedPlayer player : ProxyServer.getInstance().getPlayers()) {
-			if (player.hasPermission("DiscordBot.Chat")) {
-				player.sendMessage(new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', ingameFormat).replace("%author%", sender.getName())).append(ChatColor.translateAlternateColorCodes('&', " " + message.trim())).create());
-			}
-		}
-		if (consoleOutput == true) {
-			DiscordBot.instance.getLogger().info(sender.getName() + ": " + message.trim());
-		}
+		MessageSender.sendMessage(message, sender.getName(), "Message", true, true, true);
 		return;
 	}
 }
