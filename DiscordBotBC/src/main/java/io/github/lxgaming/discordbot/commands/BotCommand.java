@@ -7,7 +7,7 @@ import net.dv8tion.jda.entities.User;
 public class BotCommand {
 	
 	public static void bot(TextChannel channel, String command, User author) {
-		if (!DiscordBot.messages.getString("DiscordBot." + DiscordBot.config.getString("DiscordBot.Messages.Locale") + ".Commands.Custom." + command).isEmpty()) {
+		if (DiscordBot.messages.getString("DiscordBot." + DiscordBot.config.getString("DiscordBot.Messages.Locale") + ".Commands.Custom." + command) != null) {
 			channel.sendMessage(DiscordBot.messages.getString("DiscordBot." + DiscordBot.config.getString("DiscordBot.Messages.Locale") + ".Commands.Custom." + command));
 		}
 		
