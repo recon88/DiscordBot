@@ -75,6 +75,5 @@
 			<filtering>true</filtering>
 		</resource>
 	</resources>
-	<finalName>DiscordBotBC</finalName>
   </build>
 </project>
