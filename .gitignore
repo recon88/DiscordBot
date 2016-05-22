@@ -1,12 +1,4 @@
-/DiscordBotBC/.settings/
-/DiscordBotBC/target/
-/DiscordBotBC/.classpath
-/DiscordBotBC/.project
-/DiscordBotSP/.settings/
-/DiscordBotSP/target/
-/DiscordBotSP/.classpath
-/DiscordBotSP/.project
-/DiscordBotStandAlone/.settings/
-/DiscordBotStandAlone/target/
-/DiscordBotStandAlone/.classpath
-/DiscordBotStandAlone/.project
+/*/.settings/
+/*/target/
+/*/.classpath
+/*/.project
