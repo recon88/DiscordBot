@@ -9,5 +9,6 @@
 	<module>DiscordBotBC</module>
 	<module>DiscordBotSP</module>
 	<module>DiscordBotStandAlone</module>
+	<module>DiscordMusicBot</module>
   </modules>
 </project>
