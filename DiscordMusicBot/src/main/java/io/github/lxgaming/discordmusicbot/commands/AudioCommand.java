@@ -14,7 +14,7 @@ public class AudioCommand {
 		}
 		
 		if (command.startsWith("play")) {
-			if (command.substring(4).startsWith("https://www.youtube.com/")) {
+			if (command.substring(5).startsWith("https://www.youtube.com/")) {
 				AudioManager.getAudioFile(command.substring(4).trim());
 			} else {
 				channel.sendMessage("Only Youtube links are allowed");

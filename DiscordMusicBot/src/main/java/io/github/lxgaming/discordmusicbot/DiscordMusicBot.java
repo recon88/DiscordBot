@@ -24,7 +24,9 @@ public class DiscordMusicBot {
 		ConsoleOutput.info("Website - http://lxgaming.github.io");
 		ConsoleOutput.info(Environment.getJavaVendor() + " - " + Environment.getJavaVersion());
 		ConsoleOutput.info(Environment.getOSName() + " - " + Environment.getOSVersion() + " - " + Environment.getOSArch());
-		AudioManager.getResource();
+		if (AudioManager.checkDependencies() != true) {
+			System.exit(1);
+		}
 		loadDiscord();
 	}
 	

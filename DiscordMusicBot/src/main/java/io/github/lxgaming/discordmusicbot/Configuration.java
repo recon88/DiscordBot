@@ -33,6 +33,7 @@ public class Configuration {
 					.put("OwnerID", "")
 					.put("CommandPrefix", "!")
 					.put("ConsoleOutput", "true")
+					.put("Debug", "true")
 					.toString(4).getBytes());
 			System.out.println("Saved config.");
 		} catch (Exception ex) {
