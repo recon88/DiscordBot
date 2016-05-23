@@ -25,14 +25,14 @@ public class MessageListener extends ListenerAdapter {
 			return;
 		}
 		
+		if (consoleoutput.equalsIgnoreCase("true")) {
+			ConsoleOutput.info("[" + channel.getName() + "] " + author.getUsername() + ": " + message.getContent());
+		}
+		
 		if (message.getContent().startsWith(commandprefix) || message.getContent().startsWith("/")) {
 			String command = message.getContent().substring(commandprefix.length());
 			BotCommand.bot(channel, command, author);
 			AudioCommand.audio(channel, command, author);
-		}
-		
-		if (consoleoutput.equalsIgnoreCase("true")) {
-			ConsoleOutput.info("[" + channel.getName() + "] " + author.getUsername() + ": " + message.getContent());
 		}
 		return;
 	}

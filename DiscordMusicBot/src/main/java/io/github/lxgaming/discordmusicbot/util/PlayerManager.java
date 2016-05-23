@@ -7,26 +7,37 @@ import net.dv8tion.jda.audio.player.FilePlayer;
 import net.dv8tion.jda.audio.player.Player;
 import net.dv8tion.jda.entities.Guild;
 import net.dv8tion.jda.entities.TextChannel;
+import net.dv8tion.jda.entities.User;
+import net.dv8tion.jda.entities.VoiceChannel;
 
 public class PlayerManager {
 	
 	public static Player player = null;
 	public static Guild guild = DiscordMusicBot.api.getGuildById(DiscordMusicBot.config.getString("GuildID"));
 	
-	public static void connect() {
-
+	public static void connect(TextChannel channel, User author) {
+		for (VoiceChannel voice : guild.getVoiceChannels()) {
+			if (voice.getUsers().contains(author)) {
+				guild.getAudioManager().openAudioConnection(voice);
+				channel.sendMessage("DiscordMusicBot joined " + voice.getName() + " voice channel.");
+				ConsoleOutput.info("DiscordMusicBot joined " + voice.getName() + " voice channel.");
+				return;
+			}
+		}
+		channel.sendMessage("Unable to find voice channel!");
+		ConsoleOutput.warn("Unable to find voice channel!");
+		return;
 	}
 	
 	public static void play(String audiofile) {
 		if (player == null) {
-			File audioFile = null;
-			
 			try {
-				audioFile = new File(audiofile);
+				File audioFile = new File(audiofile);
 				player = new FilePlayer(audioFile);
+				guild.getAudioManager().setSendingHandler(player);
 				player.play();
 			} catch (Exception ex) {
-				ConsoleOutput.error("Unable to play");
+				ConsoleOutput.error("Unable to play" + ex);
 			}
 		}
 		return;

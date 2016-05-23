@@ -9,9 +9,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class AudioManager {
-	
+
 	private static File resource = new File("youtube-dl.exe");
-	
+
 	public static void getResource() {
 		if (!resource.exists()) {
 			ConsoleOutput.info("Resource does not exist, Downloading...");
@@ -42,39 +42,39 @@ public class AudioManager {
 		ConsoleOutput.info("Resource Exists!");
 		return;
 	}
-	
+
 	public static void getAudioFile(String url) {
+		String line = null;
 		String name = null;
+		String[] string = null;
 		try {
-		ProcessBuilder processbuilder = new ProcessBuilder("cmd.exe", "/c", "youtube-dl.exe --id " + url);
-		processbuilder.redirectErrorStream(true);
-		Process process = processbuilder.start();
-		
-		BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
-		String line;
-		while ((line = in.readLine()) != null) {
-			if (line.contains("Destination")) {
-				String[] string = line.split(" ");
-				name = string[2].trim();
-				ConsoleOutput.info("Music file name is " + name);
-			}
-			
-			if (line.contains("downloaded")) {
-				String[] string = line.split(" ");
-				name = string[1].trim();
-				ConsoleOutput.info("Music file name is " + name);
-			}
-			
-			if (line.startsWith("[download] 100%")) {
-				if (name != null) {
-					PlayerManager.audio(name);
+			ProcessBuilder processbuilder = new ProcessBuilder("cmd.exe", "/c", "youtube-dl.exe -o audio\\%(id)s.%(ext)s " + url);
+			processbuilder.redirectErrorStream(true);
+			Process process = processbuilder.start();
+			BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			while ((line = in.readLine()) != null) {
+				if (line.contains("Destination")) {
+					string = line.split(" ");
+					name = string[2].trim();
+					ConsoleOutput.info("Music file name is " + name);
 				}
+				
+				if (line.contains("downloaded")) {
+					string = line.split(" ");
+					name = string[1].trim();
+					ConsoleOutput.info("Music file name is " + name);
+				}
+				
+				if (line.startsWith("[download] 100%")) {
+					if (name != null) {
+						PlayerManager.play(name);
+					}
+				}
+				ConsoleOutput.info(line);
 			}
-			System.out.println(line);
-		}
-		process.waitFor();
-		in.close();
-		return;
+			process.waitFor();
+			in.close();
+			return;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
