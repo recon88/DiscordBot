@@ -14,7 +14,7 @@ public class DiscordMusicBot {
 	
 	public static JSONObject config = Configuration.loadConfig();
 	public static JDA api;
-	public static String dmbversion = "0.0.1-SNAPSHOT";
+	public static String dmbversion = "0.0.2-EARLY_ALPHA";
 	public static String apiversion = "JDA v2.0.0, Build 242";
 
 	public static void main(String[] args) {
