@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.lxgaming</groupId>
   <artifactId>DiscordBotBC</artifactId>
-  <version>0.5.3</version>
+  <version>0.5.4</version>
   <url>http://www.lxgaming.github.io</url>
   <properties>
 	<maven.compiler.source>1.8</maven.compiler.source>
@@ -40,20 +40,8 @@
     			<groupId>net.sourceforge.jaadec</groupId>
     		</exclusion>
     		<exclusion>
-    			<artifactId>commons-codec</artifactId>
-    			<groupId>commons-codec</groupId>
-    		</exclusion>
-    		<exclusion>
-    			<artifactId>commons-lang3</artifactId>
-    			<groupId>org.apache.commons</groupId>
-    		</exclusion>
-    		<exclusion>
     			<artifactId>jna</artifactId>
     			<groupId>net.java.dev.jna</groupId>
-    		</exclusion>
-    		<exclusion>
-    			<artifactId>httpmime</artifactId>
-    			<groupId>org.apache.httpcomponents</groupId>
     		</exclusion>
     		<exclusion>
     			<artifactId>tritonus-dsp</artifactId>
