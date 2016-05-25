@@ -22,7 +22,7 @@ public class DiscordBot extends JavaPlugin {
 	public static DiscordBot instance;
 	public static FileConfiguration config, messages;
 	public static JDA api;
-	public static String dbversion = "0.5.2 ('East')";
+	public static String dbversion = "0.5.3 ('East')";
 	public static String apiversion = "JDA v2.0.0, Build 242";
 	
 	@Override
@@ -52,6 +52,7 @@ public class DiscordBot extends JavaPlugin {
 			api = new JDABuilder()
 					.setBotToken(config.getString("DiscordBot.Credentials.BotToken"))
 					.addListener(new BotListener())
+					.setAudioEnabled(false)
 					.buildAsync();
 		} catch (Exception ex) {
 			ex.printStackTrace();
