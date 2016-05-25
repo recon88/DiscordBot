@@ -46,8 +46,8 @@ DiscordBot:
         InGameFormat: '&6[&cDiscordBot&6] &f%user%: has been &2Unmuted'
         DiscordFormat: '``Time:`` **%time%** ``User:`` **%user%** ``Voice:`` **%message%**'
     Message:
-      InGameFormat: '&6[&cDiscord&6] &f%user%: %message%'
-      DiscordFormat: '``User:`` **%user%:** %message%'
+      InGameFormat: '&6[&cDiscord&6] &f%usernick%: %message%'
+      DiscordFormat: '``User:`` **%usernick%:** %message%'
     Player:
       Join:
         InGameFormat: 'null'

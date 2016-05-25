@@ -13,7 +13,7 @@ public class DiscordBot {
 	
 	public static JSONObject config = Configuration.loadConfig();
 	public static JDA api;
-	public static String dbversion = "0.5.0 ('East')";
+	public static String dbversion = "0.5.2 ('East')";
 	public static String apiversion = "JDA v2.0.0, Build 242";
 	
 	public static void main(String[] args) {

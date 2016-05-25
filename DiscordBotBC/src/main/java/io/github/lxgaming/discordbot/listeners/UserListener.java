@@ -18,7 +18,7 @@ public class UserListener extends ListenerAdapter {
 	@Override
 	public void onUserAvatarUpdate(UserAvatarUpdateEvent UAU) {
 		if (userAvatarUpdate == true) {
-			MessageSender.sendMessage(UAU.getUser().getAvatarId(), UAU.getUser().getUsername(), "UserAvatarUpdate", true, true, false);
+			MessageSender.sendMessage(UAU.getUser().getAvatarId(), UAU.getUser().getUsername(), UAU.getUser().getId(), "UserAvatarUpdate", true, true, false);
 		}
 		return;
 	}
@@ -26,7 +26,7 @@ public class UserListener extends ListenerAdapter {
 	@Override
 	public void onUserGameUpdate(UserGameUpdateEvent UGU) {
 		if ((userGameUpdate == true) && !(UGU.getUser().getCurrentGame() == null)) {
-			MessageSender.sendMessage(UGU.getUser().getCurrentGame(), UGU.getUser().getUsername(), "UserGameUpdate", true, true, false);
+			MessageSender.sendMessage(UGU.getUser().getCurrentGame(), UGU.getUser().getUsername(), UGU.getUser().getId(), "UserGameUpdate", true, true, false);
 		}
 		return;
 	}
@@ -34,7 +34,7 @@ public class UserListener extends ListenerAdapter {
 	@Override
 	public void onUserNameUpdate(UserNameUpdateEvent UNU) {
 		if (userNameUpdate == true) {
-			MessageSender.sendMessage(UNU.getUser().getUsername(), UNU.getPreviousUsername(), "UserNameUpdate", true, true, false);
+			MessageSender.sendMessage(UNU.getUser().getUsername(), UNU.getPreviousUsername(), UNU.getUser().getId(), "UserNameUpdate", true, true, false);
 		}
 		return;
 	}
@@ -43,13 +43,13 @@ public class UserListener extends ListenerAdapter {
 	public void onUserOnlineStatusUpdate(UserOnlineStatusUpdateEvent UOSU) {
 		if (userOnlineStatusUpdate == true) {
 			if (UOSU.getUser().getOnlineStatus().toString().equals("ONLINE")) {
-				MessageSender.sendMessage("Online", UOSU.getUser().getUsername(), "UserOnlineStatusUpdate.Online", true, true, false);
+				MessageSender.sendMessage("Online", UOSU.getUser().getUsername(), UOSU.getUser().getId(), "UserOnlineStatusUpdate.Online", true, true, false);
 			}
 			if (UOSU.getUser().getOnlineStatus().toString().equals("AWAY")) {
-				MessageSender.sendMessage("Away", UOSU.getUser().getUsername(), "UserOnlineStatusUpdate.Away", true, true, false);
+				MessageSender.sendMessage("Away", UOSU.getUser().getUsername(), UOSU.getUser().getId(), "UserOnlineStatusUpdate.Away", true, true, false);
 			}
 			if (UOSU.getUser().getOnlineStatus().toString().equals("OFFLINE")) {
-				MessageSender.sendMessage("Offline", UOSU.getUser().getUsername(), "UserOnlineStatusUpdate.Offline", true, true, false);
+				MessageSender.sendMessage("Offline", UOSU.getUser().getUsername(), UOSU.getUser().getId(), "UserOnlineStatusUpdate.Offline", true, true, false);
 			}
 		}
 		return;

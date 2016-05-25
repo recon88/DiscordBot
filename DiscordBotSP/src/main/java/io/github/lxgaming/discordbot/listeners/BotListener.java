@@ -14,7 +14,7 @@ public class BotListener extends ListenerAdapter {
 	
 	@Override
 	public void onDisconnect(DisconnectEvent D) {
-		MessageSender.sendMessage("DiscordBot Disconnected", "", "Disconnet", false, true, true);
+		MessageSender.sendMessage("DiscordBot Disconnected", "", "", "Disconnet", false, true, true);
 		return;
 	}
 	
@@ -30,22 +30,22 @@ public class BotListener extends ListenerAdapter {
 			DiscordBot.api.addEventListener(new MessageListener());
 			DiscordBot.api.addEventListener(new UserListener());
 			DiscordBot.api.addEventListener(new VoiceListener());
-			MessageSender.sendMessage("DiscordBot Connected", "", "Ready", true, true, true);
+			MessageSender.sendMessage("DiscordBot Connected", "", "", "Ready", true, true, true);
 		} else {
-			MessageSender.sendMessage("DiscordBot Connected Not running as Main!", null, "Ready", true, true, true);
+			MessageSender.sendMessage("DiscordBot Connected Not running as Main!", "", "", "Ready", true, true, true);
 		}
 		return;
 	}
 	
 	@Override
 	public void onReconnect(ReconnectedEvent R) {
-		MessageSender.sendMessage("DiscordBot Reconnected", "", "Reconnect", true, true, true);
+		MessageSender.sendMessage("DiscordBot Reconnected", "", "", "Reconnect", true, true, true);
 		return;
 	}
 	
 	@Override
 	public void onShutdown(ShutdownEvent S) {
-		MessageSender.sendMessage("DiscordBot Shutdown", "", "Shutdown", false, false, false);
+		MessageSender.sendMessage("DiscordBot Shutdown", "", "", "Shutdown", false, false, false);
 		return;
 	}
 }

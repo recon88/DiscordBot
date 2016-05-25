@@ -3,6 +3,7 @@ package io.github.lxgaming.discordbot.commands;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import io.github.lxgaming.discordbot.DiscordBot;
 import io.github.lxgaming.discordbot.util.MessageSender;
@@ -21,7 +22,13 @@ public class DiscordChatCommand implements CommandExecutor {
 				for (String arg : args) {
 					message = message + arg + " ";
 				}
-				MessageSender.sendMessage(message, sender.getName(), "Message", true, true, true);
+				
+				if (sender instanceof Player) {
+					Player player = (Player) sender;
+					MessageSender.sendMessage(message, player.getName(), player.getDisplayName(), "Message", true, true, true);
+				} else {
+					MessageSender.sendMessage(message, sender.getName(), sender.getName(), "Message", true, true, true);
+				}
 				return true;
 			}
 			sender.sendMessage(ChatColor.RED + "You do not have permission!");

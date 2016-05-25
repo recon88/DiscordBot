@@ -16,15 +16,15 @@ public class MessageSender {
 	private static Boolean sendDiscord = DiscordBot.config.getBoolean("DiscordBot.Messages.SendDiscord");
 	private static Boolean sendConsole = DiscordBot.config.getBoolean("DiscordBot.Messages.ConsoleOutput");
 	
-	public static void sendMessage(String message, String user, String format, Boolean discord, Boolean ingame, Boolean console) {
+	public static void sendMessage(String message, String user, String usernick, String format, Boolean discord, Boolean ingame, Boolean console) {
 		if (discord == true && sendDiscord == true) {
 			if (!DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".DiscordFormat").equals("") || !DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".DiscordFormat").equals("null")) {
-				sendMessageDiscord(message, user, format);
+				sendMessageDiscord(message, user, usernick, format);
 			}
 		}
 		if (ingame == true && sendInGame == true) {
 			if (!DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".InGameFormat").equals("") || !DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".InGameFormat").equals("null")) {
-				sendMessageInGame(message, user, format);
+				sendMessageInGame(message, user, usernick, format);
 			}
 		}
 		if (console == true && sendConsole == true) {
@@ -36,19 +36,19 @@ public class MessageSender {
 		channel.sendMessage(DiscordBot.messages.getString("DiscordBot." + locale + ".Commands." + group + "." + command).replaceAll("%sender%", author.getUsername()).replaceAll("%number%", number).replaceAll("%name%", name));
 	}
 	
-	private static void sendMessageDiscord(String message, String user, String format) {
+	private static void sendMessageDiscord(String message, String user, String usernick, String format) {
 		try {
-			DiscordBot.api.getTextChannelById(botTextChannel).sendMessage(DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".DiscordFormat").replaceAll("%time%", Date.getTime()).replaceAll("%user%", user).replaceAll("%message%", message));
+			DiscordBot.api.getTextChannelById(botTextChannel).sendMessage(DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".DiscordFormat").replaceAll("%time%", Date.getTime()).replaceAll("%user%", user).replaceAll("%usernick%", usernick).replaceAll("%message%", message).replaceAll("§.", ""));
 		} catch (Exception ex) {
 			DiscordBot.instance.getLogger().severe("Unable to send message!");
 		}
 		return;
 	}
 	
-	private static void sendMessageInGame(String message, String user, String format) {
+	private static void sendMessageInGame(String message, String user, String usernick, String format) {
 		for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
 			if (onlinePlayer.hasPermission("DiscordBot.ReceiveDiscordChat")) {
-				onlinePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".InGameFormat").replaceAll("%time%", Date.getTime()).replace("%user%", user).replaceAll("%message%", message)));
+				onlinePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".InGameFormat").replaceAll("%time%", Date.getTime()).replaceAll("%user%", user).replaceAll("%usernick%", usernick).replaceAll("%message%", message).replaceAll("§", "&")));
 			}
 		}
 		return;

@@ -3,6 +3,7 @@ package io.github.lxgaming.discordbot.commands;
 import io.github.lxgaming.discordbot.DiscordBot;
 import io.github.lxgaming.discordbot.util.MessageSender;
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
 public class DiscordChatCommand extends Command {
@@ -21,7 +22,13 @@ public class DiscordChatCommand extends Command {
 		for (String arg : args) {
 			message = message + arg + " ";
 		}
-		MessageSender.sendMessage(message, sender.getName(), "Message", true, true, true);
+		
+		if (sender instanceof ProxiedPlayer) {
+			ProxiedPlayer player = (ProxiedPlayer) sender;
+			MessageSender.sendMessage(message, player.getName(), player.getDisplayName(), "Message", true, true, true);
+		} else {
+			MessageSender.sendMessage(message, sender.getName(), sender.getName(), "Message", true, true, true);
+		}
 		return;
 	}
 }

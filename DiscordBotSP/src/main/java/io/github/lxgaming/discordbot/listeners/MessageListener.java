@@ -38,7 +38,7 @@ public class MessageListener extends ListenerAdapter {
 		}
 		
 		if (channel.getId().equals(ingameTextChannel) && !author.getId().equals(DiscordBot.api.getSelfInfo().getId())) {
-			MessageSender.sendMessage(message.getContent(), author.getUsername(), "Message", false, true, true);
+			MessageSender.sendMessage(message.getContent(), author.getUsername(), author.getId(), "Message", false, true, true);
 			return;
 		}
 		return;

@@ -24,7 +24,7 @@ public class PlayerEvent implements Listener {
 		}
 		
 		if (playerChat == true && player.hasPermission("DiscordBot.GlobalChat")) {
-			MessageSender.sendMessage(C.getMessage(), player.getName(), "Message", true, false, false);
+			MessageSender.sendMessage(C.getMessage(), player.getName(), player.getDisplayName(), "Message", true, false, false);
 		}
 		return;
 	}
@@ -32,7 +32,7 @@ public class PlayerEvent implements Listener {
 	@EventHandler
 	public void onServerConnect(ServerConnectEvent SC) {
 		if (playerJoin == true) {
-			MessageSender.sendMessage("Joined", SC.getPlayer().getName(), "Player.Join", true, false, false);
+			MessageSender.sendMessage("Joined", SC.getPlayer().getName(), SC.getPlayer().getDisplayName(), "Player.Join", true, false, false);
 		}
 		return;
 	}
@@ -40,7 +40,7 @@ public class PlayerEvent implements Listener {
 	@EventHandler
 	public void onServerDisconnect(ServerDisconnectEvent SD) {
 		if (playerQuit == true) {
-			MessageSender.sendMessage("Quit", SD.getPlayer().getName(), "Player.Quit", true, false, false);
+			MessageSender.sendMessage("Quit", SD.getPlayer().getName(), SD.getPlayer().getDisplayName(), "Player.Quit", true, false, false);
 		}
 		return;
 	}

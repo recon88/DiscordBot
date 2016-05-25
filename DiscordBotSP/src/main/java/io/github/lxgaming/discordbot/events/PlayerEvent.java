@@ -25,7 +25,7 @@ public class PlayerEvent implements Listener {
 		}
 		
 		if (playerChat == true && APC.getPlayer().hasPermission("DiscordBot.GlobalChat")) {
-			MessageSender.sendMessage(APC.getMessage(), APC.getPlayer().getName(), "Message", true, false, false);
+			MessageSender.sendMessage(APC.getMessage(), APC.getPlayer().getName(), APC.getPlayer().getDisplayName(), "Message", true, false, false);
 		}
 		return;
 	}
@@ -33,7 +33,7 @@ public class PlayerEvent implements Listener {
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent PJ) {
 		if (playerJoin == true) {
-			MessageSender.sendMessage("Joined", PJ.getPlayer().getName(), "Player.Join", true, false, false);
+			MessageSender.sendMessage("Joined", PJ.getPlayer().getName(), PJ.getPlayer().getDisplayName(), "Player.Join", true, false, false);
 		}
 		return;
 	}
@@ -41,7 +41,7 @@ public class PlayerEvent implements Listener {
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent PQ) {
 		if (playerQuit == true) {
-			MessageSender.sendMessage("Quit", PQ.getPlayer().getName(), "Player.Quit", true, false, false);
+			MessageSender.sendMessage("Quit", PQ.getPlayer().getName(), PQ.getPlayer().getDisplayName(), "Player.Quit", true, false, false);
 		}
 		return;
 	}
@@ -49,7 +49,7 @@ public class PlayerEvent implements Listener {
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent PD) {
 		if (playerDeath == true) {
-			MessageSender.sendMessage(PD.getDeathMessage(), PD.getEntity().getName(), "Player.Death", true, false, false);
+			MessageSender.sendMessage(PD.getDeathMessage(), PD.getEntity().getName(), PD.getEntity().getDisplayName(), "Player.Death", true, false, false);
 		}
 		return;
 	}

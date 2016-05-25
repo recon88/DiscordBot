@@ -7,6 +7,7 @@ import io.github.lxgaming.discordmusicbot.listeners.MessageListener;
 import io.github.lxgaming.discordmusicbot.util.AudioManager;
 import io.github.lxgaming.discordmusicbot.util.ConsoleOutput;
 import io.github.lxgaming.discordmusicbot.util.Environment;
+import io.github.lxgaming.discordmusicbot.util.ThreadManager;
 import net.dv8tion.jda.JDA;
 import net.dv8tion.jda.JDABuilder;
 
@@ -27,6 +28,8 @@ public class DiscordMusicBot {
 		if (AudioManager.checkDependencies() != true) {
 			System.exit(1);
 		}
+		
+		ThreadManager.Thread();
 		loadDiscord();
 	}
 	
