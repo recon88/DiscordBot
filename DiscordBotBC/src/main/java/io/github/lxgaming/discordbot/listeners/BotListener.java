@@ -14,7 +14,9 @@ public class BotListener extends ListenerAdapter {
 	
 	@Override
 	public void onDisconnect(DisconnectEvent D) {
-		MessageSender.sendMessage("DiscordBot Disconnected", "", "", "Disconnet", false, true, true);
+		if (DiscordBot.config.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
+			MessageSender.sendMessage("DiscordBot Disconnected", "", "", "Disconnet", false, true, true);
+		}
 		return;
 	}
 	
@@ -30,22 +32,30 @@ public class BotListener extends ListenerAdapter {
 			DiscordBot.api.addEventListener(new MessageListener());
 			DiscordBot.api.addEventListener(new UserListener());
 			DiscordBot.api.addEventListener(new VoiceListener());
-			MessageSender.sendMessage("DiscordBot Connected", "", "", "Ready", true, true, true);
+			if (DiscordBot.config.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
+				MessageSender.sendMessage("DiscordBot Connected", "", "", "Ready", true, true, true);
+			}
 		} else {
-			MessageSender.sendMessage("DiscordBot Connected Not running as Main!", "", "", "Ready", true, true, true);
+			if (DiscordBot.config.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
+				MessageSender.sendMessage("DiscordBot Connected Not running as Main!", "", "", "Ready", true, true, true);
+			}
 		}
 		return;
 	}
 	
 	@Override
 	public void onReconnect(ReconnectedEvent R) {
-		MessageSender.sendMessage("DiscordBot Reconnected", "", "", "Reconnect", true, true, true);
+		if (DiscordBot.config.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
+			MessageSender.sendMessage("DiscordBot Reconnected", "", "", "Reconnect", true, true, true);
+		}
 		return;
 	}
 	
 	@Override
 	public void onShutdown(ShutdownEvent S) {
-		MessageSender.sendMessage("DiscordBot Shutdown", "", "", "Shutdown", false, false, false);
+		if (DiscordBot.config.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
+			MessageSender.sendMessage("DiscordBot Shutdown", "", "", "Shutdown", false, false, false);
+		}
 		return;
 	}
 }

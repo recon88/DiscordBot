@@ -1,6 +1,7 @@
 package io.github.lxgaming.discordbot.events;
 
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -17,9 +18,8 @@ public class PlayerEvent implements Listener {
 	private static Boolean playerQuit = DiscordBot.config.getBoolean("DiscordBot.Events.PlayerQuit");
 	private static Boolean playerDeath = DiscordBot.config.getBoolean("DiscordBot.Events.PlayerDeath");
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerChat(AsyncPlayerChatEvent APC) {
-		
 		if (APC.isCancelled()) {
 			return;
 		}
@@ -30,7 +30,7 @@ public class PlayerEvent implements Listener {
 		return;
 	}
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerJoin(PlayerJoinEvent PJ) {
 		if (playerJoin == true) {
 			MessageSender.sendMessage("Joined", PJ.getPlayer().getName(), PJ.getPlayer().getDisplayName(), "Player.Join", true, false, false);
@@ -38,7 +38,7 @@ public class PlayerEvent implements Listener {
 		return;
 	}
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerQuit(PlayerQuitEvent PQ) {
 		if (playerQuit == true) {
 			MessageSender.sendMessage("Quit", PQ.getPlayer().getName(), PQ.getPlayer().getDisplayName(), "Player.Quit", true, false, false);
@@ -46,7 +46,7 @@ public class PlayerEvent implements Listener {
 		return;
 	}
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerDeath(PlayerDeathEvent PD) {
 		if (playerDeath == true) {
 			MessageSender.sendMessage(PD.getDeathMessage(), PD.getEntity().getName(), PD.getEntity().getDisplayName(), "Player.Death", true, false, false);

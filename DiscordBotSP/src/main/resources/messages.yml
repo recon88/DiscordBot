@@ -47,7 +47,7 @@ DiscordBot:
         DiscordFormat: '``Time:`` **%time%** ``User:`` **%user%** ``Voice:`` **%message%**'
     Message:
       InGameFormat: '&6[&cDiscord&6] &f%usernick%: %message%'
-      DiscordFormat: '``User:`` **%usernick%:** %message%'
+      DiscordFormat: '``User:`` **%user%:** %message%'
     Player:
       Join:
         InGameFormat: 'null'
