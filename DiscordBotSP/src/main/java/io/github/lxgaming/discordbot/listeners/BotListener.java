@@ -10,13 +10,13 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 
 public class BotListener extends ListenerAdapter {
 	
-	private static String BOTTEXTCHANNEL = DiscordBot.CONFIG.getString("DiscordBot.TextChannels.Bot");
 	private static String GUILDID = DiscordBot.CONFIG.getString("DiscordBot.Credentials.Guild");
+	private static String BOTTEXTCHANNEL = DiscordBot.CONFIG.getString("DiscordBot.TextChannels.Bot");
 	
 	@Override
 	public void onDisconnect(DisconnectEvent D) {
 		if (DiscordBot.CONFIG.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
-			MessageSender.sendMessage("DiscordBot Disconnected", "", "", "Disconnet", false, true, true);
+			MessageSender.sendMessage("DiscordBot Disconnected", "", "", DiscordBot.API.getGuildById(GUILDID).getName(), "Disconnet", false, true, true);
 		}
 		return;
 	}
@@ -45,11 +45,11 @@ public class BotListener extends ListenerAdapter {
 			DiscordBot.API.addEventListener(new UserListener());
 			DiscordBot.API.addEventListener(new VoiceListener());
 			if (DiscordBot.CONFIG.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
-				MessageSender.sendMessage("DiscordBot Connected", "", "", "Ready", true, true, true);
+				MessageSender.sendMessage("DiscordBot Connected", "", "", DiscordBot.API.getGuildById(GUILDID).getName(), "Ready", true, true, true);
 			}	
 		} else {
 			if (DiscordBot.CONFIG.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
-				MessageSender.sendMessage("DiscordBot Connected Not running as Main!", "", "", "Ready", true, true, true);
+				MessageSender.sendMessage("DiscordBot Connected Not running as Main!", "", "", DiscordBot.API.getGuildById(GUILDID).getName(), "Ready", true, true, true);
 			}
 		}
 		return;
@@ -58,7 +58,7 @@ public class BotListener extends ListenerAdapter {
 	@Override
 	public void onReconnect(ReconnectedEvent R) {
 		if (DiscordBot.CONFIG.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
-			MessageSender.sendMessage("DiscordBot Reconnected", "", "", "Reconnect", true, true, true);
+			MessageSender.sendMessage("DiscordBot Reconnected", "", "", DiscordBot.API.getGuildById(GUILDID).getName(), "Reconnect", true, true, true);
 		}
 		return;
 	}
@@ -66,7 +66,7 @@ public class BotListener extends ListenerAdapter {
 	@Override
 	public void onShutdown(ShutdownEvent S) {
 		if (DiscordBot.CONFIG.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
-			MessageSender.sendMessage("DiscordBot Shutdown", "", "", "Shutdown", false, false, false);
+			MessageSender.sendMessage("DiscordBot Shutdown", "", "", DiscordBot.API.getGuildById(GUILDID).getName(), "Shutdown", false, false, false);
 		}
 		return;
 	}

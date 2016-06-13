@@ -20,9 +20,9 @@ public class DiscordChatCommand implements CommandExecutor {
 				
 				if (SENDER instanceof Player) {
 					Player PLAYER = (Player) SENDER;
-					MessageSender.sendMessage(MESSAGE, PLAYER.getName(), PLAYER.getDisplayName(), "Message", true, true, true);
+					MessageSender.sendMessage(MESSAGE, PLAYER.getName(), PLAYER.getDisplayName(), PLAYER.getServer().getServerName(), "Message", true, true, true);
 				} else {
-					MessageSender.sendMessage(MESSAGE, SENDER.getName(), SENDER.getName(), "Message", true, true, true);
+					MessageSender.sendMessage(MESSAGE, SENDER.getName(), SENDER.getName(), SENDER.getServer().getServerName(), "Message", true, true, true);
 				}
 				return true;
 			}

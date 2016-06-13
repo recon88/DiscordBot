@@ -14,6 +14,7 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 
 public class MessageListener extends ListenerAdapter {
 	
+	private static String GUILDID = DiscordBot.CONFIG.getString("DiscordBot.Credentials.Guild");
 	private static String INGAMETEXTCHANNEL = DiscordBot.CONFIG.getString("DiscordBot.TextChannels.InGame");
 	private static String COMMANDPREFIX = DiscordBot.CONFIG.getString("DiscordBot.Messages.CommandPrefix");
 	private static Boolean MAINBOT = DiscordBot.CONFIG.getBoolean("DiscordBot.Listeners.MainBot");
@@ -38,7 +39,7 @@ public class MessageListener extends ListenerAdapter {
 		}
 		
 		if (CHANNEL.getId().equals(INGAMETEXTCHANNEL) && !AUTHOR.getId().equals(DiscordBot.API.getSelfInfo().getId())) {
-			MessageSender.sendMessage(MESSAGE.getContent(), AUTHOR.getUsername(), AUTHOR.getId(), "Message", false, true, true);
+			MessageSender.sendMessage(MESSAGE.getContent(), AUTHOR.getUsername(), DiscordBot.API.getGuildById(GUILDID).getNicknameForUser(AUTHOR), CHANNEL.getName(), "Message", false, true, true);
 			return;
 		}
 		return;

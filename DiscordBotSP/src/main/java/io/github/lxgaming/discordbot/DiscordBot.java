@@ -23,7 +23,7 @@ public class DiscordBot extends JavaPlugin {
 	public static FileConfiguration CONFIG, MESSAGES;
 	public static File CONFIGFILE, MESSAGESFILE;
 	public static JDA API;
-	public static String DBVERSION = "0.6.0 ('Forest')";
+	public static String DBVERSION = "0.6.1 ('Forest')";
 	public static String APIVERSION = "JDA v2.1.0, Build 293 - Recompiled";
 	
 	@Override

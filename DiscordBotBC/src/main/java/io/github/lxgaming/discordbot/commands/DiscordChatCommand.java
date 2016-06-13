@@ -20,9 +20,9 @@ public class DiscordChatCommand extends Command {
 		
 		if (SENDER instanceof ProxiedPlayer) {
 			ProxiedPlayer PLAYER = (ProxiedPlayer) SENDER;
-			MessageSender.sendMessage(MESSAGE, PLAYER.getName(), PLAYER.getDisplayName(), "Message", true, true, true);
+			MessageSender.sendMessage(MESSAGE, PLAYER.getName(), PLAYER.getDisplayName(), PLAYER.getServer().getInfo().getName(), "Message", true, true, true);
 		} else {
-			MessageSender.sendMessage(MESSAGE, SENDER.getName(), SENDER.getName(), "Message", true, true, true);
+			MessageSender.sendMessage(MESSAGE, SENDER.getName(), SENDER.getName(), SENDER.getName(), "Message", true, true, true);
 		}
 		return;
 	}

@@ -25,7 +25,7 @@ public class PlayerEvent implements Listener {
 		}
 		
 		if (PLAYERCHAT == true && APC.getPlayer().hasPermission("DiscordBot.GlobalChat")) {
-			MessageSender.sendMessage(APC.getMessage(), APC.getPlayer().getName(), APC.getPlayer().getDisplayName(), "Message", true, false, false);
+			MessageSender.sendMessage(APC.getMessage(), APC.getPlayer().getName(), APC.getPlayer().getDisplayName(), APC.getPlayer().getServer().getServerName(), "Message", true, false, false);
 		}
 		return;
 	}
@@ -33,7 +33,7 @@ public class PlayerEvent implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerJoin(PlayerJoinEvent PJ) {
 		if (PLAYERJOIN == true) {
-			MessageSender.sendMessage("Joined", PJ.getPlayer().getName(), PJ.getPlayer().getDisplayName(), "Player.Join", true, false, false);
+			MessageSender.sendMessage("Joined", PJ.getPlayer().getName(), PJ.getPlayer().getDisplayName(), PJ.getPlayer().getServer().getServerName(), "Player.Join", true, false, false);
 		}
 		return;
 	}
@@ -41,7 +41,7 @@ public class PlayerEvent implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerQuit(PlayerQuitEvent PQ) {
 		if (PLAYERQUIT == true) {
-			MessageSender.sendMessage("Quit", PQ.getPlayer().getName(), PQ.getPlayer().getDisplayName(), "Player.Quit", true, false, false);
+			MessageSender.sendMessage("Quit", PQ.getPlayer().getName(), PQ.getPlayer().getDisplayName(), PQ.getPlayer().getServer().getServerName(), "Player.Quit", true, false, false);
 		}
 		return;
 	}
@@ -49,7 +49,7 @@ public class PlayerEvent implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerDeath(PlayerDeathEvent PD) {
 		if (PLAYERDEATH == true) {
-			MessageSender.sendMessage(PD.getDeathMessage(), PD.getEntity().getName(), PD.getEntity().getDisplayName(), "Player.Death", true, false, false);
+			MessageSender.sendMessage(PD.getDeathMessage(), PD.getEntity().getName(), PD.getEntity().getDisplayName(), PD.getEntity().getServer().getServerName(), "Player.Death", true, false, false);
 		}
 		return;
 	}
