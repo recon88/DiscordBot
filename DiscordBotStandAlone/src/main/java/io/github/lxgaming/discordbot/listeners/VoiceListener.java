@@ -9,12 +9,12 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 
 public class VoiceListener extends ListenerAdapter {
 	
-	private String voiceServerDeaf = DiscordBot.config.getString("VoiceServerDeaf");
-	private String voiceServerMute = DiscordBot.config.getString("VoiceServerMute");
+	private String VOICESERVERDEAF = DiscordBot.CONFIG.getString("VoiceServerDeaf");
+	private String VOICESERVERMUTE = DiscordBot.CONFIG.getString("VoiceServerMute");
 	
 	@Override
 	public void onVoiceServerDeaf(VoiceServerDeafEvent VSD) {
-		if (voiceServerDeaf.toLowerCase().equals("true")) {
+		if (VOICESERVERDEAF.toLowerCase().equals("true")) {
 			if (VSD.getVoiceStatus().isServerDeaf() == true) {
 				MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + VSD.getUser().getUsername() + "** ``Voice:`` **Server Deafened**");
 			} else {
@@ -26,7 +26,7 @@ public class VoiceListener extends ListenerAdapter {
 	
 	@Override
 	public void onVoiceServerMute(VoiceServerMuteEvent VSM) {		
-		if (voiceServerMute.toLowerCase().equals("true")) {
+		if (VOICESERVERMUTE.toLowerCase().equals("true")) {
 			if (VSM.getVoiceStatus().isServerMuted() == true) {
 				MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + VSM.getUser().getUsername() + "** ``Voice:`` **Server Muted**");
 			} else {

@@ -10,52 +10,55 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class MessageSender {
 	
-	private static String locale = DiscordBot.config.getString("DiscordBot.Messages.Locale");
-	private static String botTextChannel = DiscordBot.config.getString("DiscordBot.TextChannels.Bot");
-	private static Boolean sendInGame = DiscordBot.config.getBoolean("DiscordBot.Messages.SendInGame");
-	private static Boolean sendDiscord = DiscordBot.config.getBoolean("DiscordBot.Messages.SendDiscord");
-	private static Boolean sendConsole = DiscordBot.config.getBoolean("DiscordBot.Messages.ConsoleOutput");
+	private static String LOCALE = DiscordBot.CONFIG.getString("DiscordBot.Messages.Locale");
+	private static String BOTTEXTCHANNEL = DiscordBot.CONFIG.getString("DiscordBot.TextChannels.Bot");
+	private static Boolean SENDINGAME = DiscordBot.CONFIG.getBoolean("DiscordBot.Messages.SendInGame");
+	private static Boolean SENDDISCORD = DiscordBot.CONFIG.getBoolean("DiscordBot.Messages.SendDiscord");
+	private static Boolean SENDCONSOLE = DiscordBot.CONFIG.getBoolean("DiscordBot.Messages.ConsoleOutput");
 	
-	public static void sendMessage(String message, String user, String usernick, String format, Boolean discord, Boolean ingame, Boolean console) {
-		if (discord == true && sendDiscord == true) {
-			if (!DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".DiscordFormat").equals("") || !DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".DiscordFormat").equals("null")) {
-				sendMessageDiscord(message, user, usernick, format);
+	public static void sendMessage(String MESSAGE, String USER, String USERNICK, String FORMAT, Boolean DISCORD, Boolean INGAME, Boolean CONSOLE) {
+		if (USERNICK == null || USERNICK.equals("")) {
+			USERNICK = USER;
+		}
+		if (DISCORD == true && SENDDISCORD == true) {
+			if (!DiscordBot.MESSAGES.getString("DiscordBot." + LOCALE + "." + FORMAT + ".DiscordFormat").equals("") || !DiscordBot.MESSAGES.getString("DiscordBot." + LOCALE + "." + FORMAT + ".DiscordFormat").equals("null")) {
+				sendMessageDiscord(MESSAGE, USER, USERNICK, FORMAT);
 			}
 		}
-		if (ingame == true && sendInGame == true) {
-			if (!DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".InGameFormat").equals("") || !DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".InGameFormat").equals("null")) {
-				sendMessageInGame(message, user, usernick, format);
+		if (INGAME == true && SENDINGAME == true) {
+			if (!DiscordBot.MESSAGES.getString("DiscordBot." + LOCALE + "." + FORMAT + ".InGameFormat").equals("") || !DiscordBot.MESSAGES.getString("DiscordBot." + LOCALE + "." + FORMAT + ".InGameFormat").equals("null")) {
+				sendMessageInGame(MESSAGE, USER, USERNICK, FORMAT);
 			}
 		}
-		if (console == true && sendConsole == true) {
-			sendMessageConsole(message);
+		if (CONSOLE == true && SENDCONSOLE == true) {
+			sendMessageConsole(MESSAGE);
 		}
 	}
 	
-	public static void sendCommand(TextChannel channel, User author, String group, String command, String number, String name) {
-		channel.sendMessage(DiscordBot.messages.getString("DiscordBot." + locale + ".Commands." + group + "." + command).replaceAll("%sender%", author.getUsername()).replaceAll("%number%", number).replaceAll("%name%", name));
+	public static void sendCommand(TextChannel CHANNEL, User AUTHOR, String GROUP, String COMMAND, String NUMBER, String NAME) {
+		CHANNEL.sendMessage(DiscordBot.MESSAGES.getString("DiscordBot." + LOCALE + ".Commands." + GROUP + "." + COMMAND).replaceAll("%sender%", AUTHOR.getUsername()).replaceAll("%number%", NUMBER).replaceAll("%name%", NAME));
 	}
 	
-	private static void sendMessageDiscord(String message, String user, String usernick, String format) {
+	private static void sendMessageDiscord(String MESSAGE, String USER, String USERNICK, String FORMAT) {
 		try {
-			DiscordBot.api.getTextChannelById(botTextChannel).sendMessage(DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".DiscordFormat").replaceAll("%time%", Date.getTime()).replaceAll("%user%", user).replaceAll("%usernick%", usernick).replaceAll("%message%", message).replaceAll("§.", ""));
+			DiscordBot.API.getTextChannelById(BOTTEXTCHANNEL).sendMessage(DiscordBot.MESSAGES.getString("DiscordBot." + LOCALE + "." + FORMAT + ".DiscordFormat").replaceAll("%time%", Date.getTime()).replaceAll("%user%", USER).replaceAll("%usernick%", USERNICK).replaceAll("%message%", MESSAGE).replaceAll("§.", ""));
 		} catch (Exception ex) {
-			DiscordBot.instance.getLogger().severe("Unable to send message!");
+			DiscordBot.INSTANCE.getLogger().severe("Unable to send message!");
 		}
 		return;
 	}
 	
-	private static void sendMessageInGame(String message, String user, String usernick, String format) {
-		for (ProxiedPlayer onlinePlayer : ProxyServer.getInstance().getPlayers()) {
-			if (onlinePlayer.hasPermission("DiscordBot.ReceiveDiscordChat")) {
-				onlinePlayer.sendMessage(new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".InGameFormat").replaceAll("%time%", Date.getTime()).replaceAll("%user%", user).replaceAll("%usernick%", usernick).replaceAll("%message%", message).replaceAll("§", "&"))).create());
+	private static void sendMessageInGame(String MESSAGE, String USER, String USERNICK, String FORMAT) {
+		for (ProxiedPlayer PLAYER : ProxyServer.getInstance().getPlayers()) {
+			if (PLAYER.hasPermission("DiscordBot.ReceiveDiscordChat")) {
+				PLAYER.sendMessage(new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', DiscordBot.MESSAGES.getString("DiscordBot." + LOCALE + "." + FORMAT + ".InGameFormat").replaceAll("%time%", Date.getTime()).replaceAll("%user%", USER).replaceAll("%usernick%", USERNICK).replaceAll("%message%", MESSAGE).replaceAll("§", "&"))).create());
 			}
 		}
 		return;
 	}
 	
-	private static void sendMessageConsole(String message) {
-		DiscordBot.instance.getLogger().info(message);
+	private static void sendMessageConsole(String MESSAGE) {
+		DiscordBot.INSTANCE.getLogger().info(MESSAGE);
 		return;
 	}
 }

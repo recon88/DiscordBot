@@ -6,19 +6,19 @@ import net.dv8tion.jda.entities.User;
 
 public class BotCommand {
 	
-	public static void bot(TextChannel channel, String command, User author) {
-		if (DiscordBot.messages.getString("DiscordBot." + DiscordBot.config.getString("DiscordBot.Messages.Locale") + ".Commands.Custom." + command) != null) {
-			if (!DiscordBot.messages.getString("DiscordBot." + DiscordBot.config.getString("DiscordBot.Messages.Locale") + ".Commands.Custom." + command).equals("")) {
-				channel.sendMessage(DiscordBot.messages.getString("DiscordBot." + DiscordBot.config.getString("DiscordBot.Messages.Locale") + ".Commands.Custom." + command));
+	public static void bot(TextChannel CHANNEL, String COMMAND, User AUTHOR) {
+		if (DiscordBot.MESSAGES.getString("DiscordBot." + DiscordBot.CONFIG.getString("DiscordBot.Messages.Locale") + ".Commands.Custom." + COMMAND) != null) {
+			if (!DiscordBot.MESSAGES.getString("DiscordBot." + DiscordBot.CONFIG.getString("DiscordBot.Messages.Locale") + ".Commands.Custom." + COMMAND).equals("")) {
+				CHANNEL.sendMessage(DiscordBot.MESSAGES.getString("DiscordBot." + DiscordBot.CONFIG.getString("DiscordBot.Messages.Locale") + ".Commands.Custom." + COMMAND));
 			}
 		}
 		
-		if (command.equalsIgnoreCase(DiscordBot.messages.getString("DiscordBot." + DiscordBot.config.getString("DiscordBot.Messages.Locale") + ".Commands.Bot.BotInfo"))) {
-			channel.sendMessage("DiscordBot - Bungeecord Edition, Version " + DiscordBot.dbversion + ", Created by LX_Gaming\nAPI - " + DiscordBot.apiversion);
+		if (COMMAND.equalsIgnoreCase(DiscordBot.MESSAGES.getString("DiscordBot." + DiscordBot.CONFIG.getString("DiscordBot.Messages.Locale") + ".Commands.Bot.BotInfo"))) {
+			CHANNEL.sendMessage("DiscordBot - Bungeecord Edition, Version " + DiscordBot.DBVERSION + ", Created by LX_Gaming\nAPI - " + DiscordBot.APIVERSION);
 		}
 		
-		if (command.equalsIgnoreCase(DiscordBot.messages.getString("DiscordBot." + DiscordBot.config.getString("DiscordBot.Messages.Locale") + ".Commands.Bot.Website"))) {
-			channel.sendMessage("*http://lxgaming.github.io/*");
+		if (COMMAND.equalsIgnoreCase(DiscordBot.MESSAGES.getString("DiscordBot." + DiscordBot.CONFIG.getString("DiscordBot.Messages.Locale") + ".Commands.Bot.Website"))) {
+			CHANNEL.sendMessage("*http://lxgaming.github.io/*");
 		}
 		return;
 	}

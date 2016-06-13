@@ -13,10 +13,10 @@ import io.github.lxgaming.discordbot.util.MessageSender;
 
 public class PlayerEvent implements Listener {
 	
-	private static Boolean playerChat = DiscordBot.config.getBoolean("DiscordBot.Events.PlayerChat");
-	private static Boolean playerJoin = DiscordBot.config.getBoolean("DiscordBot.Events.PlayerJoin");
-	private static Boolean playerQuit = DiscordBot.config.getBoolean("DiscordBot.Events.PlayerQuit");
-	private static Boolean playerDeath = DiscordBot.config.getBoolean("DiscordBot.Events.PlayerDeath");
+	private static Boolean PLAYERCHAT = DiscordBot.CONFIG.getBoolean("DiscordBot.Events.PlayerChat");
+	private static Boolean PLAYERJOIN = DiscordBot.CONFIG.getBoolean("DiscordBot.Events.PlayerJoin");
+	private static Boolean PLAYERQUIT = DiscordBot.CONFIG.getBoolean("DiscordBot.Events.PlayerQuit");
+	private static Boolean PLAYERDEATH = DiscordBot.CONFIG.getBoolean("DiscordBot.Events.PlayerDeath");
 	
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerChat(AsyncPlayerChatEvent APC) {
@@ -24,7 +24,7 @@ public class PlayerEvent implements Listener {
 			return;
 		}
 		
-		if (playerChat == true && APC.getPlayer().hasPermission("DiscordBot.GlobalChat")) {
+		if (PLAYERCHAT == true && APC.getPlayer().hasPermission("DiscordBot.GlobalChat")) {
 			MessageSender.sendMessage(APC.getMessage(), APC.getPlayer().getName(), APC.getPlayer().getDisplayName(), "Message", true, false, false);
 		}
 		return;
@@ -32,7 +32,7 @@ public class PlayerEvent implements Listener {
 	
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerJoin(PlayerJoinEvent PJ) {
-		if (playerJoin == true) {
+		if (PLAYERJOIN == true) {
 			MessageSender.sendMessage("Joined", PJ.getPlayer().getName(), PJ.getPlayer().getDisplayName(), "Player.Join", true, false, false);
 		}
 		return;
@@ -40,7 +40,7 @@ public class PlayerEvent implements Listener {
 	
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerQuit(PlayerQuitEvent PQ) {
-		if (playerQuit == true) {
+		if (PLAYERQUIT == true) {
 			MessageSender.sendMessage("Quit", PQ.getPlayer().getName(), PQ.getPlayer().getDisplayName(), "Player.Quit", true, false, false);
 		}
 		return;
@@ -48,7 +48,7 @@ public class PlayerEvent implements Listener {
 	
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerDeath(PlayerDeathEvent PD) {
-		if (playerDeath == true) {
+		if (PLAYERDEATH == true) {
 			MessageSender.sendMessage(PD.getDeathMessage(), PD.getEntity().getName(), PD.getEntity().getDisplayName(), "Player.Death", true, false, false);
 		}
 		return;

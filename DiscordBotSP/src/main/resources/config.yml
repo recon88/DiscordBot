@@ -3,6 +3,8 @@ DiscordBot:
     # Information on how to get a BotToken below
     # https://www.spigotmc.org/resources/discordbot-bungeecord-edition.19347/update?update=85962
     BotToken: ''
+    # Must be your Discord Channel ID. (The Bot will automatically set this if left blank).
+    Guild: ''
   TextChannels:
     # These Must be IDs From Discord
     # Leaving Bot Blank will cause the plugin to output all TextChannels and their IDs into Console

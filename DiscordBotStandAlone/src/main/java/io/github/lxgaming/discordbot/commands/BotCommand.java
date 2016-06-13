@@ -7,76 +7,76 @@ import net.dv8tion.jda.entities.User;
 
 public class BotCommand {
 	
-	private static String commandPrefix = DiscordBot.config.getString("CommandPrefix");
+	private static String COMMANDPREFIX = DiscordBot.CONFIG.getString("CommandPrefix");
 	
-	public static void bot(TextChannel channel, String command, User author) {
-		if (command.equalsIgnoreCase("ping")) {
-			channel.sendMessage("Pong!");
+	public static void bot(TextChannel CHANNEL, String COMMAND, User AUTHOR) {
+		if (COMMAND.equalsIgnoreCase("ping")) {
+			CHANNEL.sendMessage("Pong!");
 		}
 		
-		if (command.equalsIgnoreCase("botinfo")) {
-			channel.sendMessage("DiscordStandAlone, Version " + DiscordBot.dbversion + ", Created by LX_Gaming\nAPI - " + DiscordBot.apiversion + "\nOS - " + EnvironmentManager.getOS() + ", Java - " + EnvironmentManager.getJavaVersion());
+		if (COMMAND.equalsIgnoreCase("botinfo")) {
+			CHANNEL.sendMessage("DiscordStandAlone, Version " + DiscordBot.DBVERSION + ", Created by LX_Gaming\nAPI - " + DiscordBot.APIVERSION + "\nOS - " + EnvironmentManager.getOS() + ", Java - " + EnvironmentManager.getJavaVersion());
 		}
 		
-		if (command.equalsIgnoreCase("restartbot")) {
-			if (author.getId().equals(DiscordBot.config.getString("OwnerID"))) {
-				channel.sendMessage("Attempting Restart...");
+		if (COMMAND.equalsIgnoreCase("restartbot")) {
+			if (AUTHOR.getId().equals(DiscordBot.CONFIG.getString("OwnerID"))) {
+				CHANNEL.sendMessage("Attempting Restart...");
 				EnvironmentManager.restartBot();
 				return;
 			}
-			channel.sendMessage("You are not permitted to use this command!");
+			CHANNEL.sendMessage("You are not permitted to use this command!");
 		}
 		
-		if (command.equalsIgnoreCase("request")) {
-			channel.sendMessage("*https://trello.com/c/DGx9tron* \nComment with your Request!");
+		if (COMMAND.equalsIgnoreCase("request")) {
+			CHANNEL.sendMessage("*https://trello.com/c/DGx9tron* \nComment with your Request!");
 		}
 		
-		if (command.equalsIgnoreCase("website")) {
-			channel.sendMessage("*http://lxgaming.github.io/*");
+		if (COMMAND.equalsIgnoreCase("website")) {
+			CHANNEL.sendMessage("*http://lxgaming.github.io/*");
 		}
 		
-		if (command.startsWith("bothelp")) {
-			String helpOption = command.substring(7).trim();
-			if (helpOption.equalsIgnoreCase("bot")) {
-				channel.sendMessage(""
-						+ "`" + commandPrefix + "ping`\n" 
+		if (COMMAND.startsWith("bothelp")) {
+			String HELPOPTION = COMMAND.substring(7).trim();
+			if (HELPOPTION.equalsIgnoreCase("bot")) {
+				CHANNEL.sendMessage(""
+						+ "`" + COMMANDPREFIX + "ping`\n" 
 						+ "		Ping the bot.\n"
-						+ "`" + commandPrefix + "botinfo`\n" 
+						+ "`" + COMMANDPREFIX + "botinfo`\n" 
 						+ "		Display bot information.\n"
-						+ "`" + commandPrefix + "request`\n" 
+						+ "`" + COMMANDPREFIX + "request`\n" 
 						+ "		Request a feature.\n"
-						+ "`" + commandPrefix + "website`\n" 
+						+ "`" + COMMANDPREFIX + "website`\n" 
 						+ "		Link to LX's website.\n");
 				return;
-			} else if (helpOption.equalsIgnoreCase("fun")) {
-				channel.sendMessage(""
-						+ "`" + commandPrefix + "number`\n" 
+			} else if (HELPOPTION.equalsIgnoreCase("fun")) {
+				CHANNEL.sendMessage(""
+						+ "`" + COMMANDPREFIX + "number`\n" 
 						+ "		What's your lucky number?\n"
-						+ "`" + commandPrefix + "roll`\n" 
+						+ "`" + COMMANDPREFIX + "roll`\n" 
 						+ "		Roll the dice.\n"
-						+ "`" + commandPrefix + "coin`\n" 
+						+ "`" + COMMANDPREFIX + "coin`\n" 
 						+ "		Flip a coin.\n"
-						+ "`" + commandPrefix + "version`\n" 
+						+ "`" + COMMANDPREFIX + "version`\n" 
 						+ "		All the versions.\n");
 				return;
-			} else if (helpOption.equalsIgnoreCase("love")) {
-				channel.sendMessage(""
-						+ "`" + commandPrefix + "kiss`\n" 
+			} else if (HELPOPTION.equalsIgnoreCase("love")) {
+				CHANNEL.sendMessage(""
+						+ "`" + COMMANDPREFIX + "kiss`\n" 
 						+ "		Kiss your loved one.\n"
-						+ "`" + commandPrefix + "hug`\n" 
+						+ "`" + COMMANDPREFIX + "hug`\n" 
 						+ "		Embrace another.\n"
-						+ "`" + commandPrefix + "slap`\n" 
+						+ "`" + COMMANDPREFIX + "slap`\n" 
 						+ "		Slap a user!\n"
-						+ "`" + commandPrefix + "lick`\n" 
+						+ "`" + COMMANDPREFIX + "lick`\n" 
 						+ "		Claim it as yours!\n");
 				return;
 			} else {
-				channel.sendMessage(""
-						+ "`" + commandPrefix + "bothelp bot`\n" 
+				CHANNEL.sendMessage(""
+						+ "`" + COMMANDPREFIX + "bothelp bot`\n" 
 						+ "		List bot commands.\n"
-						+ "`" + commandPrefix + "bothelp fun`\n" 
+						+ "`" + COMMANDPREFIX + "bothelp fun`\n" 
 						+ "		List fun commands.\n"
-						+ "`" + commandPrefix + "bothelp love`\n" 
+						+ "`" + COMMANDPREFIX + "bothelp love`\n" 
 						+ "		List love commands.\n");
 			}
 		}

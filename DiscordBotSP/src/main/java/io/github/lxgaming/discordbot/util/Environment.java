@@ -6,11 +6,11 @@ import org.bukkit.entity.Player;
 public class Environment {
 	
 	public static String getPlayers() {
-		String onlineplayers = "";
-		for (Player player : Bukkit.getOnlinePlayers()) {
-			onlineplayers = onlineplayers + player.getName() + ", ";
+		String ONLINEPLAYERS = "";
+		for (Player PLAYER : Bukkit.getOnlinePlayers()) {
+			ONLINEPLAYERS = ONLINEPLAYERS + PLAYER.getName() + ", ";
 		}
-		return onlineplayers.trim();
+		return ONLINEPLAYERS.trim();
 	}
 	
 	public static String getServerName() {

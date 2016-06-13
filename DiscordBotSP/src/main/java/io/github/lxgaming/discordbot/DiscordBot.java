@@ -19,38 +19,39 @@ import net.dv8tion.jda.JDABuilder;
 
 public class DiscordBot extends JavaPlugin {
 	
-	public static DiscordBot instance;
-	public static FileConfiguration config, messages;
-	public static JDA api;
-	public static String dbversion = "0.5.6 ('East')";
-	public static String apiversion = "JDA v2.0.0, Build 242 - Recompiled";
+	public static DiscordBot INSTANCE;
+	public static FileConfiguration CONFIG, MESSAGES;
+	public static File CONFIGFILE, MESSAGESFILE;
+	public static JDA API;
+	public static String DBVERSION = "0.6.0 ('Forest')";
+	public static String APIVERSION = "JDA v2.1.0, Build 293 - Recompiled";
 	
 	@Override
 	public void onEnable() {
-		instance = this;
+		INSTANCE = this;
 		loadConfig();
 		this.getCommand("discordbot").setExecutor(new DiscordBotCommand());
 		this.getCommand("discordchat").setExecutor(new DiscordChatCommand());
 		this.getCommand("dcc").setExecutor(new DiscordChatCommand());
-		PluginManager pm = getServer().getPluginManager();
-		pm.registerEvents(new PlayerEvent(), this);
+		PluginManager PM = getServer().getPluginManager();
+		PM.registerEvents(new PlayerEvent(), this);
 		loadDiscord();
 		getLogger().info("DiscordBot has started!");
 	}
 	
 	@Override
 	public void onDisable() {
-		instance = null;
-		if (api != null) {
-			api.shutdown(true);
+		INSTANCE = null;
+		if (API != null) {
+			API.shutdown(true);
 		}
 		getLogger().info("DiscordBot has stopped!");
 	}
 	
 	public void loadDiscord() {
 		try {
-			api = new JDABuilder()
-					.setBotToken(config.getString("DiscordBot.Credentials.BotToken"))
+			API = new JDABuilder()
+					.setBotToken(CONFIG.getString("DiscordBot.Credentials.BotToken"))
 					.addListener(new BotListener())
 					.setAudioEnabled(false)
 					.buildAsync();
@@ -64,37 +65,37 @@ public class DiscordBot extends JavaPlugin {
 		if (!getDataFolder().exists()) {
 			getDataFolder().mkdir();
 		}
-		File configFile = new File(getDataFolder(), "config.yml");
-		File messagesFile = new File(getDataFolder(), "messages.yml");
-		if (!configFile.exists()) {
-			copy(getResource("config.yml"), configFile);
+		CONFIGFILE = new File(getDataFolder(), "config.yml");
+		MESSAGESFILE = new File(getDataFolder(), "messages.yml");
+		if (!CONFIGFILE.exists()) {
+			copy(getResource("config.yml"), CONFIGFILE);
 			getLogger().info("Config file created.");
 		}
-		if (!messagesFile.exists()) {
-			copy(getResource("messages.yml"), messagesFile);
+		if (!MESSAGESFILE.exists()) {
+			copy(getResource("messages.yml"), MESSAGESFILE);
 			getLogger().info("Messages file created.");
 		}
-		config = new YamlConfiguration();
-		messages = new YamlConfiguration();
+		CONFIG = new YamlConfiguration();
+		MESSAGES = new YamlConfiguration();
 		try {
-			config.load(configFile);
-			messages.load(messagesFile);
+			CONFIG.load(CONFIGFILE);
+			MESSAGES.load(MESSAGESFILE);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			getLogger().severe("Failed to load files!");
 		}
 	}
 	
-	public void copy(InputStream in, File file) {
+	public void copy(InputStream IN, File FILE) {
 		try {
-			OutputStream out = new FileOutputStream(file);
-			byte[] buf = new byte[1024];
-			int len;
-			while ((len = in.read(buf)) > 0) {
-				out.write(buf, 0, len);
+			OutputStream OUT = new FileOutputStream(FILE);
+			byte[] BUF = new byte[1024];
+			int LEN;
+			while ((LEN = IN.read(BUF)) > 0) {
+				OUT.write(BUF, 0, LEN);
 			}
-			out.close();
-			in.close();
+			OUT.close();
+			IN.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			getLogger().severe("Failed to save files!");

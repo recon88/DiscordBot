@@ -14,31 +14,31 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 
 public class MessageListener extends ListenerAdapter {
 	
-	private static String ingameTextChannel = DiscordBot.config.getString("DiscordBot.TextChannels.InGame");
-	private static String commandPrefix = DiscordBot.config.getString("DiscordBot.Messages.CommandPrefix");
-	private static Boolean mainBot = DiscordBot.config.getBoolean("DiscordBot.Listeners.MainBot");
+	private static String INGAMETEXTCHANNEL = DiscordBot.CONFIG.getString("DiscordBot.TextChannels.InGame");
+	private static String COMMANDPREFIX = DiscordBot.CONFIG.getString("DiscordBot.Messages.CommandPrefix");
+	private static Boolean MAINBOT = DiscordBot.CONFIG.getBoolean("DiscordBot.Listeners.MainBot");
 	
 	@Override
 	public void onMessageReceived(MessageReceivedEvent MR) {
-		TextChannel channel = MR.getTextChannel();
-		Message message = MR.getMessage();
-		User author = MR.getAuthor();
+		TextChannel CHANNEL = MR.getTextChannel();
+		Message MESSAGE = MR.getMessage();
+		User AUTHOR = MR.getAuthor();
 		
 		if (MR.isPrivate()) {
 			return;
 		}
 		
-		if ((message.getContent().startsWith(commandPrefix) || message.getContent().startsWith("/")) && (!author.getId().equals(DiscordBot.api.getSelfInfo().getId()) && mainBot == true)) {
-			String command = message.getContent().substring(commandPrefix.length());
-			BotCommand.bot(channel, command, author);
-			FunCommand.fun(channel, command, author);
-			LoveCommand.love(channel, command, author);
-			ServerCommand.server(channel, command, author);
+		if ((MESSAGE.getContent().startsWith(COMMANDPREFIX) || MESSAGE.getContent().startsWith("/")) && (!AUTHOR.getId().equals(DiscordBot.API.getSelfInfo().getId()) && MAINBOT == true)) {
+			String COMMAND = MESSAGE.getContent().substring(COMMANDPREFIX.length());
+			BotCommand.bot(CHANNEL, COMMAND, AUTHOR);
+			FunCommand.fun(CHANNEL, COMMAND, AUTHOR);
+			LoveCommand.love(CHANNEL, COMMAND, AUTHOR);
+			ServerCommand.server(CHANNEL, COMMAND, AUTHOR);
 			return;
 		}
 		
-		if (channel.getId().equals(ingameTextChannel) && !author.getId().equals(DiscordBot.api.getSelfInfo().getId())) {
-			MessageSender.sendMessage(message.getContent(), author.getUsername(), author.getId(), "Message", false, true, true);
+		if (CHANNEL.getId().equals(INGAMETEXTCHANNEL) && !AUTHOR.getId().equals(DiscordBot.API.getSelfInfo().getId())) {
+			MessageSender.sendMessage(MESSAGE.getContent(), AUTHOR.getUsername(), AUTHOR.getId(), "Message", false, true, true);
 			return;
 		}
 		return;

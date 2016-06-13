@@ -11,13 +11,13 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 
 public class UserListener extends ListenerAdapter {
 	
-	private String userAvatarUpdate = DiscordBot.config.getString("UserAvatarUpdate");
-	private String userGameUpdate = DiscordBot.config.getString("UserGameUpdate");
-	private String userNameUpdate = DiscordBot.config.getString("UserNameUpdate");
-	private String userOnlineStatusUpdate = DiscordBot.config.getString("UserOnlineStatusUpdate");
+	private String USERAVATARUPDATE = DiscordBot.CONFIG.getString("UserAvatarUpdate");
+	private String USERGAMEUPDATE = DiscordBot.CONFIG.getString("UserGameUpdate");
+	private String USERNAMEUPDATE = DiscordBot.CONFIG.getString("UserNameUpdate");
+	private String USERONLINESTATUSUPDATE = DiscordBot.CONFIG.getString("UserOnlineStatusUpdate");
 	@Override
 	public void onUserAvatarUpdate(UserAvatarUpdateEvent UAU) {
-		if (userAvatarUpdate.toLowerCase().equals("true")) {
+		if (USERAVATARUPDATE.toLowerCase().equals("true")) {
 			MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UAU.getUser().getUsername() + "** ``New Avatar:`` **" + UAU.getUser().getAvatarId() + "**");
 		}
 		return;
@@ -25,7 +25,7 @@ public class UserListener extends ListenerAdapter {
 	
 	@Override
 	public void onUserGameUpdate(UserGameUpdateEvent UGU) {
-		if (userGameUpdate.toLowerCase().equals("true") &&!(UGU.getUser().getCurrentGame() == null)) {
+		if (USERGAMEUPDATE.toLowerCase().equals("true") &&!(UGU.getUser().getCurrentGame() == null)) {
 			MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UGU.getUser().getUsername() + "** ``Game:`` **" + UGU.getUser().getCurrentGame() + "**");
 		}
 		return;
@@ -33,7 +33,7 @@ public class UserListener extends ListenerAdapter {
 	
 	@Override
 	public void onUserNameUpdate(UserNameUpdateEvent UNU) {
-		if (userNameUpdate.toLowerCase().equals("true")) {
+		if (USERNAMEUPDATE.toLowerCase().equals("true")) {
 			MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UNU.getPreviousUsername() + "** ``New name:`` **" + UNU.getUser().getUsername() + "**");
 		}
 		return;
@@ -41,7 +41,7 @@ public class UserListener extends ListenerAdapter {
 	
 	@Override
 	public void onUserOnlineStatusUpdate(UserOnlineStatusUpdateEvent UOSU) {
-		if (userOnlineStatusUpdate.toLowerCase().equals("true")) {
+		if (USERONLINESTATUSUPDATE.toLowerCase().equals("true")) {
 			if (UOSU.getUser().getOnlineStatus().toString().equals("ONLINE")) {
 				MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UOSU.getUser().getUsername() + "** ``Status:`` **Online**");
 			}

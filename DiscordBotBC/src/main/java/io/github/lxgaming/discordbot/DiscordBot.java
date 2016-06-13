@@ -21,15 +21,16 @@ import net.md_5.bungee.config.YamlConfiguration;
 
 public class DiscordBot extends Plugin {
 	
-	public static DiscordBot instance;
-	public static Configuration config, messages;
-	public static JDA api;
-	public static String dbversion = "0.5.6 ('East')";
-	public static String apiversion = "JDA v2.0.0, Build 242 - Recompiled";
+	public static DiscordBot INSTANCE;
+	public static Configuration CONFIG, MESSAGES;
+	public static File CONFIGFILE, MESSAGESFILE;
+	public static JDA API;
+	public static String DBVERSION = "0.6.0 ('Forest')";
+	public static String APIVERSION = "JDA v2.1.0, Build 293 - Recompiled";
 	
 	@Override
 	public void onEnable() {
-		instance = this;
+		INSTANCE = this;
 		loadConfig();
 		getProxy().getPluginManager().registerCommand(this, new DiscordBotCommand());
 		getProxy().getPluginManager().registerCommand(this, new DiscordChatCommand());
@@ -39,9 +40,9 @@ public class DiscordBot extends Plugin {
 	
 	@Override
 	public void onDisable() {
-		instance = null;
-		if (api != null) {
-			api.shutdown(true);
+		INSTANCE = null;
+		if (API != null) {
+			API.shutdown(true);
 		}
 	}
 	
@@ -50,8 +51,8 @@ public class DiscordBot extends Plugin {
 			@Override
 			public void run() {
 				try {
-					api = new JDABuilder()
-							.setBotToken(config.getString("DiscordBot.Credentials.BotToken"))
+					API = new JDABuilder()
+							.setBotToken(CONFIG.getString("DiscordBot.Credentials.BotToken"))
 							.addListener(new BotListener())
 							.setAudioEnabled(false)
 							.buildAsync();
@@ -67,13 +68,13 @@ public class DiscordBot extends Plugin {
 		if (!getDataFolder().exists()) {
 			getDataFolder().mkdir();
 		}
-		File configFile = new File(getDataFolder(), "config.yml");
-		File messagesFile = new File(getDataFolder(), "messages.yml");
-		if (!configFile.exists()) {
+		CONFIGFILE = new File(getDataFolder(), "config.yml");
+		MESSAGESFILE = new File(getDataFolder(), "messages.yml");
+		if (!CONFIGFILE.exists()) {
 			try {
-				configFile.createNewFile();
-				try (InputStream is = getResourceAsStream("config.yml"); OutputStream os = new FileOutputStream(configFile)) {
-					ByteStreams.copy(is, os);
+				CONFIGFILE.createNewFile();
+				try (InputStream IS = getResourceAsStream("config.yml"); OutputStream OS = new FileOutputStream(CONFIGFILE)) {
+					ByteStreams.copy(IS, OS);
 					getLogger().info("Config file created!");
 				}
 			} catch (IOException ex) {
@@ -81,11 +82,11 @@ public class DiscordBot extends Plugin {
 			}
 		}
 		
-		if (!messagesFile.exists()) {
+		if (!MESSAGESFILE.exists()) {
 			try {
-				messagesFile.createNewFile();
-				try (InputStream is = getResourceAsStream("messages.yml"); OutputStream os = new FileOutputStream(messagesFile)) {
-					ByteStreams.copy(is, os);
+				MESSAGESFILE.createNewFile();
+				try (InputStream IS = getResourceAsStream("messages.yml"); OutputStream OS = new FileOutputStream(MESSAGESFILE)) {
+					ByteStreams.copy(IS, OS);
 					getLogger().info("Messages file created!");
 				}
 			} catch (IOException ex) {
@@ -93,8 +94,8 @@ public class DiscordBot extends Plugin {
 			}
 		}
 		try {
-			config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(configFile);
-			messages = ConfigurationProvider.getProvider(YamlConfiguration.class).load(messagesFile);
+			CONFIG = ConfigurationProvider.getProvider(YamlConfiguration.class).load(CONFIGFILE);
+			MESSAGES = ConfigurationProvider.getProvider(YamlConfiguration.class).load(MESSAGESFILE);
 		} catch (IOException ex) {
 			getLogger().severe("Error while loading files!");
 		}
@@ -103,8 +104,8 @@ public class DiscordBot extends Plugin {
 	
 	private void saveConfig() {
 		try {
-			ConfigurationProvider.getProvider(YamlConfiguration.class).save(config, new File(getDataFolder(), "config.yml"));
-			ConfigurationProvider.getProvider(YamlConfiguration.class).save(messages, new File(getDataFolder(), "messages.yml"));
+			ConfigurationProvider.getProvider(YamlConfiguration.class).save(CONFIG, CONFIGFILE);
+			ConfigurationProvider.getProvider(YamlConfiguration.class).save(MESSAGES, MESSAGESFILE);
 		} catch (IOException ex) {
 			getLogger().severe("Error while saving files!");
 		}

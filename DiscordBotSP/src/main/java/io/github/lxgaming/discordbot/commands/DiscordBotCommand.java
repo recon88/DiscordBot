@@ -9,19 +9,19 @@ import io.github.lxgaming.discordbot.DiscordBot;
 
 public class DiscordBotCommand implements CommandExecutor {
 	
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (cmd.getName().equalsIgnoreCase("discordbot")) {
-			sender.sendMessage(ChatColor.GOLD + "===== " + ChatColor.GREEN + "DiscordBot - Spigot Edition" + ChatColor.GOLD + " ===== ");
-			sender.sendMessage(ChatColor.GOLD + "- " + ChatColor.AQUA + "Version " + DiscordBot.dbversion);
-			sender.sendMessage(ChatColor.GOLD + "- " + ChatColor.AQUA + "API " + DiscordBot.apiversion);
-			sender.sendMessage(ChatColor.GOLD + "- " + ChatColor.AQUA + "Author - LX_Gaming");
-			sender.sendMessage(ChatColor.GOLD + "===== " + ChatColor.GREEN + "Commands" + ChatColor.GOLD + " ===== ");
-			sender.sendMessage(ChatColor.GOLD + "- " + ChatColor.AQUA + "/discordbot");
-			sender.sendMessage(ChatColor.GOLD + "- " + ChatColor.AQUA + "/discordchat + /dcc");
-			sender.sendMessage(ChatColor.GOLD + "===== " + ChatColor.GREEN + "Permissions" + ChatColor.GOLD + " ===== ");
-			sender.sendMessage(ChatColor.GOLD + "- " + ChatColor.AQUA + "DiscordBot.CommandChat");
-			sender.sendMessage(ChatColor.GOLD + "- " + ChatColor.AQUA + "DiscordBot.GlobalChat");
-			sender.sendMessage(ChatColor.GOLD + "- " + ChatColor.AQUA + "DiscordBot.ReceiveDiscordChat");
+	public boolean onCommand(CommandSender SENDER, Command CMD, String LABEL, String[] ARGS) {
+		if (CMD.getName().equalsIgnoreCase("discordbot")) {
+			SENDER.sendMessage(ChatColor.GOLD + "===== " + ChatColor.GREEN + "DiscordBot - Spigot Edition" + ChatColor.GOLD + " ===== ");
+			SENDER.sendMessage(ChatColor.GOLD + "- " + ChatColor.AQUA + "Version " + DiscordBot.DBVERSION);
+			SENDER.sendMessage(ChatColor.GOLD + "- " + ChatColor.AQUA + "API " + DiscordBot.APIVERSION);
+			SENDER.sendMessage(ChatColor.GOLD + "- " + ChatColor.AQUA + "Author - LX_Gaming");
+			SENDER.sendMessage(ChatColor.GOLD + "===== " + ChatColor.GREEN + "Commands" + ChatColor.GOLD + " ===== ");
+			SENDER.sendMessage(ChatColor.GOLD + "- " + ChatColor.AQUA + "/discordbot");
+			SENDER.sendMessage(ChatColor.GOLD + "- " + ChatColor.AQUA + "/discordchat + /dcc");
+			SENDER.sendMessage(ChatColor.GOLD + "===== " + ChatColor.GREEN + "Permissions" + ChatColor.GOLD + " ===== ");
+			SENDER.sendMessage(ChatColor.GOLD + "- " + ChatColor.AQUA + "DiscordBot.CommandChat");
+			SENDER.sendMessage(ChatColor.GOLD + "- " + ChatColor.AQUA + "DiscordBot.GlobalChat");
+			SENDER.sendMessage(ChatColor.GOLD + "- " + ChatColor.AQUA + "DiscordBot.ReceiveDiscordChat");
 			return true;
 		}
 		return false;

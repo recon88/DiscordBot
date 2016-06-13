@@ -8,17 +8,17 @@ import org.json.JSONObject;
 
 public class Configuration {
 	
-	public static File config = new File("config.json");
+	public static File CONFIG = new File("config.json");
 	
 	public static JSONObject loadConfig() {
-		if (!config.exists()) {
+		if (!CONFIG.exists()) {
 			saveConfig();
 		}
 		
 		try {
-			JSONObject object = new JSONObject(new String(Files.readAllBytes(Paths.get(config.getPath())), "UTF-8"));
+			JSONObject OBJECT = new JSONObject(new String(Files.readAllBytes(Paths.get(CONFIG.getPath())), "UTF-8"));
 			System.out.println("Loaded config.");
-			return object;
+			return OBJECT;
 		} catch (Exception ex) {
 			System.out.println("Failed to load config!");
 		}
@@ -27,7 +27,7 @@ public class Configuration {
 	
 	private static void saveConfig() {
 		try {
-			Files.write(Paths.get(config.getPath()), new JSONObject()
+			Files.write(Paths.get(CONFIG.getPath()), new JSONObject()
 					.put("BotToken", "")
 					.put("BotChannel", "")
 					.put("OwnerID", "")

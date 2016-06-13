@@ -6,11 +6,11 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 public class Environment {
 	
 	public static String getPlayers() {
-		String onlineplayers = "";
-		for (ProxiedPlayer player : ProxyServer.getInstance().getPlayers()) {
-			onlineplayers = onlineplayers + player.getName() + ", ";
+		String ONLINEPLAYERS = "";
+		for (ProxiedPlayer PLAYER : ProxyServer.getInstance().getPlayers()) {
+			ONLINEPLAYERS = ONLINEPLAYERS + PLAYER.getName() + ", ";
 		}
-		return onlineplayers.trim();
+		return ONLINEPLAYERS.trim();
 	}
 	
 	public static String getServerName() {

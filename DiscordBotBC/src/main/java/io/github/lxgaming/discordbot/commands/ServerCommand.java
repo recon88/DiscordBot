@@ -8,13 +8,13 @@ import net.dv8tion.jda.entities.User;
 
 public class ServerCommand {
 	
-	public static void server(TextChannel channel, String command, User author) {
-		if (command.equalsIgnoreCase(DiscordBot.messages.getString("DiscordBot." + DiscordBot.config.getString("DiscordBot.Messages.Locale") + ".Commands.Server.List.Command"))) {
-			MessageSender.sendCommand(channel, author, "Server", "List.Message", "", Environment.getPlayers());
+	public static void server(TextChannel CHANNEL, String COMMAND, User AUTHOR) {
+		if (COMMAND.equalsIgnoreCase(DiscordBot.MESSAGES.getString("DiscordBot." + DiscordBot.CONFIG.getString("DiscordBot.Messages.Locale") + ".Commands.Server.List.Command"))) {
+			MessageSender.sendCommand(CHANNEL, AUTHOR, "Server", "List.Message", "", Environment.getPlayers());
 		}
 		
-		if (command.equalsIgnoreCase(DiscordBot.messages.getString("DiscordBot." + DiscordBot.config.getString("DiscordBot.Messages.Locale") + ".Commands.Server.ServerInfo.Command"))) {
-			MessageSender.sendCommand(channel, author, "Server", "ServerInfo.Message", Environment.getServerVersion(), Environment.getServerName());
+		if (COMMAND.equalsIgnoreCase(DiscordBot.MESSAGES.getString("DiscordBot." + DiscordBot.CONFIG.getString("DiscordBot.Messages.Locale") + ".Commands.Server.ServerInfo.Command"))) {
+			MessageSender.sendCommand(CHANNEL, AUTHOR, "Server", "ServerInfo.Message", Environment.getServerVersion(), Environment.getServerName());
 		}
 	}
 }

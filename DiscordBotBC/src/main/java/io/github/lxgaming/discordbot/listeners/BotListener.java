@@ -7,14 +7,17 @@ import net.dv8tion.jda.events.ReadyEvent;
 import net.dv8tion.jda.events.ReconnectedEvent;
 import net.dv8tion.jda.events.ShutdownEvent;
 import net.dv8tion.jda.hooks.ListenerAdapter;
+import net.md_5.bungee.config.ConfigurationProvider;
+import net.md_5.bungee.config.YamlConfiguration;
 
 public class BotListener extends ListenerAdapter {
 	
-	private static String botTextChannel = DiscordBot.config.getString("DiscordBot.TextChannels.Bot");
+	private static String BOTTEXTCHANNEL = DiscordBot.CONFIG.getString("DiscordBot.TextChannels.Bot");
+	private static String GUILDID = DiscordBot.CONFIG.getString("DiscordBot.Credentials.Guild");
 	
 	@Override
 	public void onDisconnect(DisconnectEvent D) {
-		if (DiscordBot.config.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
+		if (DiscordBot.CONFIG.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
 			MessageSender.sendMessage("DiscordBot Disconnected", "", "", "Disconnet", false, true, true);
 		}
 		return;
@@ -22,21 +25,32 @@ public class BotListener extends ListenerAdapter {
 	
 	@Override
 	public void onReady(ReadyEvent R) {
-		if (botTextChannel.equals("") || botTextChannel.contains("[a-zA-Z]+") == true) {
-			DiscordBot.instance.getLogger().severe("Please make sure you are using the Channel ID in the config");
-			DiscordBot.instance.getLogger().info("List of available TextChannels " + R.getJDA().getTextChannels());
+		if (BOTTEXTCHANNEL.equals("") || BOTTEXTCHANNEL.contains("[a-zA-Z]+") == true) {
+			DiscordBot.INSTANCE.getLogger().severe("Please make sure you are using the Channel ID in the config");
+			DiscordBot.INSTANCE.getLogger().info("List of available TextChannels " + R.getJDA().getTextChannels());
 			return;
 		}
 		
-		if (DiscordBot.config.getBoolean("DiscordBot.Listeners.MainBot") == true) {
-			DiscordBot.api.addEventListener(new MessageListener());
-			DiscordBot.api.addEventListener(new UserListener());
-			DiscordBot.api.addEventListener(new VoiceListener());
-			if (DiscordBot.config.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
+		if (GUILDID.equals("") || GUILDID.contains("[a-zA-Z]+") == true) {
+			DiscordBot.INSTANCE.getLogger().info("Setting Guild ID.");
+			DiscordBot.CONFIG.set("DiscordBot.Credentials.Guild", DiscordBot.API.getTextChannelById(BOTTEXTCHANNEL).getGuild().getId());
+			try {
+				ConfigurationProvider.getProvider(YamlConfiguration.class).save(DiscordBot.CONFIG, DiscordBot.CONFIGFILE);
+			} catch (Exception ex) {
+				DiscordBot.INSTANCE.getLogger().severe("Failed to save GuildID to Config!");
+				return;
+			}
+		}
+		
+		if (DiscordBot.CONFIG.getBoolean("DiscordBot.Listeners.MainBot") == true) {
+			DiscordBot.API.addEventListener(new MessageListener());
+			DiscordBot.API.addEventListener(new UserListener());
+			DiscordBot.API.addEventListener(new VoiceListener());
+			if (DiscordBot.CONFIG.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
 				MessageSender.sendMessage("DiscordBot Connected", "", "", "Ready", true, true, true);
 			}
 		} else {
-			if (DiscordBot.config.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
+			if (DiscordBot.CONFIG.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
 				MessageSender.sendMessage("DiscordBot Connected Not running as Main!", "", "", "Ready", true, true, true);
 			}
 		}
@@ -45,7 +59,7 @@ public class BotListener extends ListenerAdapter {
 	
 	@Override
 	public void onReconnect(ReconnectedEvent R) {
-		if (DiscordBot.config.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
+		if (DiscordBot.CONFIG.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
 			MessageSender.sendMessage("DiscordBot Reconnected", "", "", "Reconnect", true, true, true);
 		}
 		return;
@@ -53,7 +67,7 @@ public class BotListener extends ListenerAdapter {
 	
 	@Override
 	public void onShutdown(ShutdownEvent S) {
-		if (DiscordBot.config.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
+		if (DiscordBot.CONFIG.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
 			MessageSender.sendMessage("DiscordBot Shutdown", "", "", "Shutdown", false, false, false);
 		}
 		return;

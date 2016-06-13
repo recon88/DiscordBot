@@ -11,7 +11,7 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 
 public class BotListener extends ListenerAdapter {
 	
-	private String botTextChannel = DiscordBot.config.getString("BotChannel");
+	private String BOTTEXTCHANNEL = DiscordBot.CONFIG.getString("BotChannel");
 	
 	@Override
 	public void onDisconnect(DisconnectEvent D) {
@@ -21,7 +21,7 @@ public class BotListener extends ListenerAdapter {
 	
 	@Override
 	public void onReady(ReadyEvent R) {
-		if (botTextChannel.equals("") || botTextChannel.contains("[a-zA-Z]+") == true) {
+		if (BOTTEXTCHANNEL.equals("") || BOTTEXTCHANNEL.contains("[a-zA-Z]+") == true) {
 			System.out.println("Please make sure you are using the Channel ID in the config");
 			System.out.println("List of available TextChannels " + R.getJDA().getTextChannels());
 			System.exit(0);

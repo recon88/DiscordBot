@@ -10,14 +10,14 @@ public class Date {
 	}
 	
 	public static String getDate() {
-		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		return sdf.format(cal.getTime());
+		Calendar CAL = Calendar.getInstance();
+		SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy");
+		return SDF.format(CAL.getTime());
 	}
 	
 	public static String getTime() {
-		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-		return sdf.format(cal.getTime());
+		Calendar CAL = Calendar.getInstance();
+		SimpleDateFormat SDF = new SimpleDateFormat("HH:mm:ss");
+		return SDF.format(CAL.getTime());
 	}
 }
