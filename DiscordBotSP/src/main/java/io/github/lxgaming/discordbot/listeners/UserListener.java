@@ -10,47 +10,47 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 
 public class UserListener extends ListenerAdapter {
 	
-	private static String GUILDID = DiscordBot.CONFIG.getString("DiscordBot.Credentials.Guild");
-	private static Boolean USERAVATARUPDATE = DiscordBot.CONFIG.getBoolean("DiscordBot.Listeners.UserAvatarUpdate");
-	private static Boolean USERNAMEUPDATE = DiscordBot.CONFIG.getBoolean("DiscordBot.Listeners.UserNameUpdate");
-	private static Boolean USERGAMEUPDATE = DiscordBot.CONFIG.getBoolean("DiscordBot.Listeners.UserGameUpdate");
-	private static Boolean USERONLINESTATUSUPDATE = DiscordBot.CONFIG.getBoolean("DiscordBot.Listeners.UserOnlineStatusUpdate");
+	private static String guildID = DiscordBot.config.getString("DiscordBot.Credentials.Guild");
+	private static boolean userAvatarUpdate = DiscordBot.config.getBoolean("DiscordBot.Listeners.UserAvatarUpdate");
+	private static boolean userNameUpdate = DiscordBot.config.getBoolean("DiscordBot.Listeners.UserNameUpdate");
+	private static boolean userGameUpdate = DiscordBot.config.getBoolean("DiscordBot.Listeners.UserGameUpdate");
+	private static boolean userOnlineStatusUpdate = DiscordBot.config.getBoolean("DiscordBot.Listeners.UserOnlineStatusUpdate");
 	
 	@Override
-	public void onUserAvatarUpdate(UserAvatarUpdateEvent UAU) {
-		if (USERAVATARUPDATE == true) {
-			MessageSender.sendMessage(UAU.getUser().getAvatarId(), UAU.getUser().getUsername(), DiscordBot.API.getGuildById(GUILDID).getNicknameForUser(UAU.getUser()), DiscordBot.API.getGuildById(GUILDID).getName(), "UserAvatarUpdate", true, true, false);
+	public void onUserAvatarUpdate(UserAvatarUpdateEvent event) {
+		if (userAvatarUpdate == true) {
+			MessageSender.sendMessage(event.getUser().getAvatarId(), event.getUser().getUsername(), DiscordBot.jda.getGuildById(guildID).getNicknameForUser(event.getUser()), DiscordBot.jda.getGuildById(guildID).getName(), "UserAvatarUpdate", true, true, false);
 		}
 		return;
 	}
 	
 	@Override
-	public void onUserGameUpdate(UserGameUpdateEvent UGU) {
-		if ((USERNAMEUPDATE == true) && !(UGU.getUser().getCurrentGame() == null)) {
-			MessageSender.sendMessage(UGU.getUser().getCurrentGame().getName(), UGU.getUser().getUsername(),DiscordBot.API.getGuildById(GUILDID).getNicknameForUser(UGU.getUser()), DiscordBot.API.getGuildById(GUILDID).getName(), "UserGameUpdate", true, true, false);
+	public void onUserGameUpdate(UserGameUpdateEvent event) {
+		if ((userNameUpdate == true) && !(event.getUser().getCurrentGame() == null)) {
+			MessageSender.sendMessage(event.getUser().getCurrentGame().getName(), event.getUser().getUsername(),DiscordBot.jda.getGuildById(guildID).getNicknameForUser(event.getUser()), DiscordBot.jda.getGuildById(guildID).getName(), "UserGameUpdate", true, true, false);
 		}
 		return;
 	}
 	
 	@Override
-	public void onUserNameUpdate(UserNameUpdateEvent UNU) {
-		if (USERGAMEUPDATE == true) {
-			MessageSender.sendMessage(UNU.getUser().getUsername(), UNU.getPreviousUsername(), DiscordBot.API.getGuildById(GUILDID).getNicknameForUser(UNU.getUser()), DiscordBot.API.getGuildById(GUILDID).getName(), "UserNameUpdate", true, true, false);
+	public void onUserNameUpdate(UserNameUpdateEvent event) {
+		if (userGameUpdate == true) {
+			MessageSender.sendMessage(event.getUser().getUsername(), event.getPreviousUsername(), DiscordBot.jda.getGuildById(guildID).getNicknameForUser(event.getUser()), DiscordBot.jda.getGuildById(guildID).getName(), "UserNameUpdate", true, true, false);
 		}
 		return;
 	}
 	
 	@Override
-	public void onUserOnlineStatusUpdate(UserOnlineStatusUpdateEvent UOSU) {
-		if (USERONLINESTATUSUPDATE == true) {
-			if (UOSU.getUser().getOnlineStatus().toString().equals("ONLINE")) {
-				MessageSender.sendMessage("Online", UOSU.getUser().getUsername(), DiscordBot.API.getGuildById(GUILDID).getNicknameForUser(UOSU.getUser()), DiscordBot.API.getGuildById(GUILDID).getName(), "UserOnlineStatusUpdate.Online", true, true, false);
+	public void onUserOnlineStatusUpdate(UserOnlineStatusUpdateEvent event) {
+		if (userOnlineStatusUpdate == true) {
+			if (event.getUser().getOnlineStatus().toString().equals("ONLINE")) {
+				MessageSender.sendMessage("Online", event.getUser().getUsername(), DiscordBot.jda.getGuildById(guildID).getNicknameForUser(event.getUser()), DiscordBot.jda.getGuildById(guildID).getName(), "UserOnlineStatusUpdate.Online", true, true, false);
 			}
-			if (UOSU.getUser().getOnlineStatus().toString().equals("AWAY")) {
-				MessageSender.sendMessage("Away", UOSU.getUser().getUsername(), DiscordBot.API.getGuildById(GUILDID).getNicknameForUser(UOSU.getUser()), DiscordBot.API.getGuildById(GUILDID).getName(), "UserOnlineStatusUpdate.Away", true, true, false);
+			if (event.getUser().getOnlineStatus().toString().equals("AWAY")) {
+				MessageSender.sendMessage("Away", event.getUser().getUsername(), DiscordBot.jda.getGuildById(guildID).getNicknameForUser(event.getUser()), DiscordBot.jda.getGuildById(guildID).getName(), "UserOnlineStatusUpdate.Away", true, true, false);
 			}
-			if (UOSU.getUser().getOnlineStatus().toString().equals("OFFLINE")) {
-				MessageSender.sendMessage("Offline", UOSU.getUser().getUsername(), DiscordBot.API.getGuildById(GUILDID).getNicknameForUser(UOSU.getUser()), DiscordBot.API.getGuildById(GUILDID).getName(), "UserOnlineStatusUpdate.Offline", true, true, false);
+			if (event.getUser().getOnlineStatus().toString().equals("OFFLINE")) {
+				MessageSender.sendMessage("Offline", event.getUser().getUsername(), DiscordBot.jda.getGuildById(guildID).getNicknameForUser(event.getUser()), DiscordBot.jda.getGuildById(guildID).getName(), "UserOnlineStatusUpdate.Offline", true, true, false);
 			}
 		}
 		return;

@@ -11,45 +11,46 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 
 public class UserListener extends ListenerAdapter {
 	
-	private String USERAVATARUPDATE = DiscordBot.CONFIG.getString("UserAvatarUpdate");
-	private String USERGAMEUPDATE = DiscordBot.CONFIG.getString("UserGameUpdate");
-	private String USERNAMEUPDATE = DiscordBot.CONFIG.getString("UserNameUpdate");
-	private String USERONLINESTATUSUPDATE = DiscordBot.CONFIG.getString("UserOnlineStatusUpdate");
+	private String userAvatarUpdate = DiscordBot.config.getString("UserAvatarUpdate");
+	private String userGameUpdate = DiscordBot.config.getString("UserGameUpdate");
+	private String userNameUpdate = DiscordBot.config.getString("UserNameUpdate");
+	private String userOnlineStatusUpdate = DiscordBot.config.getString("UserOnlineStatusUpdate");
+	
 	@Override
-	public void onUserAvatarUpdate(UserAvatarUpdateEvent UAU) {
-		if (USERAVATARUPDATE.toLowerCase().equals("true")) {
-			MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UAU.getUser().getUsername() + "** ``New Avatar:`` **" + UAU.getUser().getAvatarId() + "**");
+	public void onUserAvatarUpdate(UserAvatarUpdateEvent event) {
+		if (userAvatarUpdate.toLowerCase().equals("true")) {
+			MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + event.getUser().getUsername() + "** ``New Avatar:`` **" + event.getUser().getAvatarId() + "**");
 		}
 		return;
 	}
 	
 	@Override
-	public void onUserGameUpdate(UserGameUpdateEvent UGU) {
-		if (USERGAMEUPDATE.toLowerCase().equals("true") &&!(UGU.getUser().getCurrentGame() == null)) {
-			MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UGU.getUser().getUsername() + "** ``Game:`` **" + UGU.getUser().getCurrentGame() + "**");
+	public void onUserGameUpdate(UserGameUpdateEvent event) {
+		if (userGameUpdate.toLowerCase().equals("true") && !(event.getUser().getCurrentGame() == null)) {
+			MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + event.getUser().getUsername() + "** ``Game:`` **" + event.getUser().getCurrentGame() + "**");
 		}
 		return;
 	}
 	
 	@Override
-	public void onUserNameUpdate(UserNameUpdateEvent UNU) {
-		if (USERNAMEUPDATE.toLowerCase().equals("true")) {
-			MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UNU.getPreviousUsername() + "** ``New name:`` **" + UNU.getUser().getUsername() + "**");
+	public void onUserNameUpdate(UserNameUpdateEvent event) {
+		if (userNameUpdate.toLowerCase().equals("true")) {
+			MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + event.getPreviousUsername() + "** ``New name:`` **" + event.getUser().getUsername() + "**");
 		}
 		return;
 	}
 	
 	@Override
-	public void onUserOnlineStatusUpdate(UserOnlineStatusUpdateEvent UOSU) {
-		if (USERONLINESTATUSUPDATE.toLowerCase().equals("true")) {
-			if (UOSU.getUser().getOnlineStatus().toString().equals("ONLINE")) {
-				MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UOSU.getUser().getUsername() + "** ``Status:`` **Online**");
+	public void onUserOnlineStatusUpdate(UserOnlineStatusUpdateEvent event) {
+		if (userOnlineStatusUpdate.toLowerCase().equals("true")) {
+			if (event.getUser().getOnlineStatus().toString().equals("ONLINE")) {
+				MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + event.getUser().getUsername() + "** ``Status:`` **Online**");
 			}
-			if (UOSU.getUser().getOnlineStatus().toString().equals("AWAY")) {
-				MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UOSU.getUser().getUsername() + "** ``Status:`` **Away**");
+			if (event.getUser().getOnlineStatus().toString().equals("AWAY")) {
+				MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + event.getUser().getUsername() + "** ``Status:`` **Away**");
 			}
-			if (UOSU.getUser().getOnlineStatus().toString().equals("OFFLINE")) {
-				MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + UOSU.getUser().getUsername() + "** ``Status:`` **Offline**");
+			if (event.getUser().getOnlineStatus().toString().equals("OFFLINE")) {
+				MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + event.getUser().getUsername() + "** ``Status:`` **Offline**");
 			}
 		}
 		return;

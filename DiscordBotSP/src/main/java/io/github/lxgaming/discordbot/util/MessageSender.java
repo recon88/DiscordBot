@@ -10,55 +10,55 @@ import net.dv8tion.jda.entities.User;
 
 public class MessageSender {
 	
-	private static String LOCALE = DiscordBot.CONFIG.getString("DiscordBot.Messages.Locale");
-	private static String BOTTEXTCHANNEL = DiscordBot.CONFIG.getString("DiscordBot.TextChannels.Bot");
-	private static Boolean SENDINGAME = DiscordBot.CONFIG.getBoolean("DiscordBot.Messages.SendInGame");
-	private static Boolean SENDDISCORD = DiscordBot.CONFIG.getBoolean("DiscordBot.Messages.SendDiscord");
-	private static Boolean SENDCONSOLE = DiscordBot.CONFIG.getBoolean("DiscordBot.Messages.ConsoleOutput");
+	private static String locale = DiscordBot.config.getString("DiscordBot.Messages.Locale");
+	private static String botTextChannel = DiscordBot.config.getString("DiscordBot.TextChannels.Bot");
+	private static boolean sendInGame = DiscordBot.config.getBoolean("DiscordBot.Messages.SendInGame");
+	private static boolean sendDiscord = DiscordBot.config.getBoolean("DiscordBot.Messages.SendDiscord");
+	private static boolean sendConsole = DiscordBot.config.getBoolean("DiscordBot.Messages.ConsoleOutput");
 	
-	public static void sendMessage(String MESSAGE, String USER, String USERNICK, String SERVER, String FORMAT, Boolean DISCORD, Boolean INGAME, Boolean CONSOLE) {
-		if (USERNICK == null || USERNICK.equals("")) {
-			USERNICK = USER;
+	public static void sendMessage(String message, String user, String userNick, String server, String format, boolean discord, boolean inGame, boolean console) {
+		if (userNick == null || userNick.equals("")) {
+			userNick = user;
 		}
-		if (DISCORD == true && SENDDISCORD == true) {
-			if (!DiscordBot.MESSAGES.getString("DiscordBot." + LOCALE + "." + FORMAT + ".DiscordFormat").equals("") || !DiscordBot.MESSAGES.getString("DiscordBot." + LOCALE + "." + FORMAT + ".DiscordFormat").equals("null")) {
-				sendMessageDiscord(MESSAGE, USER, USERNICK, SERVER, FORMAT);
+		if (discord == true && sendDiscord == true) {
+			if (!DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".DiscordFormat").equals("") || !DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".DiscordFormat").equals("null")) {
+				sendMessageDiscord(message, user, userNick, server, format);
 			}
 		}
-		if (INGAME == true && SENDINGAME == true) {
-			if (!DiscordBot.MESSAGES.getString("DiscordBot." + LOCALE + "." + FORMAT + ".InGameFormat").equals("") || !DiscordBot.MESSAGES.getString("DiscordBot." + LOCALE + "." + FORMAT + ".InGameFormat").equals("null")) {
-				sendMessageInGame(MESSAGE, USER, USERNICK, SERVER, FORMAT);
+		if (inGame == true && sendInGame == true) {
+			if (!DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".InGameFormat").equals("") || !DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".InGameFormat").equals("null")) {
+				sendMessageInGame(message, user, userNick, server, format);
 			}
 		}
-		if (CONSOLE == true && SENDCONSOLE == true) {
-			sendMessageConsole(MESSAGE, USER, SERVER);
+		if (console == true && sendConsole == true) {
+			sendMessageConsole(message, user, server);
 		}
 	}
 	
-	public static void sendCommand(TextChannel CHANNEL, User AUTHOR, String GROUP, String COMMAND, String NUMBER, String NAME) {
-		CHANNEL.sendMessage(DiscordBot.MESSAGES.getString("DiscordBot." + LOCALE + ".Commands." + GROUP + "." + COMMAND).replaceAll("%sender%", AUTHOR.getUsername()).replaceAll("%number%", NUMBER).replaceAll("%name%", NAME));
+	public static void sendCommand(TextChannel channel, User author, String group, String command, String number, String name) {
+		channel.sendMessage(DiscordBot.messages.getString("DiscordBot." + locale + ".Commands." + group + "." + command).replaceAll("%sender%", author.getUsername()).replaceAll("%number%", number).replaceAll("%name%", name));
 	}
 	
-	private static void sendMessageDiscord(String MESSAGE, String USER, String USERNICK, String SERVER, String FORMAT) {
+	private static void sendMessageDiscord(String message, String user, String userNick, String server, String format) {
 		try {
-			DiscordBot.API.getTextChannelById(BOTTEXTCHANNEL).sendMessage(DiscordBot.MESSAGES.getString("DiscordBot." + LOCALE + "." + FORMAT + ".DiscordFormat").replaceAll("%time%", Date.getTime()).replaceAll("%user%", USER).replaceAll("%usernick%", USERNICK).replaceAll("%server%", SERVER).replaceAll("%message%", MESSAGE).replaceAll("§.", ""));
+			DiscordBot.jda.getTextChannelById(botTextChannel).sendMessage(DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".DiscordFormat").replaceAll("%time%", Date.getTime()).replaceAll("%user%", user).replaceAll("%usernick%", userNick).replaceAll("%server%", server).replaceAll("%message%", message).replaceAll("§.", ""));
 		} catch (Exception ex) {
-			DiscordBot.INSTANCE.getLogger().severe("Unable to send message!");
+			DiscordBot.instance.getLogger().severe("Unable to send message!");
 		}
 		return;
 	}
 	
-	private static void sendMessageInGame(String MESSAGE, String USER, String USERNICK, String SERVER, String FORMAT) {
-		for (Player PLAYER : Bukkit.getOnlinePlayers()) {
-			if (PLAYER.hasPermission("DiscordBot.ReceiveDiscordChat")) {
-				PLAYER.sendMessage(ChatColor.translateAlternateColorCodes('&', DiscordBot.MESSAGES.getString("DiscordBot." + LOCALE + "." + FORMAT + ".InGameFormat").replaceAll("%time%", Date.getTime()).replaceAll("%user%", USER).replaceAll("%usernick%", USERNICK).replaceAll("%server%", SERVER).replaceAll("%message%", MESSAGE).replaceAll("§", "&")));
+	private static void sendMessageInGame(String message, String user, String userNick, String server, String format) {
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			if (player.hasPermission("DiscordBot.ReceiveDiscordChat") && !DatabaseManager.checkDatabase(player.getUniqueId().toString())) {
+				player.sendMessage(ChatColor.translateAlternateColorCodes('&', DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".InGameFormat").replaceAll("%time%", Date.getTime()).replaceAll("%user%", user).replaceAll("%usernick%", userNick).replaceAll("%server%", server).replaceAll("%message%", message).replaceAll("§", "&")));
 			}
 		}
 		return;
 	}
 	
-	private static void sendMessageConsole(String MESSAGE, String USER, String SERVER) {
-		DiscordBot.INSTANCE.getLogger().info("[" + SERVER + "] " + USER + ": " + MESSAGE);
+	private static void sendMessageConsole(String message, String user, String server) {
+		DiscordBot.instance.getLogger().info("[" + server + "] " + user + ": " + message);
 		return;
 	}
 }

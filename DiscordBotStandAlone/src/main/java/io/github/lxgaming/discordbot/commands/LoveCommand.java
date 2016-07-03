@@ -7,59 +7,59 @@ import net.dv8tion.jda.entities.User;
 
 public class LoveCommand {
 	
-	private static Random RANDOM = new Random();
+	private static Random random = new Random();
 	
-	public static void love(TextChannel CHANNEL, String COMMAND, User AUTHOR) {
+	public static void love(TextChannel channel, String command, User author) {
 		
-		String SENDER = AUTHOR.getUsername();
-		String NAME = "";
+		String sender = author.getUsername();
+		String name = "";
 		
-		if (COMMAND.toLowerCase().startsWith("kiss")) {
-			if (COMMAND.length() > 4) {
-				NAME = COMMAND.substring(4);
-				int NUMBER = RANDOM.nextInt(3);
-				if (NUMBER == 0) {
-					CHANNEL.sendMessage(SENDER + " kissed" + NAME);
-				} else if (NUMBER == 1) {
-					CHANNEL.sendMessage("Awww" + NAME + " ran away, no kiss for you.");
-				} else if (NUMBER == 2) {
-					CHANNEL.sendMessage("Oh god, get a room you two!");
+		if (command.toLowerCase().startsWith("kiss")) {
+			if (command.length() > 4) {
+				name = command.substring(4);
+				int number = random.nextInt(3);
+				if (number == 0) {
+					channel.sendMessage(sender + " kissed" + name);
+				} else if (number == 1) {
+					channel.sendMessage("Awww" + name + " ran away, no kiss for you.");
+				} else if (number == 2) {
+					channel.sendMessage("Oh god, get a room you two!");
 				}
 			} else {
-				CHANNEL.sendMessage("Got nobody to kiss?");
+				channel.sendMessage("Got nobody to kiss?");
 			}
 		}
 		
-		if (COMMAND.toLowerCase().startsWith("hug")) {
-			if (COMMAND.length() > 3) {
-				NAME = COMMAND.substring(3);
-				CHANNEL.sendMessage(SENDER + " hugged" + NAME);
+		if (command.toLowerCase().startsWith("hug")) {
+			if (command.length() > 3) {
+				name = command.substring(3);
+				channel.sendMessage(sender + " hugged" + name);
 			} else {
-				CHANNEL.sendMessage("Got nobody to hug?");
+				channel.sendMessage("Got nobody to hug?");
 			}
 		}
 		
-		if (COMMAND.toLowerCase().startsWith("slap")) {
-			if (COMMAND.length() > 4) {
-				NAME = COMMAND.substring(4);
-				int NUMBER = RANDOM.nextInt(2);
-				if (NUMBER == 0) {
-					CHANNEL.sendMessage(SENDER + " slapped" + NAME);
-				} else if (NUMBER == 1) {
-					NAME = COMMAND.substring(5);
-					CHANNEL.sendMessage(NAME + " got RKO'D outta nowhere!");
+		if (command.toLowerCase().startsWith("slap")) {
+			if (command.length() > 4) {
+				name = command.substring(4);
+				int number = random.nextInt(2);
+				if (number == 0) {
+					channel.sendMessage(sender + " slapped" + name);
+				} else if (number == 1) {
+					name = command.substring(5);
+					channel.sendMessage(name + " got RKO'D outta nowhere!");
 				}
 			} else {
-				CHANNEL.sendMessage("Got nobody to slap?");
+				channel.sendMessage("Got nobody to slap?");
 			}
 		}
 		
-		if (COMMAND.toLowerCase().startsWith("lick")) {
-			if (COMMAND.length() > 4) {
-				NAME = COMMAND.substring(4);
-				CHANNEL.sendMessage(SENDER + " licked" + NAME);
+		if (command.toLowerCase().startsWith("lick")) {
+			if (command.length() > 4) {
+				name = command.substring(4);
+				channel.sendMessage(sender + " licked" + name);
 			} else {
-				CHANNEL.sendMessage("Got nothing to lick?");
+				channel.sendMessage("Got nothing to lick?");
 			}
 		}
 		return;

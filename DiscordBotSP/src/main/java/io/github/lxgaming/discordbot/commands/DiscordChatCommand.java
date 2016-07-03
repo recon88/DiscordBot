@@ -5,28 +5,33 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import io.github.lxgaming.discordbot.util.DatabaseManager;
 import io.github.lxgaming.discordbot.util.MessageSender;
 import net.md_5.bungee.api.ChatColor;
 
 public class DiscordChatCommand implements CommandExecutor {
 	
-	public boolean onCommand(CommandSender SENDER, Command CMD, String LABEL, String[] ARGS) {
-		if (CMD.getName().equalsIgnoreCase("discordchat") || CMD.getName().equalsIgnoreCase("dcc")) {
-			if (SENDER.hasPermission("DiscordBot.CommandChat")) {
-				String MESSAGE = "";
-				for (String ARG : ARGS) {
-					MESSAGE = MESSAGE + ARG + " ";
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		if (cmd.getName().equalsIgnoreCase("discordchat") || cmd.getName().equalsIgnoreCase("dcc")) {
+			if (sender.hasPermission("DiscordBot.CommandChat")) {
+				String message = "";
+				for (String arg : args) {
+					message = message + arg + " ";
 				}
 				
-				if (SENDER instanceof Player) {
-					Player PLAYER = (Player) SENDER;
-					MessageSender.sendMessage(MESSAGE, PLAYER.getName(), PLAYER.getDisplayName(), PLAYER.getServer().getServerName(), "Message", true, true, true);
+				if (sender instanceof Player) {
+					Player player = (Player) sender;
+					if (DatabaseManager.checkDatabase(player.getUniqueId().toString())) {
+						player.sendMessage(ChatColor.RED + "DiscordChat disabled. '/DiscordBot Toggle' to enable");
+						return true;
+					}
+					MessageSender.sendMessage(message, player.getName(), player.getDisplayName(), player.getServer().getServerName(), "Message", true, true, true);
 				} else {
-					MessageSender.sendMessage(MESSAGE, SENDER.getName(), SENDER.getName(), SENDER.getServer().getServerName(), "Message", true, true, true);
+					MessageSender.sendMessage(message, sender.getName(), sender.getName(), sender.getServer().getServerName(), "Message", true, true, true);
 				}
 				return true;
 			}
-			SENDER.sendMessage(ChatColor.RED + "You do not have permission!");
+			sender.sendMessage(ChatColor.RED + "You do not have permission!");
 			return true;
 		}
 		return false;

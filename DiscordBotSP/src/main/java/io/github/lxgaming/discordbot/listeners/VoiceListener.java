@@ -8,29 +8,29 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 
 public class VoiceListener extends ListenerAdapter {
 	
-	private static String GUILDID = DiscordBot.CONFIG.getString("DiscordBot.Credentials.Guild");
-	private static Boolean VOICESERVERDEAF = DiscordBot.CONFIG.getBoolean("DiscordBot.Listeners.VoiceServerDeaf");
-	private static Boolean VOICESERVERMUTE = DiscordBot.CONFIG.getBoolean("DiscordBot.Listeners.VoiceServerMute");
+	private static String guildID = DiscordBot.config.getString("DiscordBot.Credentials.Guild");
+	private static boolean voiceServerDeaf = DiscordBot.config.getBoolean("DiscordBot.Listeners.VoiceServerDeaf");
+	private static boolean voiceServerMute = DiscordBot.config.getBoolean("DiscordBot.Listeners.VoiceServerMute");
 	
 	@Override
-	public void onVoiceServerDeaf(VoiceServerDeafEvent VSD) {
-		if (VOICESERVERDEAF == true) {
-			if (VSD.getVoiceStatus().isServerDeaf() == true) {
-				MessageSender.sendMessage("Deafened", VSD.getUser().getUsername(), DiscordBot.API.getGuildById(GUILDID).getNicknameForUser(VSD.getUser()), DiscordBot.API.getGuildById(GUILDID).getName(), "VoiceServerDeaf.Deafened", true, true, false);
+	public void onVoiceServerDeaf(VoiceServerDeafEvent event) {
+		if (voiceServerDeaf == true) {
+			if (event.getVoiceStatus().isServerDeaf() == true) {
+				MessageSender.sendMessage("Deafened", event.getUser().getUsername(), DiscordBot.jda.getGuildById(guildID).getNicknameForUser(event.getUser()), DiscordBot.jda.getGuildById(guildID).getName(), "VoiceServerDeaf.Deafened", true, true, false);
 			} else {
-				MessageSender.sendMessage("Undeafened", VSD.getUser().getUsername(), DiscordBot.API.getGuildById(GUILDID).getNicknameForUser(VSD.getUser()), DiscordBot.API.getGuildById(GUILDID).getName(), "VoiceServerDeaf.Undeafened", true, true, false);
+				MessageSender.sendMessage("Undeafened", event.getUser().getUsername(), DiscordBot.jda.getGuildById(guildID).getNicknameForUser(event.getUser()), DiscordBot.jda.getGuildById(guildID).getName(), "VoiceServerDeaf.Undeafened", true, true, false);
 			}
 		}
 		return;
 	}
 	
 	@Override
-	public void onVoiceServerMute(VoiceServerMuteEvent VSM) {
-		if (VOICESERVERMUTE == true) {
-			if (VSM.getVoiceStatus().isServerMuted() == true) {
-				MessageSender.sendMessage("Muted", VSM.getUser().getUsername(), DiscordBot.API.getGuildById(GUILDID).getNicknameForUser(VSM.getUser()), DiscordBot.API.getGuildById(GUILDID).getName(), "VoiceServerMute.Muted", true, true, false);
+	public void onVoiceServerMute(VoiceServerMuteEvent event) {
+		if (voiceServerMute == true) {
+			if (event.getVoiceStatus().isServerMuted() == true) {
+				MessageSender.sendMessage("Muted", event.getUser().getUsername(), DiscordBot.jda.getGuildById(guildID).getNicknameForUser(event.getUser()), DiscordBot.jda.getGuildById(guildID).getName(), "VoiceServerMute.Muted", true, true, false);
 			} else {
-				MessageSender.sendMessage("Unmuted", VSM.getUser().getUsername(), DiscordBot.API.getGuildById(GUILDID).getNicknameForUser(VSM.getUser()), DiscordBot.API.getGuildById(GUILDID).getName(), "VoiceServerMute.Unmuted", true, true, false);
+				MessageSender.sendMessage("Unmuted", event.getUser().getUsername(), DiscordBot.jda.getGuildById(guildID).getNicknameForUser(event.getUser()), DiscordBot.jda.getGuildById(guildID).getName(), "VoiceServerMute.Unmuted", true, true, false);
 			}
 		}
 		return;

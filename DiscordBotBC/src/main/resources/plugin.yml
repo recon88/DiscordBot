@@ -10,9 +10,7 @@ commands:
   discordchat:
     description: Send messages to Discord.
     usage: /<command> <message>
-  dcc:
-    description: Send messages to Discord.
-    usage: /<command> <message>
+    aliases: [dcc]
 permissions:
   DiscordBot.CommandChat:
     description: Send messages to Discord via command.

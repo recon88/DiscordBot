@@ -9,28 +9,28 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 
 public class VoiceListener extends ListenerAdapter {
 	
-	private String VOICESERVERDEAF = DiscordBot.CONFIG.getString("VoiceServerDeaf");
-	private String VOICESERVERMUTE = DiscordBot.CONFIG.getString("VoiceServerMute");
+	private String voiceServerMute = DiscordBot.config.getString("VoiceServerDeaf");
+	private String voiceServerDeaf = DiscordBot.config.getString("VoiceServerMute");
 	
 	@Override
-	public void onVoiceServerDeaf(VoiceServerDeafEvent VSD) {
-		if (VOICESERVERDEAF.toLowerCase().equals("true")) {
-			if (VSD.getVoiceStatus().isServerDeaf() == true) {
-				MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + VSD.getUser().getUsername() + "** ``Voice:`` **Server Deafened**");
+	public void onVoiceServerDeaf(VoiceServerDeafEvent event) {
+		if (voiceServerDeaf.toLowerCase().equals("true")) {
+			if (event.getVoiceStatus().isServerDeaf() == true) {
+				MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + event.getUser().getUsername() + "** ``Voice:`` **Server Deafened**");
 			} else {
-				MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + VSD.getUser().getUsername() + "** ``Voice:`` **Server Undeafened**");
+				MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + event.getUser().getUsername() + "** ``Voice:`` **Server Undeafened**");
 			}
 		}
 		return;
 	}
 	
 	@Override
-	public void onVoiceServerMute(VoiceServerMuteEvent VSM) {		
-		if (VOICESERVERMUTE.toLowerCase().equals("true")) {
-			if (VSM.getVoiceStatus().isServerMuted() == true) {
-				MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + VSM.getUser().getUsername() + "** ``Voice:`` **Server Muted**");
+	public void onVoiceServerMute(VoiceServerMuteEvent event) {		
+		if (voiceServerMute.toLowerCase().equals("true")) {
+			if (event.getVoiceStatus().isServerMuted() == true) {
+				MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + event.getUser().getUsername() + "** ``Voice:`` **Server Muted**");
 			} else {
-				MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + VSM.getUser().getUsername() + "** ``Voice:`` **Server Unmuted**");
+				MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``User:`` **" + event.getUser().getUsername() + "** ``Voice:`` **Server Unmuted**");
 			}
 		}
 		return;

@@ -11,19 +11,19 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 
 public class BotListener extends ListenerAdapter {
 	
-	private String BOTTEXTCHANNEL = DiscordBot.CONFIG.getString("BotChannel");
+	private String botTextChannel = DiscordBot.config.getString("BotChannel");
 	
 	@Override
-	public void onDisconnect(DisconnectEvent D) {
+	public void onDisconnect(DisconnectEvent event) {
 		System.out.println("DiscordBot Disconnected!");
 		return;
 	}
 	
 	@Override
-	public void onReady(ReadyEvent R) {
-		if (BOTTEXTCHANNEL.equals("") || BOTTEXTCHANNEL.contains("[a-zA-Z]+") == true) {
+	public void onReady(ReadyEvent event) {
+		if (botTextChannel.equals("") || botTextChannel.contains("[a-zA-Z]+") == true) {
 			System.out.println("Please make sure you are using the Channel ID in the config");
-			System.out.println("List of available TextChannels " + R.getJDA().getTextChannels());
+			System.out.println("List of available TextChannels " + event.getJDA().getTextChannels());
 			System.exit(0);
 		}
 		MessageSender.sendMessage("``Time:`` **" + Date.getTime() + "** ``DiscordBot`` **Connected!**");
@@ -32,13 +32,13 @@ public class BotListener extends ListenerAdapter {
 	}
 	
 	@Override
-	public void onReconnect(ReconnectedEvent R) {
+	public void onReconnect(ReconnectedEvent event) {
 		System.out.println("DiscordBot Reconnected!");
 		return;
 	}
 	
 	@Override
-	public void onShutdown(ShutdownEvent S) {
+	public void onShutdown(ShutdownEvent event) {
 		System.out.println("DiscordBot Shutdown!");
 		return;
 	}

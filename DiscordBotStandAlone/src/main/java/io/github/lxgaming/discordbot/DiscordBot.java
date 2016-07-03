@@ -11,22 +11,22 @@ import net.dv8tion.jda.JDABuilder;
 
 public class DiscordBot {
 	
-	public static JSONObject CONFIG = Configuration.loadConfig();
-	public static JDA API;
-	public static String DBVERSION = "0.6.1 ('Forest')";
-	public static String APIVERSION = "JDA v2.1.0, Build 293 - Recompiled";
+	public static JSONObject config = Configuration.loadConfig();
+	public static JDA jda;
+	public static String dbVersion = "0.7.0 ('Golden Bay')";
+	public static String jdaVersion = "JDA v2.1.1, Build 300 - Recompiled";
 	
 	public static void main(String[] args) {
-		System.out.println("DiscordBot v" + DBVERSION);
-		System.out.println("API - " + APIVERSION);
+		System.out.println("DiscordBot v" + dbVersion);
+		System.out.println("API - " + jdaVersion);
 		System.out.println("Author - Alex Thomson");
 		loadDiscord();
 	}
 	
 	public static void loadDiscord() {
 		try {
-			API = new JDABuilder()
-					.setBotToken(CONFIG.getString("BotToken"))
+			jda = new JDABuilder()
+					.setBotToken(config.getString("BotToken"))
 					.addListener(new BotListener())
 					.addListener(new MessageListener())
 					.addListener(new UserListener())

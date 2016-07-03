@@ -9,56 +9,56 @@ import net.dv8tion.jda.entities.User;
 
 public class LoveCommand {
 	
-	private static Random RANDOM = new Random();
+	private static Random random = new Random();
 	
-	public static void love(TextChannel CHANNEL, String COMMAND, User AUTHOR) {
+	public static void love(TextChannel channel, String command, User author) {
 		
-		String NAME = "";
+		String name = "";
 		
-		if (COMMAND.toLowerCase().startsWith(DiscordBot.MESSAGES.getString("DiscordBot." + DiscordBot.CONFIG.getString("DiscordBot.Messages.Locale") + ".Commands.Love.Kiss.Command"))) {
-			if (COMMAND.length() > 4) {
-				NAME = COMMAND.substring(4);
-				int NUMBER = RANDOM.nextInt(2);
-				if (NUMBER == 0) {
-					MessageSender.sendCommand(CHANNEL, AUTHOR, "Love", "Kiss.Message1", "", NAME);
-				} else if (NUMBER == 1) {
-					MessageSender.sendCommand(CHANNEL, AUTHOR, "Love", "Kiss.Message2", "", NAME);
+		if (command.toLowerCase().startsWith(DiscordBot.messages.getString("DiscordBot." + DiscordBot.config.getString("DiscordBot.Messages.Locale") + ".Commands.Love.Kiss.Command"))) {
+			if (command.length() > 4) {
+				name = command.substring(4);
+				int number = random.nextInt(2);
+				if (number == 0) {
+					MessageSender.sendCommand(channel, author, "Love", "Kiss.Message1", "", name);
+				} else if (number == 1) {
+					MessageSender.sendCommand(channel, author, "Love", "Kiss.Message2", "", name);
 				}
 			} else {
-				MessageSender.sendCommand(CHANNEL, AUTHOR, "Love", "Kiss.Invaild", "", NAME);
+				MessageSender.sendCommand(channel, author, "Love", "Kiss.Invaild", "", name);
 			}
 		}
 		
-		if (COMMAND.toLowerCase().startsWith(DiscordBot.MESSAGES.getString("DiscordBot." + DiscordBot.CONFIG.getString("DiscordBot.Messages.Locale") + ".Commands.Love.Hug.Command"))) {
-			if (COMMAND.length() > 3) {
-				NAME = COMMAND.substring(3);
-				MessageSender.sendCommand(CHANNEL, AUTHOR, "Love", "Hug.Message", "", NAME);
+		if (command.toLowerCase().startsWith(DiscordBot.messages.getString("DiscordBot." + DiscordBot.config.getString("DiscordBot.Messages.Locale") + ".Commands.Love.Hug.Command"))) {
+			if (command.length() > 3) {
+				name = command.substring(3);
+				MessageSender.sendCommand(channel, author, "Love", "Hug.Message", "", name);
 			} else {
-				MessageSender.sendCommand(CHANNEL, AUTHOR, "Love", "Hug.Invaild", "", NAME);
+				MessageSender.sendCommand(channel, author, "Love", "Hug.Invaild", "", name);
 			}
 		}
 		
-		if (COMMAND.toLowerCase().startsWith(DiscordBot.MESSAGES.getString("DiscordBot." + DiscordBot.CONFIG.getString("DiscordBot.Messages.Locale") + ".Commands.Love.Slap.Command"))) {
-			if (COMMAND.length() > 4) {
-				NAME = COMMAND.substring(4);
-				int NUMBER = RANDOM.nextInt(2);
-				if (NUMBER == 0) {
-					MessageSender.sendCommand(CHANNEL, AUTHOR, "Love", "Slap.Message1", "", NAME);
-				} else if (NUMBER == 1) {
-					NAME = COMMAND.substring(5);
-					MessageSender.sendCommand(CHANNEL, AUTHOR, "Love", "Slap.Message2", "", NAME);
+		if (command.toLowerCase().startsWith(DiscordBot.messages.getString("DiscordBot." + DiscordBot.config.getString("DiscordBot.Messages.Locale") + ".Commands.Love.Slap.Command"))) {
+			if (command.length() > 4) {
+				name = command.substring(4);
+				int number = random.nextInt(2);
+				if (number == 0) {
+					MessageSender.sendCommand(channel, author, "Love", "Slap.Message1", "", name);
+				} else if (number == 1) {
+					name = command.substring(5);
+					MessageSender.sendCommand(channel, author, "Love", "Slap.Message2", "", name);
 				}
 			} else {
-				MessageSender.sendCommand(CHANNEL, AUTHOR, "Love", "Slap.Invaild", "", NAME);
+				MessageSender.sendCommand(channel, author, "Love", "Slap.Invaild", "", name);
 			}
 		}
 		
-		if (COMMAND.toLowerCase().startsWith(DiscordBot.MESSAGES.getString("DiscordBot." + DiscordBot.CONFIG.getString("DiscordBot.Messages.Locale") + ".Commands.Love.Lick.Command"))) {
-			if (COMMAND.length() > 4) {
-				NAME = COMMAND.substring(4);
-				MessageSender.sendCommand(CHANNEL, AUTHOR, "Love", "Lick.Message", "", NAME);
+		if (command.toLowerCase().startsWith(DiscordBot.messages.getString("DiscordBot." + DiscordBot.config.getString("DiscordBot.Messages.Locale") + ".Commands.Love.Lick.Command"))) {
+			if (command.length() > 4) {
+				name = command.substring(4);
+				MessageSender.sendCommand(channel, author, "Love", "Lick.Message", "", name);
 			} else {
-				MessageSender.sendCommand(CHANNEL, AUTHOR, "Love", "Lick.Invaild", "", NAME);
+				MessageSender.sendCommand(channel, author, "Love", "Lick.Invaild", "", name);
 			}
 		}
 		return;

@@ -1,6 +1,7 @@
 package io.github.lxgaming.discordbot.events;
 
 import io.github.lxgaming.discordbot.DiscordBot;
+import io.github.lxgaming.discordbot.util.DatabaseManager;
 import io.github.lxgaming.discordbot.util.MessageSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
@@ -11,36 +12,41 @@ import net.md_5.bungee.event.EventHandler;
 
 public class PlayerEvent implements Listener {
 	
-	private static Boolean PLAYERCHAT = DiscordBot.CONFIG.getBoolean("DiscordBot.Events.PlayerChat");
-	private static Boolean PLAYERJOIN = DiscordBot.CONFIG.getBoolean("DiscordBot.Events.PlayerJoin");
-	private static Boolean PLAYERQUIT = DiscordBot.CONFIG.getBoolean("DiscordBot.Events.PlayerQuit");
+	private static boolean forceChat = DiscordBot.config.getBoolean("DiscordBot.Messages.ForceChat");
+	private static boolean playerChat = DiscordBot.config.getBoolean("DiscordBot.Events.PlayerChat");
+	private static boolean playerJoin = DiscordBot.config.getBoolean("DiscordBot.Events.PlayerJoin");
+	private static boolean playerQuit = DiscordBot.config.getBoolean("DiscordBot.Events.PlayerQuit");
 	
 	@EventHandler
-	public void onPlayerChat(ChatEvent C) {
-		ProxiedPlayer PLAYER = (ProxiedPlayer) C.getSender();
+	public void onPlayerChat(ChatEvent event) {
+		ProxiedPlayer player = (ProxiedPlayer) event.getSender();
 		
-		if (C.isCommand() || C.isCancelled()) {
+		if (event.isCommand()) {
 			return;
 		}
 		
-		if (PLAYERCHAT == true && PLAYER.hasPermission("DiscordBot.GlobalChat")) {
-			MessageSender.sendMessage(C.getMessage(), PLAYER.getName(), PLAYER.getDisplayName(), PLAYER.getServer().getInfo().getName(), "Message", true, false, false);
+		if (event.isCancelled() == true && forceChat != true) {
+			return;
+		}
+		
+		if (playerChat == true && player.hasPermission("DiscordBot.GlobalChat") && !DatabaseManager.checkDatabase(player.getUniqueId().toString())) {
+			MessageSender.sendMessage(event.getMessage(), player.getName(), player.getDisplayName(), player.getServer().getInfo().getName(), "Message", true, false, false);
 		}
 		return;
 	}
 	
 	@EventHandler
-	public void onServerConnect(ServerConnectEvent SC) {
-		if (PLAYERJOIN == true) {
-			MessageSender.sendMessage("Joined", SC.getPlayer().getName(), SC.getPlayer().getDisplayName(), SC.getTarget().getName(), "Player.Join", true, false, false);
+	public void onServerConnect(ServerConnectEvent event) {
+		if (playerJoin == true) {
+			MessageSender.sendMessage("Joined", event.getPlayer().getName(), event.getPlayer().getDisplayName(), event.getTarget().getName(), "Player.Join", true, false, false);
 		}
 		return;
 	}
 	
 	@EventHandler
-	public void onServerDisconnect(ServerDisconnectEvent SD) {
-		if (PLAYERQUIT == true) {
-			MessageSender.sendMessage("Quit", SD.getPlayer().getName(), SD.getPlayer().getDisplayName(), SD.getPlayer().getServer().getInfo().getName(), "Player.Quit", true, false, false);
+	public void onServerDisconnect(ServerDisconnectEvent event) {
+		if (playerQuit == true) {
+			MessageSender.sendMessage("Quit", event.getPlayer().getName(), event.getPlayer().getDisplayName(), event.getPlayer().getServer().getInfo().getName(), "Player.Quit", true, false, false);
 		}
 		return;
 	}

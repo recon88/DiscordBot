@@ -12,63 +12,63 @@ import net.md_5.bungee.config.YamlConfiguration;
 
 public class BotListener extends ListenerAdapter {
 	
-	private static String GUILDID = DiscordBot.CONFIG.getString("DiscordBot.Credentials.Guild");
-	private static String BOTTEXTCHANNEL = DiscordBot.CONFIG.getString("DiscordBot.TextChannels.Bot");
+	private static String guildID = DiscordBot.config.getString("DiscordBot.Credentials.Guild");
+	private static String botTextChannel = DiscordBot.config.getString("DiscordBot.TextChannels.Bot");
 	
 	@Override
-	public void onDisconnect(DisconnectEvent D) {
-		if (DiscordBot.CONFIG.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
-			MessageSender.sendMessage("DiscordBot Disconnected", "", "", DiscordBot.API.getGuildById(GUILDID).getName(), "Disconnet", false, true, true);
+	public void onDisconnect(DisconnectEvent event) {
+		if (DiscordBot.config.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
+			MessageSender.sendMessage("DiscordBot Disconnected", "", "", DiscordBot.jda.getGuildById(guildID).getName(), "Disconnet", false, true, true);
 		}
 		return;
 	}
 	
 	@Override
-	public void onReady(ReadyEvent R) {
-		if (BOTTEXTCHANNEL.equals("") || BOTTEXTCHANNEL.contains("[a-zA-Z]+") == true) {
-			DiscordBot.INSTANCE.getLogger().severe("Please make sure you are using the Channel ID in the config");
-			DiscordBot.INSTANCE.getLogger().info("List of available TextChannels " + R.getJDA().getTextChannels());
+	public void onReady(ReadyEvent event) {
+		if (botTextChannel.equals("") || botTextChannel.contains("[a-zA-Z]+") == true) {
+			DiscordBot.instance.getLogger().severe("Please make sure you are using the Channel ID in the config");
+			DiscordBot.instance.getLogger().info("List of available TextChannels " + event.getJDA().getTextChannels());
 			return;
 		}
 		
-		if (GUILDID.equals("") || GUILDID.contains("[a-zA-Z]+") == true) {
-			DiscordBot.INSTANCE.getLogger().info("Setting Guild ID.");
-			DiscordBot.CONFIG.set("DiscordBot.Credentials.Guild", DiscordBot.API.getTextChannelById(BOTTEXTCHANNEL).getGuild().getId());
+		if (guildID.equals("") || guildID.contains("[a-zA-Z]+") == true) {
+			DiscordBot.instance.getLogger().info("Setting Guild ID.");
+			DiscordBot.config.set("DiscordBot.Credentials.Guild", DiscordBot.jda.getTextChannelById(botTextChannel).getGuild().getId());
 			try {
-				ConfigurationProvider.getProvider(YamlConfiguration.class).save(DiscordBot.CONFIG, DiscordBot.CONFIGFILE);
+				ConfigurationProvider.getProvider(YamlConfiguration.class).save(DiscordBot.config, DiscordBot.configFile);
 			} catch (Exception ex) {
-				DiscordBot.INSTANCE.getLogger().severe("Failed to save GuildID to Config!");
+				DiscordBot.instance.getLogger().severe("Failed to save GuildID to Config!");
 				return;
 			}
 		}
 		
-		if (DiscordBot.CONFIG.getBoolean("DiscordBot.Listeners.MainBot") == true) {
-			DiscordBot.API.addEventListener(new MessageListener());
-			DiscordBot.API.addEventListener(new UserListener());
-			DiscordBot.API.addEventListener(new VoiceListener());
-			if (DiscordBot.CONFIG.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
-				MessageSender.sendMessage("DiscordBot Connected", "", "", DiscordBot.API.getGuildById(GUILDID).getName(), "Ready", true, true, true);
+		if (DiscordBot.config.getBoolean("DiscordBot.Listeners.MainBot") == true) {
+			DiscordBot.jda.addEventListener(new MessageListener());
+			DiscordBot.jda.addEventListener(new UserListener());
+			DiscordBot.jda.addEventListener(new VoiceListener());
+			if (DiscordBot.config.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
+				MessageSender.sendMessage("DiscordBot Connected", "", "", DiscordBot.jda.getGuildById(guildID).getName(), "Ready", true, true, true);
 			}
 		} else {
-			if (DiscordBot.CONFIG.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
-				MessageSender.sendMessage("DiscordBot Connected Not running as Main!", "", "", DiscordBot.API.getGuildById(GUILDID).getName(), "Ready", true, true, true);
+			if (DiscordBot.config.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
+				MessageSender.sendMessage("DiscordBot Connected Not running as Main!", "", "", DiscordBot.jda.getGuildById(guildID).getName(), "Ready", true, true, true);
 			}
 		}
 		return;
 	}
 	
 	@Override
-	public void onReconnect(ReconnectedEvent R) {
-		if (DiscordBot.CONFIG.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
-			MessageSender.sendMessage("DiscordBot Reconnected", "", "", DiscordBot.API.getGuildById(GUILDID).getName(), "Reconnect", true, true, true);
+	public void onReconnect(ReconnectedEvent event) {
+		if (DiscordBot.config.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
+			MessageSender.sendMessage("DiscordBot Reconnected", "", "", DiscordBot.jda.getGuildById(guildID).getName(), "Reconnect", true, true, true);
 		}
 		return;
 	}
 	
 	@Override
-	public void onShutdown(ShutdownEvent S) {
-		if (DiscordBot.CONFIG.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
-			MessageSender.sendMessage("DiscordBot Shutdown", "", "", DiscordBot.API.getGuildById(GUILDID).getName(), "Shutdown", false, false, false);
+	public void onShutdown(ShutdownEvent event) {
+		if (DiscordBot.config.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
+			MessageSender.sendMessage("DiscordBot Shutdown", "", "", DiscordBot.jda.getGuildById(guildID).getName(), "Shutdown", false, false, false);
 		}
 		return;
 	}

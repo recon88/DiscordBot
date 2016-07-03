@@ -23,6 +23,8 @@ DiscordBot:
     # Should Messages be sent to Minecraft/Discord?
     SendInGame: true
     SendDiscord: true
+    # Set this to true if you want global chat messages to be sent to discord regardless of other chat plugins
+    ForceChat: false
   Listeners:
     # Turns on all the Event Listeners, Good if you have 2 Bots running. Wouldn't want double spam would we?
     MainBot: true

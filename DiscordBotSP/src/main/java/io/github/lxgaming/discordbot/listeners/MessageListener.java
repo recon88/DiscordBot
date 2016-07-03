@@ -14,32 +14,32 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 
 public class MessageListener extends ListenerAdapter {
 	
-	private static String GUILDID = DiscordBot.CONFIG.getString("DiscordBot.Credentials.Guild");
-	private static String INGAMETEXTCHANNEL = DiscordBot.CONFIG.getString("DiscordBot.TextChannels.InGame");
-	private static String COMMANDPREFIX = DiscordBot.CONFIG.getString("DiscordBot.Messages.CommandPrefix");
-	private static Boolean MAINBOT = DiscordBot.CONFIG.getBoolean("DiscordBot.Listeners.MainBot");
+	private static String guildID = DiscordBot.config.getString("DiscordBot.Credentials.Guild");
+	private static String inGameTextChannel = DiscordBot.config.getString("DiscordBot.TextChannels.InGame");
+	private static String commandPrefix = DiscordBot.config.getString("DiscordBot.Messages.CommandPrefix");
+	private static boolean mainBot = DiscordBot.config.getBoolean("DiscordBot.Listeners.MainBot");
 	
 	@Override
 	public void onMessageReceived(MessageReceivedEvent MR) {
-		TextChannel CHANNEL = MR.getTextChannel();
-		Message MESSAGE = MR.getMessage();
-		User AUTHOR = MR.getAuthor();
+		TextChannel channel = MR.getTextChannel();
+		Message message = MR.getMessage();
+		User author = MR.getAuthor();
 		
 		if (MR.isPrivate()) {
 			return;
 		}
 		
-		if ((MESSAGE.getContent().startsWith(COMMANDPREFIX) || MESSAGE.getContent().startsWith("/")) && (!AUTHOR.getId().equals(DiscordBot.API.getSelfInfo().getId()) && MAINBOT == true)) {
-			String COMMAND = MESSAGE.getContent().substring(COMMANDPREFIX.length());
-			BotCommand.bot(CHANNEL, COMMAND, AUTHOR);
-			FunCommand.fun(CHANNEL, COMMAND, AUTHOR);
-			LoveCommand.love(CHANNEL, COMMAND, AUTHOR);
-			ServerCommand.server(CHANNEL, COMMAND, AUTHOR);
+		if ((message.getContent().startsWith(commandPrefix) || message.getContent().startsWith("/")) && (!author.getId().equals(DiscordBot.jda.getSelfInfo().getId()) && mainBot == true)) {
+			String command = message.getContent().substring(commandPrefix.length());
+			BotCommand.bot(channel, command, author);
+			FunCommand.fun(channel, command, author);
+			LoveCommand.love(channel, command, author);
+			ServerCommand.server(channel, command, author);
 			return;
 		}
 		
-		if (CHANNEL.getId().equals(INGAMETEXTCHANNEL) && !AUTHOR.getId().equals(DiscordBot.API.getSelfInfo().getId())) {
-			MessageSender.sendMessage(MESSAGE.getContent(), AUTHOR.getUsername(), DiscordBot.API.getGuildById(GUILDID).getNicknameForUser(AUTHOR), CHANNEL.getName(), "Message", false, true, true);
+		if (channel.getId().equals(inGameTextChannel) && !author.getId().equals(DiscordBot.jda.getSelfInfo().getId())) {
+			MessageSender.sendMessage(message.getContent(), author.getUsername(), DiscordBot.jda.getGuildById(guildID).getNicknameForUser(author), channel.getName(), "Message", false, true, true);
 			return;
 		}
 		return;

@@ -9,47 +9,49 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import io.github.lxgaming.discordbot.DiscordBot;
+import io.github.lxgaming.discordbot.util.DatabaseManager;
 import io.github.lxgaming.discordbot.util.MessageSender;
 
 public class PlayerEvent implements Listener {
 	
-	private static Boolean PLAYERCHAT = DiscordBot.CONFIG.getBoolean("DiscordBot.Events.PlayerChat");
-	private static Boolean PLAYERJOIN = DiscordBot.CONFIG.getBoolean("DiscordBot.Events.PlayerJoin");
-	private static Boolean PLAYERQUIT = DiscordBot.CONFIG.getBoolean("DiscordBot.Events.PlayerQuit");
-	private static Boolean PLAYERDEATH = DiscordBot.CONFIG.getBoolean("DiscordBot.Events.PlayerDeath");
+	private static boolean forceChat = DiscordBot.config.getBoolean("DiscordBot.Messages.ForceChat");
+	private static boolean playerChat = DiscordBot.config.getBoolean("DiscordBot.Events.PlayerChat");
+	private static boolean playerJoin = DiscordBot.config.getBoolean("DiscordBot.Events.PlayerJoin");
+	private static boolean playerQuit = DiscordBot.config.getBoolean("DiscordBot.Events.PlayerQuit");
+	private static boolean playerDeath = DiscordBot.config.getBoolean("DiscordBot.Events.PlayerDeath");
 	
 	@EventHandler(priority = EventPriority.MONITOR)
-	public void onPlayerChat(AsyncPlayerChatEvent APC) {
-		if (APC.isCancelled()) {
+	public void onPlayerChat(AsyncPlayerChatEvent event) {
+		if (event.isCancelled() == true && forceChat != true) {
 			return;
 		}
 		
-		if (PLAYERCHAT == true && APC.getPlayer().hasPermission("DiscordBot.GlobalChat")) {
-			MessageSender.sendMessage(APC.getMessage(), APC.getPlayer().getName(), APC.getPlayer().getDisplayName(), APC.getPlayer().getServer().getServerName(), "Message", true, false, false);
+		if (playerChat == true && event.getPlayer().hasPermission("DiscordBot.GlobalChat") && !DatabaseManager.checkDatabase(event.getPlayer().getUniqueId().toString())) {
+			MessageSender.sendMessage(event.getMessage(), event.getPlayer().getName(), event.getPlayer().getDisplayName(), event.getPlayer().getServer().getServerName(), "Message", true, false, false);
 		}
 		return;
 	}
 	
 	@EventHandler(priority = EventPriority.MONITOR)
-	public void onPlayerJoin(PlayerJoinEvent PJ) {
-		if (PLAYERJOIN == true) {
-			MessageSender.sendMessage("Joined", PJ.getPlayer().getName(), PJ.getPlayer().getDisplayName(), PJ.getPlayer().getServer().getServerName(), "Player.Join", true, false, false);
+	public void onPlayerJoin(PlayerJoinEvent event) {
+		if (playerJoin == true) {
+			MessageSender.sendMessage("Joined", event.getPlayer().getName(), event.getPlayer().getDisplayName(), event.getPlayer().getServer().getServerName(), "Player.Join", true, false, false);
 		}
 		return;
 	}
 	
 	@EventHandler(priority = EventPriority.MONITOR)
-	public void onPlayerQuit(PlayerQuitEvent PQ) {
-		if (PLAYERQUIT == true) {
-			MessageSender.sendMessage("Quit", PQ.getPlayer().getName(), PQ.getPlayer().getDisplayName(), PQ.getPlayer().getServer().getServerName(), "Player.Quit", true, false, false);
+	public void onPlayerQuit(PlayerQuitEvent event) {
+		if (playerQuit == true) {
+			MessageSender.sendMessage("Quit", event.getPlayer().getName(), event.getPlayer().getDisplayName(), event.getPlayer().getServer().getServerName(), "Player.Quit", true, false, false);
 		}
 		return;
 	}
 	
 	@EventHandler(priority = EventPriority.MONITOR)
-	public void onPlayerDeath(PlayerDeathEvent PD) {
-		if (PLAYERDEATH == true) {
-			MessageSender.sendMessage(PD.getDeathMessage(), PD.getEntity().getName(), PD.getEntity().getDisplayName(), PD.getEntity().getServer().getServerName(), "Player.Death", true, false, false);
+	public void onPlayerDeath(PlayerDeathEvent event) {
+		if (playerDeath == true) {
+			MessageSender.sendMessage(event.getDeathMessage(), event.getEntity().getName(), event.getEntity().getDisplayName(), event.getEntity().getServer().getServerName(), "Player.Death", true, false, false);
 		}
 		return;
 	}

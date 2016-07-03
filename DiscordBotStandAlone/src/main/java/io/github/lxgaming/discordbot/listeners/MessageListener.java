@@ -12,28 +12,28 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 
 public class MessageListener extends ListenerAdapter {
 	
-	private static String COMMANDPREFIX = DiscordBot.CONFIG.getString("CommandPrefix");
-	private static String CONSOLEOUTPUT = DiscordBot.CONFIG.getString("ConsoleOutput");
+	private static String commandPrefix = DiscordBot.config.getString("CommandPrefix");
+	private static String consoleOutput = DiscordBot.config.getString("ConsoleOutput");
 	
 	@Override
-	public void onMessageReceived(MessageReceivedEvent MR) {
-		TextChannel CHANNEL = MR.getTextChannel();
-		Message MESSAGE = MR.getMessage();
-		User AUTHOR = MR.getAuthor();
+	public void onMessageReceived(MessageReceivedEvent event) {
+		TextChannel channel = event.getTextChannel();
+		Message message = event.getMessage();
+		User author = event.getAuthor();
 		
-		if (AUTHOR.getId().equals(DiscordBot.API.getSelfInfo().getId())) {
+		if (author.getId().equals(DiscordBot.jda.getSelfInfo().getId())) {
 			return;
 		}
 		
-		if ((MESSAGE.getContent().startsWith(COMMANDPREFIX) || MESSAGE.getContent().startsWith("/")) && !AUTHOR.getId().equals(DiscordBot.API.getSelfInfo().getId())) {
-			String COMMAND = MESSAGE.getContent().substring(COMMANDPREFIX.length());
-			BotCommand.bot(CHANNEL, COMMAND, AUTHOR);
-			FunCommand.fun(CHANNEL, COMMAND, AUTHOR);
-			LoveCommand.love(CHANNEL, COMMAND, AUTHOR);
+		if ((message.getContent().startsWith(commandPrefix) || message.getContent().startsWith("/")) && !author.getId().equals(DiscordBot.jda.getSelfInfo().getId())) {
+			String command = message.getContent().substring(commandPrefix.length());
+			BotCommand.bot(channel, command, author);
+			FunCommand.fun(channel, command, author);
+			LoveCommand.love(channel, command, author);
 		}
 		
-		if (CONSOLEOUTPUT.equalsIgnoreCase("true")) {
-			System.out.println(AUTHOR.getUsername() + ": " + MESSAGE.getContent());
+		if (consoleOutput.equalsIgnoreCase("true")) {
+			System.out.println(author.getUsername() + ": " + message.getContent());
 		}
 		return;
 	}
