@@ -18,3 +18,5 @@ permissions:
     description: Send messages to Discord via global chat.
   DiscordBot.ReceiveDiscordChat:
     description: Receive Discord messages ingame.
+  DiscordBot.Silent:
+    description: Players with this permission won't trigger events.

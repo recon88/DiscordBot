@@ -18,7 +18,7 @@ public class BotListener extends ListenerAdapter {
 	@Override
 	public void onDisconnect(DisconnectEvent event) {
 		if (DiscordBot.config.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
-			MessageSender.sendMessage("DiscordBot Disconnected", "", "", DiscordBot.jda.getGuildById(guildID).getName(), "Disconnet", false, true, true);
+			MessageSender.sendMessage("DiscordBot Disconnected", "", "", DiscordBot.jda.getGuildById(guildID).getName(), "Disconnect", false, true, true);
 		}
 		return;
 	}
@@ -67,9 +67,6 @@ public class BotListener extends ListenerAdapter {
 	
 	@Override
 	public void onShutdown(ShutdownEvent event) {
-		if (DiscordBot.config.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
-			MessageSender.sendMessage("DiscordBot Shutdown", "", "", DiscordBot.jda.getGuildById(guildID).getName(), "Shutdown", false, false, false);
-		}
 		return;
 	}
 }

@@ -23,8 +23,8 @@ public class DiscordBot extends JavaPlugin {
 	public static FileConfiguration config, database, messages;
 	public static File configFile, databaseFile, messagesFile;
 	public static JDA jda;
-	public static String dbVersion = "0.7.0 ('Golden Bay')";
-	public static String jdaVersion = "JDA v2.1.1, Build 300 - Recompiled";
+	public static String dbVersion = "0.7.1 ('Golden Bay')";
+	public static String jdaVersion = "JDA v2.1.3 - Recompiled";
 	
 	@Override
 	public void onEnable() {
@@ -40,10 +40,10 @@ public class DiscordBot extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
-		instance = null;
 		if (jda != null) {
 			jda.shutdown(true);
 		}
+		instance = null;
 		getLogger().info("DiscordBot has stopped!");
 	}
 	
@@ -53,6 +53,7 @@ public class DiscordBot extends JavaPlugin {
 					.setBotToken(config.getString("DiscordBot.Credentials.BotToken"))
 					.addListener(new BotListener())
 					.setAudioEnabled(false)
+					.setBulkDeleteSplittingEnabled(false)
 					.buildAsync();
 		} catch (Exception ex) {
 			ex.printStackTrace();

@@ -34,7 +34,7 @@ public class PlayerEvent implements Listener {
 	
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		if (playerJoin == true) {
+		if (playerJoin == true && !event.getPlayer().hasPermission("DiscordBot.Silent")) {
 			MessageSender.sendMessage("Joined", event.getPlayer().getName(), event.getPlayer().getDisplayName(), event.getPlayer().getServer().getServerName(), "Player.Join", true, false, false);
 		}
 		return;
@@ -42,7 +42,7 @@ public class PlayerEvent implements Listener {
 	
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerQuit(PlayerQuitEvent event) {
-		if (playerQuit == true) {
+		if (playerQuit == true && !event.getPlayer().hasPermission("DiscordBot.Silent")) {
 			MessageSender.sendMessage("Quit", event.getPlayer().getName(), event.getPlayer().getDisplayName(), event.getPlayer().getServer().getServerName(), "Player.Quit", true, false, false);
 		}
 		return;
@@ -50,7 +50,7 @@ public class PlayerEvent implements Listener {
 	
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerDeath(PlayerDeathEvent event) {
-		if (playerDeath == true) {
+		if (playerDeath == true && !event.getEntity().hasPermission("DiscordBot.Silent")) {
 			MessageSender.sendMessage(event.getDeathMessage(), event.getEntity().getName(), event.getEntity().getDisplayName(), event.getEntity().getServer().getServerName(), "Player.Death", true, false, false);
 		}
 		return;

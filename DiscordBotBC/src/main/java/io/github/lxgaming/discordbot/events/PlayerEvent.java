@@ -37,7 +37,7 @@ public class PlayerEvent implements Listener {
 	
 	@EventHandler
 	public void onServerConnect(ServerConnectEvent event) {
-		if (playerJoin == true) {
+		if (playerJoin == true && !event.getPlayer().hasPermission("DiscordBot.Silent")) {
 			MessageSender.sendMessage("Joined", event.getPlayer().getName(), event.getPlayer().getDisplayName(), event.getTarget().getName(), "Player.Join", true, false, false);
 		}
 		return;
@@ -45,7 +45,7 @@ public class PlayerEvent implements Listener {
 	
 	@EventHandler
 	public void onServerDisconnect(ServerDisconnectEvent event) {
-		if (playerQuit == true) {
+		if (playerQuit == true && !event.getPlayer().hasPermission("DiscordBot.Silent")) {
 			MessageSender.sendMessage("Quit", event.getPlayer().getName(), event.getPlayer().getDisplayName(), event.getPlayer().getServer().getInfo().getName(), "Player.Quit", true, false, false);
 		}
 		return;

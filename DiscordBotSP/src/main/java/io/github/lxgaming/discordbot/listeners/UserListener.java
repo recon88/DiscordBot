@@ -12,8 +12,8 @@ public class UserListener extends ListenerAdapter {
 	
 	private static String guildID = DiscordBot.config.getString("DiscordBot.Credentials.Guild");
 	private static boolean userAvatarUpdate = DiscordBot.config.getBoolean("DiscordBot.Listeners.UserAvatarUpdate");
-	private static boolean userNameUpdate = DiscordBot.config.getBoolean("DiscordBot.Listeners.UserNameUpdate");
 	private static boolean userGameUpdate = DiscordBot.config.getBoolean("DiscordBot.Listeners.UserGameUpdate");
+	private static boolean userNameUpdate = DiscordBot.config.getBoolean("DiscordBot.Listeners.UserNameUpdate");
 	private static boolean userOnlineStatusUpdate = DiscordBot.config.getBoolean("DiscordBot.Listeners.UserOnlineStatusUpdate");
 	
 	@Override
@@ -26,15 +26,15 @@ public class UserListener extends ListenerAdapter {
 	
 	@Override
 	public void onUserGameUpdate(UserGameUpdateEvent event) {
-		if ((userNameUpdate == true) && !(event.getUser().getCurrentGame() == null)) {
-			MessageSender.sendMessage(event.getUser().getCurrentGame().getName(), event.getUser().getUsername(),DiscordBot.jda.getGuildById(guildID).getNicknameForUser(event.getUser()), DiscordBot.jda.getGuildById(guildID).getName(), "UserGameUpdate", true, true, false);
+		if (userGameUpdate == true && event.getUser().getCurrentGame() != null) {
+			MessageSender.sendMessage(event.getUser().getCurrentGame().getName(), event.getUser().getUsername(), DiscordBot.jda.getGuildById(guildID).getNicknameForUser(event.getUser()), DiscordBot.jda.getGuildById(guildID).getName(), "UserGameUpdate", true, true, false);
 		}
 		return;
 	}
 	
 	@Override
 	public void onUserNameUpdate(UserNameUpdateEvent event) {
-		if (userGameUpdate == true) {
+		if (userNameUpdate == true) {
 			MessageSender.sendMessage(event.getUser().getUsername(), event.getPreviousUsername(), DiscordBot.jda.getGuildById(guildID).getNicknameForUser(event.getUser()), DiscordBot.jda.getGuildById(guildID).getName(), "UserNameUpdate", true, true, false);
 		}
 		return;

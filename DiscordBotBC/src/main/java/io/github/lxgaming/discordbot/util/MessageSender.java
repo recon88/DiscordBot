@@ -17,22 +17,28 @@ public class MessageSender {
 	private static boolean sendConsole = DiscordBot.config.getBoolean("DiscordBot.Messages.ConsoleOutput");
 	
 	public static void sendMessage(String message, String user, String userNick, String server, String format, boolean discord, boolean inGame, boolean console) {
-		if (userNick == null || userNick.equals("")) {
-			userNick = user;
-		}
-		if (discord == true && sendDiscord == true) {
-			if (!DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".DiscordFormat").equals("") || !DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".DiscordFormat").equals("null")) {
-				sendMessageDiscord(message, user, userNick, server, format);
+		DiscordBot.instance.getProxy().getScheduler().runAsync(DiscordBot.instance, new Runnable() {
+			@Override
+			public void run() {
+				String userNickname = userNick;
+				if (userNickname == null || userNickname.equals("")) {
+					userNickname = user;
+				}
+				if (discord == true && sendDiscord == true) {
+					if (!DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".DiscordFormat").equals("") || !DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".DiscordFormat").equals("null")) {
+						sendMessageDiscord(message, user, userNickname, server, format);
+					}
+				}
+				if (inGame == true && sendInGame == true) {
+					if (!DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".InGameFormat").equals("") || !DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".InGameFormat").equals("null")) {
+						sendMessageInGame(message, user, userNickname, server, format);
+					}
+				}
+				if (console == true && sendConsole == true) {
+					sendMessageConsole(message, user, server);
+				}
 			}
-		}
-		if (inGame == true && sendInGame == true) {
-			if (!DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".InGameFormat").equals("") || !DiscordBot.messages.getString("DiscordBot." + locale + "." + format + ".InGameFormat").equals("null")) {
-				sendMessageInGame(message, user, userNick, server, format);
-			}
-		}
-		if (console == true && sendConsole == true) {
-			sendMessageConsole(message, user, server);
-		}
+		});
 	}
 	
 	public static void sendCommand(TextChannel channel, User author, String group, String command, String number, String name) {

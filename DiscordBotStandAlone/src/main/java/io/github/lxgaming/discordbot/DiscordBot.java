@@ -13,8 +13,8 @@ public class DiscordBot {
 	
 	public static JSONObject config = Configuration.loadConfig();
 	public static JDA jda;
-	public static String dbVersion = "0.7.0 ('Golden Bay')";
-	public static String jdaVersion = "JDA v2.1.1, Build 300 - Recompiled";
+	public static String dbVersion = "0.7.1 ('Golden Bay')";
+	public static String jdaVersion = "JDA v2.1.3 - Recompiled";
 	
 	public static void main(String[] args) {
 		System.out.println("DiscordBot v" + dbVersion);

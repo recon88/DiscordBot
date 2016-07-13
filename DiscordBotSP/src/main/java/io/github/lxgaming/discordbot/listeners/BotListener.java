@@ -14,18 +14,18 @@ public class BotListener extends ListenerAdapter {
 	private static String botTextChannel = DiscordBot.config.getString("DiscordBot.TextChannels.Bot");
 	
 	@Override
-	public void onDisconnect(DisconnectEvent D) {
+	public void onDisconnect(DisconnectEvent event) {
 		if (DiscordBot.config.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
-			MessageSender.sendMessage("DiscordBot Disconnected", "", "", DiscordBot.jda.getGuildById(guildID).getName(), "Disconnet", false, true, true);
+			MessageSender.sendMessage("DiscordBot Disconnected", "", "", DiscordBot.jda.getGuildById(guildID).getName(), "Disconnect", false, true, true);
 		}
 		return;
 	}
 	
 	@Override
-	public void onReady(ReadyEvent R) {
+	public void onReady(ReadyEvent event) {
 		if (botTextChannel.equals("") || botTextChannel.contains("[a-zA-Z]+") == true) {
 			DiscordBot.instance.getLogger().severe("Please make sure you are using the Channel ID in the config");
-			DiscordBot.instance.getLogger().info("List of available TextChannels " + R.getJDA().getTextChannels());
+			DiscordBot.instance.getLogger().info("List of available TextChannels " + event.getJDA().getTextChannels());
 			return;
 		}
 		
@@ -56,7 +56,7 @@ public class BotListener extends ListenerAdapter {
 	}
 	
 	@Override
-	public void onReconnect(ReconnectedEvent R) {
+	public void onReconnect(ReconnectedEvent event) {
 		if (DiscordBot.config.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
 			MessageSender.sendMessage("DiscordBot Reconnected", "", "", DiscordBot.jda.getGuildById(guildID).getName(), "Reconnect", true, true, true);
 		}
@@ -64,10 +64,7 @@ public class BotListener extends ListenerAdapter {
 	}
 	
 	@Override
-	public void onShutdown(ShutdownEvent S) {
-		if (DiscordBot.config.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
-			MessageSender.sendMessage("DiscordBot Shutdown", "", "", DiscordBot.jda.getGuildById(guildID).getName(), "Shutdown", false, false, false);
-		}
+	public void onShutdown(ShutdownEvent event) {
 		return;
 	}
 }
