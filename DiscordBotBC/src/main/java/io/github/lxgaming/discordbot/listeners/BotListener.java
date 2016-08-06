@@ -42,17 +42,12 @@ public class BotListener extends ListenerAdapter {
 			}
 		}
 		
-		if (DiscordBot.config.getBoolean("DiscordBot.Listeners.MainBot") == true) {
-			DiscordBot.jda.addEventListener(new MessageListener());
-			DiscordBot.jda.addEventListener(new UserListener());
-			DiscordBot.jda.addEventListener(new VoiceListener());
-			if (DiscordBot.config.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
-				MessageSender.sendMessage("DiscordBot Connected", "", "", DiscordBot.jda.getGuildById(guildID).getName(), "Ready", true, true, true);
-			}
-		} else {
-			if (DiscordBot.config.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
-				MessageSender.sendMessage("DiscordBot Connected Not running as Main!", "", "", DiscordBot.jda.getGuildById(guildID).getName(), "Ready", true, true, true);
-			}
+		DiscordBot.jda.addEventListener(new MessageListener());
+		DiscordBot.jda.addEventListener(new UserListener());
+		DiscordBot.jda.addEventListener(new VoiceListener());
+		
+		if (DiscordBot.config.getBoolean("DiscordBot.Messages.ConnectionMessage") == true) {
+			MessageSender.sendMessage("DiscordBot Connected", "", "", DiscordBot.jda.getGuildById(guildID).getName(), "Ready", true, true, true);
 		}
 		return;
 	}

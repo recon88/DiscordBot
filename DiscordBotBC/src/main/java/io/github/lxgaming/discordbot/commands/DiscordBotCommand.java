@@ -25,6 +25,7 @@ public class DiscordBotCommand extends Command {
 			sender.sendMessage(new ComponentBuilder(" - ").color(ChatColor.GOLD).append("/discordbot <toggle / t>").color(ChatColor.AQUA).create());
 			sender.sendMessage(new ComponentBuilder(" - ").color(ChatColor.GOLD).append("/discordchat + /dcc").color(ChatColor.AQUA).create());
 			sender.sendMessage(new ComponentBuilder("===== ").color(ChatColor.GOLD).append("Permissions").color(ChatColor.GREEN).append(" =====").color(ChatColor.GOLD).create());
+			sender.sendMessage(new ComponentBuilder(" - ").color(ChatColor.GOLD).append("DiscordBot.Silent").color(ChatColor.AQUA).create());
 			sender.sendMessage(new ComponentBuilder(" - ").color(ChatColor.GOLD).append("DiscordBot.CommandChat").color(ChatColor.AQUA).create());
 			sender.sendMessage(new ComponentBuilder(" - ").color(ChatColor.GOLD).append("DiscordBot.GlobalChat").color(ChatColor.AQUA).create());
 			sender.sendMessage(new ComponentBuilder(" - ").color(ChatColor.GOLD).append("DiscordBot.ReceiveDiscordChat").color(ChatColor.AQUA).create());

@@ -20,12 +20,12 @@ public class MessageListener extends ListenerAdapter {
 	private static boolean mainBot = DiscordBot.config.getBoolean("DiscordBot.Listeners.MainBot");
 	
 	@Override
-	public void onMessageReceived(MessageReceivedEvent MR) {
-		TextChannel channel = MR.getTextChannel();
-		Message message = MR.getMessage();
-		User author = MR.getAuthor();
+	public void onMessageReceived(MessageReceivedEvent event) {
+		TextChannel channel = event.getTextChannel();
+		Message message = event.getMessage();
+		User author = event.getAuthor();
 		
-		if (MR.isPrivate()) {
+		if (event.isPrivate()) {
 			return;
 		}
 		

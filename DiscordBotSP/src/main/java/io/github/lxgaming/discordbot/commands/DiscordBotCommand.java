@@ -25,6 +25,7 @@ public class DiscordBotCommand implements CommandExecutor {
 			sender.sendMessage(ChatColor.GOLD + "- " + ChatColor.AQUA + "/discordbot <toggle / t>");
 			sender.sendMessage(ChatColor.GOLD + "- " + ChatColor.AQUA + "/discordchat + /dcc");
 			sender.sendMessage(ChatColor.GOLD + "===== " + ChatColor.GREEN + "Permissions" + ChatColor.GOLD + " ===== ");
+			sender.sendMessage(ChatColor.GOLD + "- " + ChatColor.AQUA + "DiscordBot.Silent");
 			sender.sendMessage(ChatColor.GOLD + "- " + ChatColor.AQUA + "DiscordBot.CommandChat");
 			sender.sendMessage(ChatColor.GOLD + "- " + ChatColor.AQUA + "DiscordBot.GlobalChat");
 			sender.sendMessage(ChatColor.GOLD + "- " + ChatColor.AQUA + "DiscordBot.ReceiveDiscordChat");

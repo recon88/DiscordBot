@@ -21,7 +21,7 @@ public class PlayerEvent implements Listener {
 	public void onPlayerChat(ChatEvent event) {
 		ProxiedPlayer player = (ProxiedPlayer) event.getSender();
 		
-		if (event.isCommand()) {
+		if (event.isCommand() == true) {
 			return;
 		}
 		
