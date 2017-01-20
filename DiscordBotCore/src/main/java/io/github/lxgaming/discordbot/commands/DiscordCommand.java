@@ -35,8 +35,8 @@ public class DiscordCommand {
 		}
 		
 		//Make this a message?
-		DiscordBotCore.getInstance().getEventManager().onCommandReceived(new Message()
-				.setChannel(channel.getId())
-				.setFormat(DiscordBotCore.));
+		//DiscordBotCore.getInstance().getEventManager().onCommandReceived(new Message()
+		//		.setChannel(channel.getId())
+		//		.setFormat(DiscordBotCore.));
 	}
 }
