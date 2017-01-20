@@ -1,85 +1,53 @@
+/*
+ * Copyright 2017 Alex Thomson
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.github.lxgaming.discordbot.commands;
 
 import io.github.lxgaming.discordbot.DiscordBot;
-import io.github.lxgaming.discordbot.util.Environment;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
+import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.TextChannel;
 
-public class BotCommand {
+public class BotCommand implements ICommand {
 	
-	private static String commandPrefix = DiscordBot.config.getString("CommandPrefix");
-	
-	public static void bot(TextChannel channel, String command, User author) {
-		if (command.equalsIgnoreCase("ping")) {
-			channel.sendMessage("Pong!");
+	@Override
+	public boolean execute(TextChannel textChannel, Member member, Message message) {
+		String command = message.getContent().substring(DiscordBot.getInstance().getConfiguration().getClient().getCommandPrefix().length());
+		
+		if (command.equalsIgnoreCase("djhelp")) {
+			StringBuilder stringBuilder = new StringBuilder();
+			stringBuilder.append("DJHelp: (CommandPrefix: ``" + DiscordBot.getInstance().getConfiguration().getClient().getCommandPrefix() + "``)\n");
+			stringBuilder.append("  Music:``Join <Channel>, Play <URL>, Resume, Pause, Volume [Volume], Skip, Clear, NowPlaying``\n");
+			stringBuilder.append("  Bot:``Info``\n");
+			stringBuilder.append("  <> = Required Argument, [] = Optional Argument\n");
+			DiscordBot.getInstance().getMessageSender().sendMessage(textChannel.getId(), member.getEffectiveName(), member.getNickname(), stringBuilder.toString().trim());
+			return true;
 		}
 		
-		if (command.equalsIgnoreCase("botinfo")) {
-			channel.sendMessage("DiscordStandAlone, Version " + DiscordBot.dbVersion + ", Created by LX_Gaming\nAPI - " + DiscordBot.jdaVersion + "\nOS - " + Environment.getOS() + ", Java - " + Environment.getJavaVersion());
+		if (command.equalsIgnoreCase("info")) {
+			StringBuilder stringBuilder = new StringBuilder();
+			stringBuilder.append(DiscordBot.getInstance().getConfiguration().getVersion() + "\n");
+			stringBuilder.append("  Author - ``LX_Gaming``\n");
+			stringBuilder.append("  Source - ``https://github.com/LXGaming/DiscordBot/``\n");
+			stringBuilder.append("  Dependencies:\n");
+			stringBuilder.append("    ``" + DiscordBot.getInstance().getConfiguration().getJDAVersion() + "``\n");
+			stringBuilder.append("    ``" + DiscordBot.getInstance().getConfiguration().getLavaPlayerVersion() + "``\n");
+			DiscordBot.getInstance().getMessageSender().sendMessage(textChannel.getId(), member.getEffectiveName(), member.getNickname(), stringBuilder.toString().trim());
+			return true;
 		}
-		
-		if (command.equalsIgnoreCase("restartbot")) {
-			if (author.getId().equals(DiscordBot.config.getString("OwnerID"))) {
-				channel.sendMessage("Attempting Restart...");
-				Environment.restartBot();
-				return;
-			}
-			channel.sendMessage("You are not permitted to use this command!");
-		}
-		
-		if (command.equalsIgnoreCase("request")) {
-			channel.sendMessage("*https://trello.com/c/DGx9tron* \nComment with your Request!");
-		}
-		
-		if (command.equalsIgnoreCase("website")) {
-			channel.sendMessage("*http://lxgaming.github.io/*");
-		}
-		
-		if (command.startsWith("bothelp")) {
-			String helpOption = command.substring(7).trim();
-			if (helpOption.equalsIgnoreCase("bot")) {
-				channel.sendMessage(""
-						+ "`" + commandPrefix + "ping`\n" 
-						+ "		Ping the bot.\n"
-						+ "`" + commandPrefix + "botinfo`\n" 
-						+ "		Display bot information.\n"
-						+ "`" + commandPrefix + "request`\n" 
-						+ "		Request a feature.\n"
-						+ "`" + commandPrefix + "website`\n" 
-						+ "		Link to LX's website.\n");
-				return;
-			} else if (helpOption.equalsIgnoreCase("fun")) {
-				channel.sendMessage(""
-						+ "`" + commandPrefix + "number`\n" 
-						+ "		What's your lucky number?\n"
-						+ "`" + commandPrefix + "roll`\n" 
-						+ "		Roll the dice.\n"
-						+ "`" + commandPrefix + "coin`\n" 
-						+ "		Flip a coin.\n"
-						+ "`" + commandPrefix + "version`\n" 
-						+ "		All the versions.\n");
-				return;
-			} else if (helpOption.equalsIgnoreCase("love")) {
-				channel.sendMessage(""
-						+ "`" + commandPrefix + "kiss`\n" 
-						+ "		Kiss your loved one.\n"
-						+ "`" + commandPrefix + "hug`\n" 
-						+ "		Embrace another.\n"
-						+ "`" + commandPrefix + "slap`\n" 
-						+ "		Slap a user!\n"
-						+ "`" + commandPrefix + "lick`\n" 
-						+ "		Claim it as yours!\n");
-				return;
-			} else {
-				channel.sendMessage(""
-						+ "`" + commandPrefix + "bothelp bot`\n" 
-						+ "		List bot commands.\n"
-						+ "`" + commandPrefix + "bothelp fun`\n" 
-						+ "		List fun commands.\n"
-						+ "`" + commandPrefix + "bothelp love`\n" 
-						+ "		List love commands.\n");
-			}
-		}
-		return;
+		return false;
 	}
 }
