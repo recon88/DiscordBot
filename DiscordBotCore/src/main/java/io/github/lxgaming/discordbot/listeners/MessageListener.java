@@ -39,13 +39,9 @@ public class MessageListener extends ListenerAdapter {
 			return;
 		}
 		
-		if (DiscordBotCore.getInstance().getChannelManager().getChannelName(event.getTextChannel().getId()) == null) {
-			return;
-		}
-		
 		DiscordBotCore.getInstance().getMessageSender().sendMessage(new Message()
 				.setChannel(event.getChannel().getId())
-				.setFormat(DiscordBotCore.getInstance().getConfiguration().getChannelFormat().get("InGame"))
+				.setFormat(DiscordBotCore.getInstance().getConfiguration().getChannelFormat().get(DiscordBotCore.getInstance().getChannelManager().getChannelName(event.getTextChannel().getId())))
 				.setName(event.getMember().getEffectiveName())
 				.setNick(event.getMember().getNickname())
 				.setServer(event.getChannel().getName())

@@ -34,9 +34,11 @@ public class DiscordCommand {
 			return;
 		}
 		
-		//Make this a message?
-		//DiscordBotCore.getInstance().getEventManager().onCommandReceived(new Message()
-		//		.setChannel(channel.getId())
-		//		.setFormat(DiscordBotCore.));
+		DiscordBotCore.getInstance().getEventManager().onCommandReceived(new Message()
+				.setChannel(channel.getId())
+				.setFormat(DiscordBotCore.getInstance().getConfiguration().getCommandFormat().get(command.split(" ")[0]))
+				.setName(member.getEffectiveName())
+				.setNick(member.getNickname())
+				.setMessage(command));
 	}
 }

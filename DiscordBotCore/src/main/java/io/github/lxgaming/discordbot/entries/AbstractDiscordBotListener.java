@@ -26,15 +26,7 @@ public abstract class AbstractDiscordBotListener {
 		return;
 	}
 	
-	public boolean onCommandReceived(Command command) {
-		return false;
-	}
-	
-	public void onChannelUpdate() {
-		return;
-	}
-	
-	public void onConfigUpdate() {
+	public void onCommandReceived(Message message) {
 		return;
 	}
 	

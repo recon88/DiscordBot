@@ -56,22 +56,6 @@ public class EventManager extends AbstractDiscordBotListener {
 	}
 	
 	@Override
-	public void onChannelUpdate() {
-		for (Iterator<AbstractDiscordBotListener> iterator = getListeners().iterator(); iterator.hasNext();) {
-			AbstractDiscordBotListener listener = iterator.next();
-			listener.onChannelUpdate();
-		}
-	}
-	
-	@Override
-	public void onConfigUpdate() {
-		for (Iterator<AbstractDiscordBotListener> iterator = getListeners().iterator(); iterator.hasNext();) {
-			AbstractDiscordBotListener listener = iterator.next();
-			listener.onConfigUpdate();
-		}
-	}
-	
-	@Override
 	public void onDatabaseUpdate() {
 		for (Iterator<AbstractDiscordBotListener> iterator = getListeners().iterator(); iterator.hasNext();) {
 			AbstractDiscordBotListener listener = iterator.next();

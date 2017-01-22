@@ -56,8 +56,9 @@ public class DiscordBotConfiguration {
 	private HashMap<String, MessageFormat> userOnlineStatusUpdateFormat;
 	private HashMap<String, MessageFormat> voiceDeafenFormat;
 	private HashMap<String, MessageFormat> voiceMuteFormat;
-	private HashMap<String, MessageFormat> channelFormat;
 	private HashMap<String, MessageFormat> playerFormat;
+	private HashMap<String, MessageFormat> channelFormat;
+	private HashMap<String, MessageFormat> commandFormat;
 	
 	private String guildId;
 	private HashMap<String, Channel> channels;
@@ -286,6 +287,14 @@ public class DiscordBotConfiguration {
 		this.voiceMuteFormat = voiceMuteFormat;
 	}
 	
+	public HashMap<String, MessageFormat> getPlayerFormat() {
+		return playerFormat;
+	}
+	
+	public void setPlayerFormat(HashMap<String, MessageFormat> playerFormat) {
+		this.playerFormat = playerFormat;
+	}
+	
 	public HashMap<String, MessageFormat> getChannelFormat() {
 		return channelFormat;
 	}
@@ -294,12 +303,12 @@ public class DiscordBotConfiguration {
 		this.channelFormat = channelFormat;
 	}
 	
-	public HashMap<String, MessageFormat> getPlayerFormat() {
-		return playerFormat;
+	public HashMap<String, MessageFormat> getCommandFormat() {
+		return commandFormat;
 	}
 	
-	public void setPlayerFormat(HashMap<String, MessageFormat> playerFormat) {
-		this.playerFormat = playerFormat;
+	public void setCommandFormat(HashMap<String, MessageFormat> commandFormat) {
+		this.commandFormat = commandFormat;
 	}
 	
 	public String getGuildId() {

@@ -38,6 +38,16 @@ DiscordBot:
     Unmuted:
       MinecraftFormat: '&6[&9Discord&6] &f%name%: has been &2%message%*'
       DiscordFormat: '``Time:`` **%time%** ``User:`` **%name%** ``Voice:`` **%message%**'
+  Player:
+    Join:
+      MinecraftFormat: 'null'
+      DiscordFormat: '``Time:`` **%time%** ``User:`` **%name%:** %message%'
+    Death:
+      MinecraftFormat: 'null'
+      DiscordFormat: '``Time:`` **%time%** ``Server:`` **%server%** ``User:`` **%name%:** %message%'
+    Quit:
+      MinecraftFormat: 'null'
+      DiscordFormat: '``Time:`` **%time%** ``User:`` **%name%:** %message%'
   Channel:
     Global:
       MinecraftFormat: '&6[&9Discord&6] &6[&a%server%&6] &f%name%: %message%'
@@ -51,13 +61,7 @@ DiscordBot:
     Admin:
       MinecraftFormat: '&4[&cAdmin&4] &6[&a%server%&6] &f%name%: %message%'
       DiscordFormat: '``Time:`` **%time%** ``Server:`` **%server%** ``User:`` **%name%:** %message%'
-  Player:
-    Join:
+  Command:
+    List:
       MinecraftFormat: 'null'
-      DiscordFormat: '``Time:`` **%time%** ``User:`` **%name%:** %message%'
-    Death:
-      MinecraftFormat: 'null'
-      DiscordFormat: '``Time:`` **%time%** ``Server:`` **%server%** ``User:`` **%name%:** %message%'
-    Quit:
-      MinecraftFormat: 'null'
-      DiscordFormat: '``Time:`` **%time%** ``User:`` **%name%:** %message%'
+      DiscordFormat: '```%command%```'

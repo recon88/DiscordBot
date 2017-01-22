@@ -43,7 +43,6 @@ public class ChannelManager {
 				}
 				
 				DiscordBotCore.getInstance().getConfiguration().getChannels().get(entry.getKey()).setChannel(DiscordBotCore.getInstance().getJDA().getTextChannelsByName(channelId, false).get(0).getId());
-				DiscordBotCore.getInstance().getEventManager().onChannelUpdate();
 			}
 			
 			if (DiscordBotCore.getInstance().getJDA().getTextChannelById(channelId) == null) {
@@ -73,7 +72,6 @@ public class ChannelManager {
 		
 		if (DiscordBotCore.getInstance().getJDA().getGuildById(guildId) != null) {
 			DiscordBotCore.getInstance().getConfiguration().setGuildId(guildId);
-			DiscordBotCore.getInstance().getEventManager().onConfigUpdate();
 			return DiscordBotCore.getInstance().getJDA().getGuildById(guildId);
 		}
 		

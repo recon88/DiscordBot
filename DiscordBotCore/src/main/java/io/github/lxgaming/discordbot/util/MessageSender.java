@@ -101,6 +101,11 @@ public class MessageSender {
 	}
 	
 	private String getMinecraftFormat(Message message, boolean chatColor) {
+		if (message.getFormat() == null) {
+			DiscordBotCore.getInstance().getLogger().severe("Unable to send message as format was blank or null!");
+			return null;
+		}
+		
 		String messageFormat = message.getFormat().getMinecraftFormat();
 		if (messageFormat.equals("") || messageFormat.equals("null")) {
 			DiscordBotCore.getInstance().getLogger().severe("'DiscordBot." + message.getFormat() + ".MinecraftFormat' is blank or null!");

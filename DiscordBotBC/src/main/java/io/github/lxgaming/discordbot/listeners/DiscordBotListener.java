@@ -25,7 +25,6 @@ import io.github.lxgaming.discordbot.DiscordBot;
 import io.github.lxgaming.discordbot.DiscordBotCore;
 import io.github.lxgaming.discordbot.commands.DiscordChatCommand;
 import io.github.lxgaming.discordbot.entries.AbstractDiscordBotListener;
-import io.github.lxgaming.discordbot.entries.Command;
 import io.github.lxgaming.discordbot.entries.Message;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -64,25 +63,26 @@ public class DiscordBotListener extends AbstractDiscordBotListener {
 	}
 	
 	@Override
-	public boolean onCommandReceived(Command command) {
-		
-		
-		
-		return false;
-	}
-	
-	@Override
-	public void onChannelUpdate() {
-		return;
-	}
-	
-	@Override
-	public void onConfigUpdate() {
+	public void onCommandReceived(Message message) {
+		if (message.getMessage().equals("list")) {
+			StringBuilder stringBuilder = new StringBuilder();
+			
+			for (ProxiedPlayer proxiedPlayer : ProxyServer.getInstance().getPlayers()) {
+				stringBuilder.append(proxiedPlayer.getName() + ", ");
+			}
+			
+			if (stringBuilder.toString().endsWith(", ")) {
+				stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+			}
+			DiscordBotCore.getInstance().getMessageSender().sendMessage(message.setMessage(stringBuilder.toString()));
+		}
 		return;
 	}
 	
 	@Override
 	public void onDatabaseUpdate() {
+		DiscordBot.getInstance().getConfiguration().getDatabase().set("DiscordBot.Database", DiscordBotCore.getInstance().getConfiguration().getDatabase());
+		DiscordBot.getInstance().getConfiguration().saveFile("database.yml", DiscordBot.getInstance().getConfiguration().getDatabase());
 		return;
 	}
 }

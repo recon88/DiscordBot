@@ -81,6 +81,10 @@ public class Config {
 		}
 	}
 	
+	public Configuration getDatabase() {
+		return this.database;
+	}
+	
 	public boolean process() {
 		if (this.channels == null || this.config == null || this.database == null || this.messages == null) {
 			return false;
@@ -166,16 +170,6 @@ public class Config {
 				.setDiscordFormat(this.messages.getString("DiscordBot.VoiceMute.Unmuted.DiscordFormat")));
 		DiscordBotCore.getInstance().getConfiguration().setVoiceMuteFormat(voiceMuteFormat);
 		
-		HashMap<String, MessageFormat> channelFormat = new LinkedHashMap<String, MessageFormat>();
-		for (Iterator<String> iterator = this.messages.getSection("DiscordBot.Channel").getKeys().iterator(); iterator.hasNext();) {
-			String channel = iterator.next();
-			channelFormat.put(channel, new MessageFormat()
-					.setName(channel)
-					.setMinecraftFormat(this.messages.getString("DiscordBot.Channel." + channel + ".MinecraftFormat"))
-					.setDiscordFormat(this.messages.getString("DiscordBot.Channel." + channel + ".DiscordFormat")));
-		}
-		DiscordBotCore.getInstance().getConfiguration().setChannelFormat(channelFormat);
-		
 		HashMap<String, MessageFormat> playerFormat = new LinkedHashMap<String, MessageFormat>();
 		playerFormat.put("Join", new MessageFormat()
 				.setName("Player - Join")
@@ -187,6 +181,25 @@ public class Config {
 				.setDiscordFormat(this.messages.getString("DiscordBot.Player.Quit.DiscordFormat")));
 		DiscordBotCore.getInstance().getConfiguration().setPlayerFormat(playerFormat);
 		
+		HashMap<String, MessageFormat> channelFormat = new LinkedHashMap<String, MessageFormat>();
+		for (Iterator<String> iterator = this.messages.getSection("DiscordBot.Channel").getKeys().iterator(); iterator.hasNext();) {
+			String channel = iterator.next();
+			channelFormat.put(channel, new MessageFormat()
+					.setName(channel)
+					.setMinecraftFormat(this.messages.getString("DiscordBot.Channel." + channel + ".MinecraftFormat"))
+					.setDiscordFormat(this.messages.getString("DiscordBot.Channel." + channel + ".DiscordFormat")));
+		}
+		DiscordBotCore.getInstance().getConfiguration().setChannelFormat(channelFormat);
+		
+		HashMap<String, MessageFormat> commandFormat = new LinkedHashMap<String, MessageFormat>();
+		for (Iterator<String> iterator = this.messages.getSection("DiscordBot.Command").getKeys().iterator(); iterator.hasNext();) {
+			String command = iterator.next();
+			commandFormat.put(command, new MessageFormat()
+					.setName(command)
+					.setMinecraftFormat(this.messages.getString("DiscordBot.Command." + command + ".MinecraftFormat"))
+					.setDiscordFormat(this.messages.getString("DiscordBot.Command." + command + ".DiscordFormat")));
+		}
+		DiscordBotCore.getInstance().getConfiguration().setChannelFormat(commandFormat);
 		
 		DiscordBotCore.getInstance().getConfiguration().setGuildId(this.channels.getString("DiscordBot.Guild.Id"));
 		
