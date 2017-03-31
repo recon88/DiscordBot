@@ -1,6 +1,5 @@
 apply from: "../../.gradle/sign.gradle"
 apply plugin: "java"
-apply plugin: "eclipse"
 
 targetCompatibility = 1.8
 sourceCompatibility = 1.8
@@ -15,12 +14,6 @@ configurations {
   }
   build {
     finalizedBy(signJar)
-  }
-}
-
-eclipse {
-  classpath {
-    plusConfigurations = [ configurations.provided ]
   }
 }
 

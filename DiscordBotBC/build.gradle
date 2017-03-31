@@ -1,6 +1,5 @@
 apply from: "../../.gradle/sign.gradle"
 apply plugin: "java"
-apply plugin: "eclipse"
 
 targetCompatibility = 1.8
 sourceCompatibility = 1.8
@@ -18,12 +17,6 @@ configurations {
   }
 }
 
-eclipse {
-  classpath {
-    plusConfigurations = [ configurations.provided ]
-  }
-}
-
 repositories {
   mavenCentral()
   maven {
@@ -31,9 +24,6 @@ repositories {
   }
   maven {
     url "http://repo.md-5.net/content/repositories/releases/"
-  }
-  maven {
-    url "https://lxgaming.github.io/repo/maven/"
   }
 }
 
