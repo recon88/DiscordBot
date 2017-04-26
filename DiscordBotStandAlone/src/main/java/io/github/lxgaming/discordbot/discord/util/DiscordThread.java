@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.discordbot.util;
+package io.github.lxgaming.discordbot.discord.util;
 
 import java.util.Iterator;
 
 import io.github.lxgaming.discordbot.DiscordBot;
+import io.github.lxgaming.discordbot.util.ConsoleOutput;
 import net.dv8tion.jda.core.entities.Message;
 
 public class DiscordThread extends Thread {
@@ -31,21 +32,21 @@ public class DiscordThread extends Thread {
 				Thread.sleep(5000);
 			}
 		} catch (InterruptedException ex) {
+			ConsoleOutput.error("Exception in DiscordThread!");
 			ex.printStackTrace();
 		}
 	}
 	
 	private void process() {
-		for (Iterator<Message> iterator = DiscordBot.getInstance().getMessageSender().getMessages().iterator(); iterator.hasNext();) {
+		for (Iterator<Message> iterator = DiscordBot.getInstance().getDiscord().getMessageSender().getMessages().iterator(); iterator.hasNext();) {
 			Message message = iterator.next();
-			
 			if (message == null || message.getCreationTime() == null) {
 				iterator.remove();
 				continue;
 			}
 			
-			if (message.getCreationTime().toInstant().toEpochMilli() < (System.currentTimeMillis() - DiscordBot.getInstance().getConfiguration().getClient().getDeleteTime())) {
-				message.deleteMessage().queue();
+			if (message.getCreationTime().toInstant().toEpochMilli() < (System.currentTimeMillis() - DiscordBot.getInstance().getConfig().getDeleteTime())) {
+				message.delete().queue();
 				iterator.remove();
 			}
 		}

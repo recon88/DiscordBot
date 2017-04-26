@@ -24,49 +24,37 @@ import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 
 import io.github.lxgaming.discordbot.DiscordBot;
+import io.github.lxgaming.discordbot.entries.Config;
 import io.github.lxgaming.discordbot.util.ConsoleOutput;
 
 public class Configuration {
 	
-	private final String version = "DiscordBotStandAlone v0.1.0";
-	private final String jdaVersion = "JDA v3.0.BETA2_108";
-	private final String lavaPlayerVersion = "LavaPlayer v1.1.38";
+	private File configFile;
+	private Config config;
 	
-	private File configFile = new File("config.json");
-	private Client client;
-	private List<Group> groups;
+	public Configuration() {
+		configFile = new File("config.json");
+		config = new Config();
+	}
 	
-	public void loadConfig() {
+	public void loadConfiguration() {
 		try {
-			if (!this.configFile.exists()) {
-				this.configFile.createNewFile();
+			if (!configFile.exists()) {
+				configFile.createNewFile();
 				InputStream inputStream = DiscordBot.class.getResourceAsStream("/config.json");
-				Files.copy(inputStream, Paths.get(this.configFile.getAbsolutePath()), StandardCopyOption.REPLACE_EXISTING);
+				Files.copy(inputStream, Paths.get(configFile.getAbsolutePath()), StandardCopyOption.REPLACE_EXISTING);
 				ConsoleOutput.info("Successfully created configuration file.");
 			}
 			
-			JsonObject config = new JsonParser().parse(new String(Files.readAllBytes(Paths.get(this.configFile.getAbsolutePath())), StandardCharsets.UTF_8)).getAsJsonObject();
-			
-			this.client = new Gson().fromJson(config.get("client").getAsJsonObject(), Client.class);
-			
-			List<Group> groups = new LinkedList<Group>();
-			for (Iterator<JsonElement> iterator = config.get("groups").getAsJsonArray().iterator(); iterator.hasNext();) {
-				Group group = new Gson().fromJson(iterator.next(), Group.class);
-				ConsoleOutput.info("Successfully added '" + group.getName() + "'.");
-				groups.add(group);
-			}
-			this.groups = groups;
+			JsonObject jsonObject = new JsonParser().parse(new String(Files.readAllBytes(Paths.get(configFile.getAbsolutePath())), StandardCharsets.UTF_8)).getAsJsonObject();
+			config = new Gson().fromJson(jsonObject, Config.class);
 			
 			ConsoleOutput.info("Successfully loaded configuration file.");
 		} catch (IllegalStateException | InvalidPathException | IOException | JsonParseException | NullPointerException | OutOfMemoryError | SecurityException | UnsupportedOperationException ex) {
@@ -76,23 +64,7 @@ public class Configuration {
 		return;
 	}
 	
-	public String getVersion() {
-		return this.version;
-	}
-	
-	public String getJDAVersion() {
-		return this.jdaVersion;
-	}
-	
-	public String getLavaPlayerVersion() {
-		return this.lavaPlayerVersion;
-	}
-	
-	public Client getClient() {
-		return this.client;
-	}
-	
-	public List<Group> getGroups() {
-		return this.groups;
+	public Config getConfig() {
+		return config;
 	}
 }

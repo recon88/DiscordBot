@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.discordbot.util;
+package io.github.lxgaming.discordbot.discord.handlers;
 
 import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;
 
@@ -27,28 +27,28 @@ public class AudioPlayerSendHandler implements AudioSendHandler {
 	
 	@Override
 	public boolean canProvide() {
-		if (this.audioFrame == null) {
-			this.audioFrame = DiscordBot.getInstance().getAudioPlayer().provide();
+		if (audioFrame == null) {
+			audioFrame = DiscordBot.getInstance().getDiscord().getAudioPlayer().provide();
 		}
 		
-		if (this.audioFrame != null) {
+		if (audioFrame != null) {
 			return true;
 		}
 		return false;
 	}
-
+	
 	@Override
 	public byte[] provide20MsAudio() {
-		if (this.audioFrame == null) {
-			this.audioFrame = DiscordBot.getInstance().getAudioPlayer().provide();
+		if (audioFrame == null) {
+			audioFrame = DiscordBot.getInstance().getDiscord().getAudioPlayer().provide();
 		}
 		
 		byte[] data = null;
-		if (this.audioFrame != null && this.audioFrame.data != null) {
-			data = this.audioFrame.data;
+		if (audioFrame != null && audioFrame.data != null) {
+			data = audioFrame.data;
 		}
 		
-		this.audioFrame = null;
+		audioFrame = null;
 		return data;
 	}
 	

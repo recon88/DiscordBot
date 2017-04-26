@@ -14,20 +14,25 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.discordbot.util;
+package io.github.lxgaming.discordbot.discord.commands;
 
-import java.util.Iterator;
+import java.util.List;
 
 import io.github.lxgaming.discordbot.DiscordBot;
-import io.github.lxgaming.discordbot.configuration.Group;
+import io.github.lxgaming.discordbot.entries.ICommand;
 import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.TextChannel;
 
-public class Permission {
+public class SkipCommand implements ICommand {
 	
-	public boolean checkMember(Member member) {
-		for (Iterator<Group> iterator = DiscordBot.getInstance().getConfiguration().getGroups().iterator(); iterator.hasNext();) {
-			
-		}
-		return false;
+	@Override
+	public void execute(TextChannel textChannel, Member member, Message message, List<String> arguments) {
+		DiscordBot.getInstance().getDiscord().getAudioQueue().playNext();
+	}
+	
+	@Override
+	public String getDescription() {
+		return "Plays next song in queue.";
 	}
 }

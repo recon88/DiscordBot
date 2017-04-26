@@ -1,34 +1,30 @@
 {
-  "client": {
     "debug": false,
-    "guildId": "",
-    "botChannel": "",
     "commandPrefix": "!",
-    "messageFormat": "``Time:`` **%time%** ``User:`` **%user%:** %message%",
+    "guildId": "",
     "token": "",
-    "ownerId": "",
     "autoJoinChannel": "",
     "defaultVolume": 25,
     "autoPause": false,
     "deleteMessages": true,
     "deleteInvoking": false,
-    "deleteTime": 30000
-  },
-  "groups": [
-    {
-      "name": "Default",
-      "commandBlacklist": "",
-      "commandWhitelist": "",
-      "ignoreNonVoice": false,
-      "roles": "",
-      "users": "",
-      "maxSongs": 5,
-      "maxSongLength": 600,
-      "allowPlaylists": false,
-      "maxPlaylistLength": 10,
-      "skipsRequired": 5,
-      "skipRatio": 0.5,
-      "instantSkip": false
-    }
-  ]
+    "deleteTime": 30000,
+    "messageFormat": "``Time:`` **{TIME}** ``User:`` **{USER}:** {MESSAGE}",
+    "groups": [
+        {
+            "name": "Default",
+            "commandBlacklist": [],
+            "commandWhitelist": [],
+            "roles": [],
+            "users": [],
+            "ignoreNonVoice": false,
+            "maxSongs": 5,
+            "maxSongLength": 600,
+            "allowPlaylists": false,
+            "maxPlaylistLength": 10,
+            "skipsRequired": 5,
+            "skipRatio": 0.5,
+            "instantSkip": false
+        }
+    ]
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.discordbot.listeners;
+package io.github.lxgaming.discordbot.discord.listeners;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
@@ -23,7 +23,6 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 
 import io.github.lxgaming.discordbot.DiscordBot;
-import io.github.lxgaming.discordbot.util.Audio;
 import io.github.lxgaming.discordbot.util.ConsoleOutput;
 
 public class AudioListener extends AudioEventAdapter {
@@ -41,17 +40,20 @@ public class AudioListener extends AudioEventAdapter {
 	@Override
 	public void onTrackEnd(AudioPlayer audioPlayer, AudioTrack audioTrack, AudioTrackEndReason audioTrackEndReason) {
 		ConsoleOutput.debug("Track End!");
-		if (!audioTrackEndReason.mayStartNext) {
+		if (audioTrackEndReason.equals(AudioTrackEndReason.FINISHED) && audioTrackEndReason.mayStartNext) {
+			ConsoleOutput.debug("Track FINISHED!");
+			DiscordBot.getInstance().getDiscord().getAudioQueue().playNext();
 			return;
 		}
 		
-		if (DiscordBot.getInstance().getBlockingQueue().isEmpty()) {
+		if (audioTrackEndReason.equals(AudioTrackEndReason.STOPPED)) {
+			ConsoleOutput.debug("Track STOPPED!");
 			return;
 		}
 		
-		Audio audio = DiscordBot.getInstance().getBlockingQueue().poll();
-		if (audio != null) {
-			DiscordBot.getInstance().getAudioPlayer().playTrack(audio.getAudioTrack());
+		if (audioTrackEndReason.equals(AudioTrackEndReason.REPLACED)) {
+			ConsoleOutput.debug("Track REPLACED!");
+			//DiscordBot.getInstance().getDiscord().getAudioQueue();
 		}
 	}
 	
@@ -61,14 +63,7 @@ public class AudioListener extends AudioEventAdapter {
 		ConsoleOutput.error(friendlyException.getMessage());
 		friendlyException.printStackTrace();
 		
-		if (DiscordBot.getInstance().getBlockingQueue().isEmpty()) {
-			return;
-		}
-		
-		Audio audio = DiscordBot.getInstance().getBlockingQueue().poll();
-		if (audio != null) {
-			DiscordBot.getInstance().getAudioPlayer().playTrack(audio.getAudioTrack());
-		}
+		DiscordBot.getInstance().getDiscord().getAudioQueue().playNext();
 	}
 	
 	@Override

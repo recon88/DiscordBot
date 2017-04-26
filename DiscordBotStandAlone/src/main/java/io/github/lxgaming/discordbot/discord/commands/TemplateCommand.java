@@ -14,42 +14,25 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.discordbot.commands;
+package io.github.lxgaming.discordbot.discord.commands;
 
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
+import io.github.lxgaming.discordbot.DiscordBot;
+import io.github.lxgaming.discordbot.entries.ICommand;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 
-public class Command implements ICommand {
+public class TemplateCommand implements ICommand {
 	
-	private List<ICommand> commands;
-	
-	public void loadCommand() {
-		this.commands = new LinkedList<ICommand>();
-		getCommands().add(new BotCommand());
-		getCommands().add(new MusicCommand());
+	@Override
+	public void execute(TextChannel textChannel, Member member, Message message, List<String> arguments) {
+		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, "");
 	}
 	
 	@Override
-	public boolean execute(TextChannel textChannel, Member member, Message message) {
-		if (getCommands() == null) {
-			return false;
-		}
-		
-		for (Iterator<ICommand> iterator = getCommands().iterator(); iterator.hasNext();) {
-			ICommand command = iterator.next();
-			if (command.execute(textChannel, member, message)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public List<ICommand> getCommands() {
-		return this.commands;
+	public String getDescription() {
+		return null;
 	}
 }

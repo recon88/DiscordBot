@@ -24,20 +24,20 @@ import io.github.lxgaming.discordbot.DiscordBot;
 public class ConsoleOutput {
 	
 	public static void info(String string) {
-		System.out.println("[" + new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()) + "] [Info] [DiscordBot]: " + string);
+		System.out.println("[" + new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()) + "] [Info] [" + Thread.currentThread().getName() + "]: " + string);
 	}
 	
 	public static void warn(String string) {
-		System.out.println("[" + new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()) + "] [Warn] [DiscordBot]: " + string);
+		System.out.println("[" + new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()) + "] [Warn] [" + Thread.currentThread().getName() + "]: " + string);
 	}
 	
 	public static void error(String string) {
-		System.out.println("[" + new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()) + "] [Error] [DiscordBot]: " + string);
+		System.out.println("[" + new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()) + "] [Error] [" + Thread.currentThread().getName() + "]: " + string);
 	}
 	
 	public static void debug(String string) {
-		if (DiscordBot.getInstance().getConfiguration() != null && DiscordBot.getInstance().getConfiguration().getClient().getDebug()) {
-			System.out.println("[" + new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()) + "] [Debug] [DiscordBot]: " + string);
+		if (DiscordBot.getInstance().getConfiguration() != null && DiscordBot.getInstance().getConfig().isDebug()) {
+			System.out.println("[" + new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()) + "] [Debug] [" + Thread.currentThread().getName() + "]: " + string);
 		}
 	}
 }

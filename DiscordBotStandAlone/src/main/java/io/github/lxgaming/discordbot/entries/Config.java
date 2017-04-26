@@ -14,73 +14,69 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.discordbot.configuration;
+package io.github.lxgaming.discordbot.entries;
 
-public class Client {
+import java.util.List;
+
+public class Config {
 	
 	private boolean debug;
-	private String guildId;
-	private String botChannel;
 	private String commandPrefix;
-	private String messageFormat;
+	private String guildId;
 	private String token;
-	private String ownerId;
 	private String autoJoinChannel;
 	private int defaultVolume;
 	private boolean autoPause;
 	private boolean deleteMessages;
 	private boolean deleteInvoking;
 	private int deleteTime;
+	private String messageFormat;
+	private List<Group> groups;
 	
-	public boolean getDebug() {
-		return this.debug;
+	public boolean isDebug() {
+		return debug;
+	}
+	public String getCommandPrefix() {
+		return commandPrefix;
 	}
 	
 	public String getGuildId() {
-		return this.guildId;
-	}
-	
-	public String getBotChannel() {
-		return this.botChannel;
-	}
-	
-	public String getCommandPrefix() {
-		return this.commandPrefix;
-	}
-	
-	public String getMessageFormat() {
-		return this.messageFormat;
+		return guildId;
 	}
 	
 	public String getToken() {
-		return this.token;
-	}
-	
-	public String getOwnerId() {
-		return this.ownerId;
+		return token;
 	}
 	
 	public String getAutoJoinChannel() {
-		return this.autoJoinChannel;
+		return autoJoinChannel;
 	}
 	
 	public int getDefaultVolume() {
-		return this.defaultVolume;
+		return defaultVolume;
 	}
 	
-	public boolean getAutoPause() {
-		return this.autoPause;
+	public boolean isAutoPause() {
+		return autoPause;
 	}
 	
-	public boolean deleteMessages() {
-		return this.deleteMessages;
+	public boolean isDeleteMessages() {
+		return deleteMessages;
 	}
 	
-	public boolean deleteInvoking() {
-		return this.deleteInvoking;
+	public boolean isDeleteInvoking() {
+		return deleteInvoking;
 	}
 	
 	public int getDeleteTime() {
-		return this.deleteTime;
+		return deleteTime;
+	}
+	
+	public String getMessageFormat() {
+		return messageFormat;
+	}
+	
+	public List<Group> getGroups() {
+		return groups;
 	}
 }

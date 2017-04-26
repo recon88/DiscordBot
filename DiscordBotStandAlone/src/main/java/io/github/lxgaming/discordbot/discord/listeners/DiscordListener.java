@@ -14,21 +14,20 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.discordbot.listeners;
+package io.github.lxgaming.discordbot.discord.listeners;
 
 import io.github.lxgaming.discordbot.DiscordBot;
-import io.github.lxgaming.discordbot.util.AudioPlayerSendHandler;
-import io.github.lxgaming.discordbot.util.ConsoleOutput;
+import io.github.lxgaming.discordbot.discord.handlers.AudioPlayerSendHandler;
 import net.dv8tion.jda.core.entities.ChannelType;
 import net.dv8tion.jda.core.events.ReadyEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
-public class DiscordBotListener extends ListenerAdapter {
+public class DiscordListener extends ListenerAdapter {
 	
 	@Override
 	public void onReady(ReadyEvent event) {
-		event.getJDA().getGuildById(DiscordBot.getInstance().getConfiguration().getClient().getGuildId()).getAudioManager().setSendingHandler(new AudioPlayerSendHandler());
+		event.getJDA().getGuildById(DiscordBot.getInstance().getConfig().getGuildId()).getAudioManager().setSendingHandler(new AudioPlayerSendHandler());
 	}
 	
 	@Override
@@ -41,12 +40,9 @@ public class DiscordBotListener extends ListenerAdapter {
 			return;
 		}
 		
-		if (event.getMessage().getContent().startsWith(DiscordBot.getInstance().getConfiguration().getClient().getCommandPrefix()) || event.getMessage().getContent().startsWith("/")) {
-			ConsoleOutput.debug("Processing Command");
-			if (DiscordBot.getInstance().getCommand().execute(event.getTextChannel(), event.getMember(), event.getMessage())) {
-				DiscordBot.getInstance().getMessageSender().addMessage(event.getMessage());
-			}
-		}
+		if (event.getMessage().getContent().startsWith(DiscordBot.getInstance().getConfig().getCommandPrefix()) || event.getMessage().getContent().startsWith("/")) {
+			DiscordBot.getInstance().getDiscord().getCommand().execute(event.getTextChannel(), event.getMember(), event.getMessage());
+		}	
 		return;
 	}
 }

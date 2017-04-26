@@ -14,50 +14,34 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.discordbot.util;
+package io.github.lxgaming.discordbot.entries;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
+import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.TextChannel;
+
 public class Audio {
 	
-	private String textChannel;
-	private String userName;
-	private String nickName;
-	private AudioTrack audioTrack;
+	private final TextChannel textChannel;
+	private final Member member;
+	private final AudioTrack audioTrack;
 	
-	public Audio setTextChannel(String textChannel) {
+	public Audio(TextChannel textChannel, Member member, AudioTrack audioTrack) {
 		this.textChannel = textChannel;
-		return this;
-	}
-	
-	public String getTextChannel() {
-		return this.textChannel;
-	}
-	
-	public Audio setUserName(String userName) {
-		this.userName = userName;
-		return this;
-	}
-	
-	public String getUserName() {
-		return this.userName;
-	}
-	
-	public Audio setNickName(String nickName) {
-		this.nickName = nickName;
-		return this;
-	}
-	
-	public String getNickName() {
-		return this.nickName;
-	}
-	
-	public Audio setAudioTrack(AudioTrack audioTrack) {
+		this.member = member;
 		this.audioTrack = audioTrack;
-		return this;
+	}
+	
+	public TextChannel getTextChannel() {
+		return textChannel;
+	}
+	
+	public Member getMember() {
+		return member;
 	}
 	
 	public AudioTrack getAudioTrack() {
-		return this.audioTrack;
+		return audioTrack;
 	}
 }
