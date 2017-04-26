@@ -21,14 +21,14 @@ repositories {
 }
 
 dependencies {
-  compile "net.dv8tion:JDA:3.0.0_165"
+  compile "net.dv8tion:JDA:3.0.0_185"
 }
 
 jar {
   from {
     (configurations.compile - configurations.provided).collect {
 	  it.isDirectory() ? it : zipTree(it)
-	}\
+	}
   }
   exclude("natives/**")
 }

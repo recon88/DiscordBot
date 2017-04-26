@@ -32,7 +32,6 @@ repositories {
 
 dependencies {
   provided "org.spigotmc:spigot-api:1.11.2-R0.1-SNAPSHOT"
-  provided "net.dv8tion:JDA:3.0.BETA2-LX"
   compile files("../DiscordBotCore/build/libs/DiscordBotCore-0.9.0-UNSTABLE.jar")
 }
 

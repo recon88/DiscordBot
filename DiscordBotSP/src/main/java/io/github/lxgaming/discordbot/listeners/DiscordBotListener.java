@@ -51,16 +51,6 @@ public class DiscordBotListener extends AbstractDiscordBotListener {
 	}
 	
 	@Override
-	public void onChannelUpdate() {
-		return;
-	}
-	
-	@Override
-	public void onConfigUpdate() {
-		return;
-	}
-	
-	@Override
 	public void onDatabaseUpdate() {
 		return;
 	}

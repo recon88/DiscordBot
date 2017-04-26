@@ -75,7 +75,7 @@ public class DiscordBotCore {
 		
 		try {
 			jda = jdaBuilder
-					.addListener(new BotListener())
+					.addEventListener(new BotListener())
 					.setAudioEnabled(false)
 					.setBulkDeleteSplittingEnabled(false)
 					.buildAsync();
