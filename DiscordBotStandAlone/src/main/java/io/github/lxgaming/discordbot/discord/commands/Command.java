@@ -50,6 +50,7 @@ public class Command {
 		getRegisteredCommands().put("resume", new ResumeCommand());
 		getRegisteredCommands().put("skip", new SkipCommand());
 		getRegisteredCommands().put("next", new SkipCommand());
+		getRegisteredCommands().put("stop", new StopCommand());
 		getRegisteredCommands().put("volume", new VolumeCommand());
 		getRegisteredCommands().put("vol", new VolumeCommand());
 	}
@@ -69,6 +70,7 @@ public class Command {
 		if (getRegisteredCommands().containsKey(arguments.get(0))) {
 			ConsoleOutput.debug("Processing Command '" + message.getContent() + "' For '" + member.getEffectiveName() + "'.");
 			getRegisteredCommands().get(arguments.remove(0)).execute(textChannel, member, message, arguments);
+			DiscordBot.getInstance().getDiscord().getMessageSender().addMessage(message);
 		}
 	}
 	

@@ -65,6 +65,12 @@ public class MessageSender {
 				.replace("{MESSAGE}", message);
 	}
 	
+	public void addMessage(Message message) {
+		if (DiscordBot.getInstance().getConfig().isDeleteInvoking()) {
+			getMessages().add(message);
+		}
+	}
+	
 	public List<Message> getMessages() {
 		return messages;
 	}

@@ -24,20 +24,16 @@ import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 
-public class HelpCommand implements ICommand {
+public class StopCommand implements ICommand {
 	
 	@Override
 	public void execute(TextChannel textChannel, Member member, Message message, List<String> arguments) {
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("DJHelp: (CommandPrefix: ``" + DiscordBot.getInstance().getConfig().getCommandPrefix() + "``)"
-				+ "\n``Clear, DJHelp, Info, Join <Channel>, NowPlaying, NP, Pause, Play <URL>..., "
-				+ "\nQueue, List, Resume, Skip, Stop, Volume [0-100], Vol [0-100]``"
-				+ "\n<> = Required Argument, [] = Optional Argument");
-		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, stringBuilder.toString().trim());
+		DiscordBot.getInstance().getDiscord().getAudioPlayer().stopTrack();
+		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, member.getEffectiveName(), "Track stopped.");
 	}
 	
 	@Override
 	public String getDescription() {
-		return "Help command";
+		return "Stops players";
 	}
 }
