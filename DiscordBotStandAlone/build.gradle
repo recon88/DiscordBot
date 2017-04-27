@@ -11,10 +11,6 @@ configurations {
   provided {
     compile.extendsFrom(provided)
   }
-  project.ext.excludeDarwin = true
-  project.ext.excludeLinux = false
-  project.ext.excludeWindows = true
-  
 }
 
 repositories {
@@ -42,17 +38,12 @@ jar {
   from {
     ["LICENSE"]
   }
-  
-  if (excludeDarwin) {
-    exclude("natives/darwin*/**")
-    println "Darwin libraries excluded."
-  }
-  if (excludeLinux) {
-    exclude("natives/linux*/**")
-    println "Darwin libraries excluded."
-  }
-  if (excludeWindows) {
-    exclude("natives/win*/**")
-    println "Windows libraries excluded."
-  }
+  exclude("natives/darwin/**")
+  exclude("natives/linux-arm/**")
+  exclude("natives/linux-x86/**")
+  //exclude("natives/linux-x86-64/**")
+  exclude("natives/win-x86/**")
+  exclude("natives/win-x86-64/**")
+  exclude("natives/win32-x86/**")
+  exclude("natives/win32-x86-64/**")
 }
