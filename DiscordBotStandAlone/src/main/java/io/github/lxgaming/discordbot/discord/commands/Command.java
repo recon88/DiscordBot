@@ -18,7 +18,7 @@ package io.github.lxgaming.discordbot.discord.commands;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import io.github.lxgaming.discordbot.DiscordBot;
@@ -30,29 +30,25 @@ import net.dv8tion.jda.core.entities.TextChannel;
 
 public class Command {
 	
-	private HashMap<String, ICommand> registeredCommands;
+	private List<ICommand> registeredCommands;
 	
 	public Command() {
-		registeredCommands = new HashMap<String, ICommand>();
+		registeredCommands = new ArrayList<ICommand>();
 	}
 	
 	public void registerCommands() {
-		getRegisteredCommands().put("clear", new ClearCommand());
-		getRegisteredCommands().put("djhelp", new HelpCommand());
-		getRegisteredCommands().put("info", new InfoCommand());
-		getRegisteredCommands().put("join", new JoinCommand());
-		getRegisteredCommands().put("nowplaying", new NowPlayingCommand());
-		getRegisteredCommands().put("np", new NowPlayingCommand());
-		getRegisteredCommands().put("pause", new PauseCommand());
-		getRegisteredCommands().put("play", new PlayCommand());
-		getRegisteredCommands().put("queue", new QueueCommand());
-		getRegisteredCommands().put("list", new QueueCommand());
-		getRegisteredCommands().put("resume", new ResumeCommand());
-		getRegisteredCommands().put("skip", new SkipCommand());
-		getRegisteredCommands().put("next", new SkipCommand());
-		getRegisteredCommands().put("stop", new StopCommand());
-		getRegisteredCommands().put("volume", new VolumeCommand());
-		getRegisteredCommands().put("vol", new VolumeCommand());
+		getRegisteredCommands().add(new ClearCommand());
+		getRegisteredCommands().add(new HelpCommand());
+		getRegisteredCommands().add(new InfoCommand());
+		getRegisteredCommands().add(new JoinCommand());
+		getRegisteredCommands().add(new NowPlayingCommand());
+		getRegisteredCommands().add(new PauseCommand());
+		getRegisteredCommands().add(new PlayCommand());
+		getRegisteredCommands().add(new QueueCommand());
+		getRegisteredCommands().add(new ResumeCommand());
+		getRegisteredCommands().add(new SkipCommand());
+		getRegisteredCommands().add(new StopCommand());
+		getRegisteredCommands().add(new VolumeCommand());
 	}
 	
 	public void execute(TextChannel textChannel, Member member, Message message) {
@@ -67,14 +63,44 @@ public class Command {
 			return;
 		}
 		
-		if (getRegisteredCommands().containsKey(arguments.get(0))) {
-			ConsoleOutput.debug("Processing Command '" + message.getContent() + "' For '" + member.getEffectiveName() + "'.");
-			getRegisteredCommands().get(arguments.remove(0)).execute(textChannel, member, message, arguments);
-			DiscordBot.getInstance().getDiscord().getMessageSender().addMessage(message);
+		for (Iterator<ICommand> iterator = getRegisteredCommands().iterator(); iterator.hasNext();) {
+			ICommand command = iterator.next();
+			if (checkCommandName(arguments.get(0), command.getName()) || checkCommandAliases(arguments.get(0), command.getAliases())) {
+				ConsoleOutput.debug("Processing Command '" + message.getContent() + "' For '" + member.getEffectiveName() + "'.");
+				arguments.remove(0);
+				command.execute(textChannel, member, message, arguments);
+				DiscordBot.getInstance().getDiscord().getMessageSender().addMessage(message);
+				return;
+			}
 		}
 	}
 	
-	public HashMap<String, ICommand> getRegisteredCommands() {
+	public boolean checkCommandName(String target, String name) {
+		if (target == null || target.equals("") || name == null || name.equals("")) {
+			return false;
+		}
+		
+		if (target.equalsIgnoreCase(name)) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean checkCommandAliases(String target, List<String> aliases) {
+		if (aliases == null || aliases.isEmpty() || target == null || target.equals("")) {
+			return false;
+		}
+		
+		for (Iterator<String> iterator = aliases.iterator(); iterator.hasNext();) {
+			String alias = iterator.next();
+			if (target.equalsIgnoreCase(alias)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public List<ICommand> getRegisteredCommands() {
 		return registeredCommands;
 	}
 }

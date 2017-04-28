@@ -33,7 +33,22 @@ public class StopCommand implements ICommand {
 	}
 	
 	@Override
+	public String getName() {
+		return "Stop";
+	}
+	
+	@Override
 	public String getDescription() {
-		return "Stops players";
+		return "Stops media playback.";
+	}
+	
+	@Override
+	public String getUsage() {
+		return DiscordBot.getInstance().getConfig().getCommandPrefix() + "Stop";
+	}
+	
+	@Override
+	public List<String> getAliases() {
+		return null;
 	}
 }

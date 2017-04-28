@@ -26,7 +26,7 @@ public class Permission {
 	
 	public boolean checkMember(Member member) {
 		for (Iterator<Group> iterator = DiscordBot.getInstance().getConfig().getGroups().iterator(); iterator.hasNext();) {
-			
+			//TODO
 		}
 		return false;
 	}

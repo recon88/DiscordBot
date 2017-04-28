@@ -33,7 +33,7 @@ public class AudioQueue {
 	public void playNext() {
 		Audio audio = getNext();
 		if (audio != null) {
-			DiscordBot.getInstance().getDiscord().getAudioPlayer().playTrack(getNext().getAudioTrack());
+			DiscordBot.getInstance().getDiscord().getAudioPlayer().playTrack(audio.getAudioTrack());
 			return;
 		}
 		

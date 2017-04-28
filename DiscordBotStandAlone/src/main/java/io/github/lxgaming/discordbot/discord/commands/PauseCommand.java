@@ -38,7 +38,22 @@ public class PauseCommand implements ICommand {
 	}
 	
 	@Override
+	public String getName() {
+		return "Pause";
+	}
+	
+	@Override
 	public String getDescription() {
 		return "Pauses media playback.";
+	}
+	
+	@Override
+	public String getUsage() {
+		return DiscordBot.getInstance().getConfig().getCommandPrefix() + "Pause";
+	}
+	
+	@Override
+	public List<String> getAliases() {
+		return null;
 	}
 }

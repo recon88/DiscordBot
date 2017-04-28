@@ -8,7 +8,7 @@
     "autoPause": false,
     "deleteMessages": true,
     "deleteInvoking": false,
-    "deleteTime": 30000,
+    "deleteTime": 60000,
     "messageFormat": "``Time:`` **{TIME}** ``User:`` **{USER}:** {MESSAGE}",
     "groups": [
         {

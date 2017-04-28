@@ -25,5 +25,8 @@ import net.dv8tion.jda.core.entities.TextChannel;
 public interface ICommand {
 	
 	public void execute(TextChannel textChannel, Member member, Message message, List<String> arguments);
+	public String getName();
 	public String getDescription();
+	public String getUsage();
+	public List<String> getAliases();
 }

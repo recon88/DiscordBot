@@ -24,7 +24,9 @@ import java.util.function.Consumer;
 
 import io.github.lxgaming.discordbot.DiscordBot;
 import io.github.lxgaming.discordbot.util.ConsoleOutput;
+import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.TextChannel;
 
 public class MessageSender {
@@ -40,12 +42,27 @@ public class MessageSender {
 	}
 	
 	public void sendMessage(TextChannel textChannel, String message) {
+		sendMessage(textChannel, new MessageBuilder().append(message).build(), true);
+	}
+	
+	public void sendMessage(TextChannel textChannel, Message message, boolean autoDelete) {
 		textChannel.sendMessage(message).queue(new Consumer<Message>() {
 			
 			@Override
 			public void accept(Message message) {
-				ConsoleOutput.info("" + DiscordBot.getInstance().getConfig().isDeleteMessages());
-				if (DiscordBot.getInstance().getConfig().isDeleteMessages()) {
+				if (DiscordBot.getInstance().getConfig().isDeleteMessages() && autoDelete) {
+					getMessages().add(message);
+				}
+			}
+		});
+	}
+	
+	public void sendMessage(TextChannel textChannel, MessageEmbed messageEmbed, boolean autoDelete) {
+		textChannel.sendMessage(messageEmbed).queue(new Consumer<Message>() {
+			
+			@Override
+			public void accept(Message message) {
+				if (DiscordBot.getInstance().getConfig().isDeleteMessages() && autoDelete) {
 					getMessages().add(message);
 				}
 			}

@@ -32,7 +32,22 @@ public class TemplateCommand implements ICommand {
 	}
 	
 	@Override
+	public String getName() {
+		return "Template";
+	}
+	
+	@Override
 	public String getDescription() {
+		return "Description";
+	}
+	
+	@Override
+	public String getUsage() {
+		return DiscordBot.getInstance().getConfig().getCommandPrefix() + "Usage";
+	}
+	
+	@Override
+	public List<String> getAliases() {
 		return null;
 	}
 }

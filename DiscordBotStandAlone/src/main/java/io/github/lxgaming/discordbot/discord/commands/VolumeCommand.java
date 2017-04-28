@@ -16,6 +16,7 @@
 
 package io.github.lxgaming.discordbot.discord.commands;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.github.lxgaming.discordbot.DiscordBot;
@@ -46,7 +47,24 @@ public class VolumeCommand implements ICommand {
 	}
 	
 	@Override
+	public String getName() {
+		return "Volume";
+	}
+	
+	@Override
 	public String getDescription() {
-		return null;
+		return "Displays or changes the media playback volume.";
+	}
+	
+	@Override
+	public String getUsage() {
+		return DiscordBot.getInstance().getConfig().getCommandPrefix() + "Volume [0 - 100]";
+	}
+	
+	@Override
+	public List<String> getAliases() {
+		List<String> aliases = new ArrayList<String>();
+		aliases.add("Vol");
+		return aliases;
 	}
 }

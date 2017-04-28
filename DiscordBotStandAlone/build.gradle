@@ -3,7 +3,7 @@ apply plugin: "java"
 targetCompatibility = 1.8
 sourceCompatibility = 1.8
 
-version = "1.0.0-ALPHA"
+version = "1.1.0-ALPHA"
 group = "io.github.lxgaming.discordbot"
 archivesBaseName = "DiscordBotStandAlone"
 

@@ -16,11 +16,13 @@
 
 package io.github.lxgaming.discordbot.discord.commands;
 
+import java.awt.Color;
 import java.util.List;
 
 import io.github.lxgaming.discordbot.DiscordBot;
 import io.github.lxgaming.discordbot.entries.ICommand;
 import io.github.lxgaming.discordbot.util.Reference;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -29,18 +31,34 @@ public class InfoCommand implements ICommand {
 	
 	@Override
 	public void execute(TextChannel textChannel, Member member, Message message, List<String> arguments) {
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("```" + Reference.APP_NAME + " v" + Reference.APP_VERSION + "\n");
-		stringBuilder.append("Author - LX_Gaming\n");
-		stringBuilder.append("Source - https://github.com/LXGaming/DiscordBot/\n");
-		stringBuilder.append("Dependencies:\n");
-		stringBuilder.append(" - " + Reference.JDA_NAME + " v" + Reference.JDA_VERSION + "\n");
-		stringBuilder.append(" - " + Reference.LAVA_NAME + " v" + Reference.LAVA_VERSION + "```");
-		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, stringBuilder.toString().trim());
+		EmbedBuilder embedBuilder = new EmbedBuilder();
+		embedBuilder.setAuthor(Reference.APP_NAME + " v" + Reference.APP_VERSION, null, textChannel.getJDA().getSelfUser().getEffectiveAvatarUrl());
+		embedBuilder.setColor(Color.decode("#7289DA"));
+		embedBuilder.addField("Author", "LX_Gaming", false);
+		embedBuilder.addField("Source", "https://github.com/LXGaming/DiscordBot/", false);
+		embedBuilder.addField("Dependencies", ""
+				+ "\n- " + Reference.JDA_NAME + " v" + Reference.JDA_VERSION
+				+ "\n- " + Reference.LAVA_NAME + " v" + Reference.LAVA_VERSION, false);
+		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), false);
+	}
+	
+	@Override
+	public String getName() {
+		return "Info";
 	}
 	
 	@Override
 	public String getDescription() {
-		return "Bot information";
+		return "Displays bot information.";
+	}
+	
+	@Override
+	public String getUsage() {
+		return DiscordBot.getInstance().getConfig().getCommandPrefix() + "Info";
+	}
+	
+	@Override
+	public List<String> getAliases() {
+		return null;
 	}
 }

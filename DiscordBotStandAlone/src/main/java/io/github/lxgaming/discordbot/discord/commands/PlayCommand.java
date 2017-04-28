@@ -52,7 +52,22 @@ public class PlayCommand implements ICommand {
 	}
 	
 	@Override
+	public String getName() {
+		return "Play";
+	}
+	
+	@Override
 	public String getDescription() {
-		return "Play Music";
+		return "Play specified media";
+	}
+	
+	@Override
+	public String getUsage() {
+		return DiscordBot.getInstance().getConfig().getCommandPrefix() + "Play <URL>";
+	}
+	
+	@Override
+	public List<String> getAliases() {
+		return null;
 	}
 }

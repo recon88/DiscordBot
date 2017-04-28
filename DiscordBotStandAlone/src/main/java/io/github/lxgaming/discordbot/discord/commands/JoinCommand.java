@@ -53,7 +53,22 @@ public class JoinCommand implements ICommand {
 	}
 	
 	@Override
+	public String getName() {
+		return "Join";
+	}
+	
+	@Override
 	public String getDescription() {
 		return "Connects the bot to a voice channel.";
+	}
+	
+	@Override
+	public String getUsage() {
+		return DiscordBot.getInstance().getConfig().getCommandPrefix() + "Join <Channel>";
+	}
+	
+	@Override
+	public List<String> getAliases() {
+		return null;
 	}
 }

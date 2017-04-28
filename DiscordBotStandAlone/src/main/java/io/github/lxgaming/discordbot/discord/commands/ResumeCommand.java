@@ -38,7 +38,22 @@ public class ResumeCommand implements ICommand {
 	}
 	
 	@Override
+	public String getName() {
+		return "Resume";
+	}
+	
+	@Override
 	public String getDescription() {
 		return "Resumes media playback.";
+	}
+	
+	@Override
+	public String getUsage() {
+		return DiscordBot.getInstance().getConfig().getCommandPrefix() + "Resume";
+	}
+	
+	@Override
+	public List<String> getAliases() {
+		return null;
 	}
 }

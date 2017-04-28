@@ -16,6 +16,7 @@
 
 package io.github.lxgaming.discordbot.discord.commands;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.github.lxgaming.discordbot.DiscordBot;
@@ -32,7 +33,24 @@ public class SkipCommand implements ICommand {
 	}
 	
 	@Override
+	public String getName() {
+		return "Skip";
+	}
+	
+	@Override
 	public String getDescription() {
 		return "Plays next song in queue.";
+	}
+	
+	@Override
+	public String getUsage() {
+		return DiscordBot.getInstance().getConfig().getCommandPrefix() + "Skip";
+	}
+	
+	@Override
+	public List<String> getAliases() {
+		List<String> aliases = new ArrayList<String>();
+		aliases.add("Next");
+		return aliases;
 	}
 }

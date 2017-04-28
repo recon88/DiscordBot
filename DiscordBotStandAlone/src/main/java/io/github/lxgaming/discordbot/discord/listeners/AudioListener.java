@@ -29,31 +29,29 @@ public class AudioListener extends AudioEventAdapter {
 	
 	@Override
 	public void onPlayerPause(AudioPlayer audioPlayer) {
-		ConsoleOutput.debug("Player Pause!");
+		ConsoleOutput.debug("Player pause.");
 	}
 	
 	@Override
 	public void onPlayerResume(AudioPlayer audioPlayer) {
-		ConsoleOutput.debug("Player Resume!");
+		ConsoleOutput.debug("Player resume.");
 	}
 	
 	@Override
 	public void onTrackEnd(AudioPlayer audioPlayer, AudioTrack audioTrack, AudioTrackEndReason audioTrackEndReason) {
-		ConsoleOutput.debug("Track End!");
 		if (audioTrackEndReason.equals(AudioTrackEndReason.FINISHED) && audioTrackEndReason.mayStartNext) {
-			ConsoleOutput.debug("Track FINISHED!");
+			ConsoleOutput.debug("Track Finished, Playing next.");
 			DiscordBot.getInstance().getDiscord().getAudioQueue().playNext();
 			return;
 		}
 		
 		if (audioTrackEndReason.equals(AudioTrackEndReason.STOPPED)) {
-			ConsoleOutput.debug("Track STOPPED!");
+			ConsoleOutput.debug("Track stopped.");
 			return;
 		}
 		
 		if (audioTrackEndReason.equals(AudioTrackEndReason.REPLACED)) {
-			ConsoleOutput.debug("Track REPLACED!");
-			//DiscordBot.getInstance().getDiscord().getAudioQueue();
+			ConsoleOutput.debug("Track replaced.");
 		}
 	}
 	
@@ -68,11 +66,11 @@ public class AudioListener extends AudioEventAdapter {
 	
 	@Override
 	public void onTrackStart(AudioPlayer audioPlayer, AudioTrack audioTrack) {
-		ConsoleOutput.debug("Track Start!");
+		ConsoleOutput.debug("Track start!");
 	}
 	
 	@Override
 	public void onTrackStuck(AudioPlayer audioPlayer, AudioTrack audioTrack, long time) {
-		ConsoleOutput.debug("Track Stuck!");
+		ConsoleOutput.debug("Track stuck.");
 	}
 }

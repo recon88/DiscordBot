@@ -34,7 +34,22 @@ public class ClearCommand implements ICommand {
 	}
 	
 	@Override
+	public String getName() {
+		return "Clear";
+	}
+	
+	@Override
 	public String getDescription() {
+		return "Clears queue.";
+	}
+	
+	@Override
+	public String getUsage() {
+		return DiscordBot.getInstance().getConfig().getCommandPrefix() + "Clear";
+	}
+	
+	@Override
+	public List<String> getAliases() {
 		return null;
 	}
 }
