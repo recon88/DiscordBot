@@ -39,7 +39,7 @@ public class InfoCommand implements ICommand {
 		embedBuilder.addField("Dependencies", ""
 				+ "\n- " + Reference.JDA_NAME + " v" + Reference.JDA_VERSION
 				+ "\n- " + Reference.LAVA_NAME + " v" + Reference.LAVA_VERSION, false);
-		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), false);
+		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
 	}
 	
 	@Override
