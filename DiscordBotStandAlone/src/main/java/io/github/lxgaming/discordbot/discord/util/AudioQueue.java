@@ -16,11 +16,13 @@
 
 package io.github.lxgaming.discordbot.discord.util;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.github.lxgaming.discordbot.DiscordBot;
 import io.github.lxgaming.discordbot.entries.Audio;
+import net.dv8tion.jda.core.EmbedBuilder;
 
 public class AudioQueue {
 	
@@ -32,12 +34,18 @@ public class AudioQueue {
 	
 	public void playNext() {
 		Audio audio = getNext();
-		if (audio != null) {
-			DiscordBot.getInstance().getDiscord().getAudioPlayer().playTrack(audio.getAudioTrack());
+		if (audio == null) {
+			DiscordBot.getInstance().getDiscord().getAudioPlayer().playTrack(null);
 			return;
 		}
 		
-		DiscordBot.getInstance().getDiscord().getAudioPlayer().playTrack(null);
+		DiscordBot.getInstance().getDiscord().getAudioPlayer().playTrack(audio.getAudioTrack());
+		
+		EmbedBuilder embedBuilder = new EmbedBuilder();
+		embedBuilder.setAuthor(audio.getTextChannel().getJDA().getSelfUser().getName(), null, audio.getTextChannel().getJDA().getSelfUser().getEffectiveAvatarUrl());
+		embedBuilder.setColor(Color.decode("#7289DA"));
+		embedBuilder.addField("Now playing", audio.getAudioTrack().getInfo().title, false);
+		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(audio.getTextChannel(), embedBuilder.build(), true);
 	}
 	
 	private Audio getNext() {

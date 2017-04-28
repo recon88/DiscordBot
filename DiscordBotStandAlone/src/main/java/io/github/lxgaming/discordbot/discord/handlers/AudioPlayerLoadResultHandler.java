@@ -46,10 +46,10 @@ public class AudioPlayerLoadResultHandler implements AudioLoadResultHandler {
 		}
 		
 		Audio audio = new Audio(getTextChannel(), getMember(), audioTrack);
-		if (DiscordBot.getInstance().getDiscord().getAudioPlayer().startTrack(audio.getAudioTrack(), true)) {
-			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(audio.getTextChannel(), audio.getMember().getEffectiveName(),
-					"Now playing - '" + audio.getAudioTrack().getInfo().title + "'.");
-		} else if (DiscordBot.getInstance().getDiscord().getAudioQueue().getQueue().add(audio)) {
+		DiscordBot.getInstance().getDiscord().getAudioQueue().getQueue().add(audio);
+		if (DiscordBot.getInstance().getDiscord().getAudioPlayer().getPlayingTrack() == null) {
+			DiscordBot.getInstance().getDiscord().getAudioQueue().playNext();
+		} else {
 			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(audio.getTextChannel(), audio.getMember().getEffectiveName(),
 					"'" + audio.getAudioTrack().getInfo().title + "' Has been added to the queue.");
 		}
@@ -60,19 +60,17 @@ public class AudioPlayerLoadResultHandler implements AudioLoadResultHandler {
 	public void playlistLoaded(AudioPlaylist audioPlaylist) {
 		for (Iterator<AudioTrack> iterator = audioPlaylist.getTracks().iterator(); iterator.hasNext();) {
 			AudioTrack audioTrack = iterator.next();
-			
 			if (audioTrack == null) {
 				continue;
 			}
 			
 			Audio audio = new Audio(getTextChannel(), getMember(), audioTrack);
-			if (DiscordBot.getInstance().getDiscord().getAudioPlayer().startTrack(audioTrack, true)) {
-				DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(audio.getTextChannel(), audio.getMember().getEffectiveName(),
-						"Now playing - '" + audio.getAudioTrack().getInfo().title + "'.");
-			} else if (DiscordBot.getInstance().getDiscord().getAudioQueue().getQueue().add(audio)) {
+			DiscordBot.getInstance().getDiscord().getAudioQueue().getQueue().add(audio);
+			if (DiscordBot.getInstance().getDiscord().getAudioPlayer().getPlayingTrack() == null) {
+				DiscordBot.getInstance().getDiscord().getAudioQueue().playNext();
+			} else {
 				ConsoleOutput.debug("'" + audio.getAudioTrack().getInfo().title + "' Has been added to the queue.");
 			}
-			
 			audio = null;
 		}
 		ConsoleOutput.debug(audioPlaylist.getTracks().size() + " Songs have been added to the queue.");

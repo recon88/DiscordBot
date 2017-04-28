@@ -50,6 +50,7 @@ Temporary Items
 .settings
 .classpath
 .project
+*/config.json
 
 # Maven project
 target

@@ -38,6 +38,12 @@ public class QueueCommand implements ICommand {
 		embedBuilder.setAuthor(textChannel.getJDA().getSelfUser().getName(), null, textChannel.getJDA().getSelfUser().getEffectiveAvatarUrl());
 		embedBuilder.setColor(Color.decode("#7289DA"));
 		
+		if (DiscordBot.getInstance().getDiscord().getAudioQueue().getQueue() == null || DiscordBot.getInstance().getDiscord().getAudioQueue().getQueue().isEmpty()) {
+			embedBuilder.setTitle("Nothing Queued", null);
+			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
+			return;
+		}
+		
 		StringBuilder stringBuilder = new StringBuilder();
 		int count = 0;
 		for (Iterator<Audio> iterator = DiscordBot.getInstance().getDiscord().getAudioQueue().getQueue().iterator(); iterator.hasNext();) {
