@@ -30,7 +30,7 @@ repositories {
 dependencies {
   provided "net.md-5:bungeecord-api:1.11-SNAPSHOT"
   provided "com.imaginarycode.minecraft:RedisBungee:0.3.8-INTERIM"
-  compile fileTree(dir: "../DiscordBotCore/build/libs/", include: ["*.jar"])
+  compile fileTree(dir: "../DiscordBotCore/build/libs/", include: ["DiscordBotCore-*.jar"])
 }
 
 jar {
