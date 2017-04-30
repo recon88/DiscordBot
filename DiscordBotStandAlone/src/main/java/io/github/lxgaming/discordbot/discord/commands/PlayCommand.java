@@ -21,7 +21,9 @@ import java.util.List;
 
 import io.github.lxgaming.discordbot.DiscordBot;
 import io.github.lxgaming.discordbot.discord.handlers.AudioPlayerLoadResultHandler;
+import io.github.lxgaming.discordbot.discord.util.DiscordUtil;
 import io.github.lxgaming.discordbot.entries.ICommand;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -30,13 +32,21 @@ public class PlayCommand implements ICommand {
 	
 	@Override
 	public void execute(TextChannel textChannel, Member member, Message message, List<String> arguments) {
+		EmbedBuilder embedBuilder = new EmbedBuilder();
+		embedBuilder.setAuthor(textChannel.getJDA().getSelfUser().getName(), null, textChannel.getJDA().getSelfUser().getEffectiveAvatarUrl());
+		embedBuilder.setColor(DiscordUtil.DEFAULT);
+		
 		if (member.getGuild().getAudioManager().getConnectedChannel() == null) {
-			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, "Not connected to voice channel!");
+			embedBuilder.setColor(DiscordUtil.ERROR);
+			embedBuilder.setTitle("Not connected to voice channel!", null);
+			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
 			return;
 		}
 		
 		if (arguments == null || arguments.isEmpty()) {
-			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, "Invalid arguments!");
+			embedBuilder.setColor(DiscordUtil.ERROR);
+			embedBuilder.setTitle("Invalid arguments!", null);
+			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
 			return;
 		}
 		
@@ -47,7 +57,9 @@ public class PlayCommand implements ICommand {
 			}
 			
 			DiscordBot.getInstance().getDiscord().getAudioPlayerManager().loadItem(string, new AudioPlayerLoadResultHandler(textChannel, member));
-			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, member.getEffectiveName(), "Processing...");
+			embedBuilder.setColor(DiscordUtil.SUCCESS);
+			embedBuilder.setTitle("Processing...", null);
+			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
 		}
 	}
 	

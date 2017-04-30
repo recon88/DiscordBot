@@ -16,7 +16,6 @@
 
 package io.github.lxgaming.discordbot.discord.util;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +42,7 @@ public class AudioQueue {
 		
 		EmbedBuilder embedBuilder = new EmbedBuilder();
 		embedBuilder.setAuthor(audio.getTextChannel().getJDA().getSelfUser().getName(), null, audio.getTextChannel().getJDA().getSelfUser().getEffectiveAvatarUrl());
-		embedBuilder.setColor(Color.decode("#7289DA"));
+		embedBuilder.setColor(DiscordUtil.DEFAULT);
 		embedBuilder.addField("Now playing", audio.getAudioTrack().getInfo().title, false);
 		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(audio.getTextChannel(), embedBuilder.build(), true);
 	}

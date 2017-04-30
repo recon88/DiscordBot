@@ -32,7 +32,7 @@ repositories {
 
 dependencies {
   provided "org.spigotmc:spigot-api:1.11.2-R0.1-SNAPSHOT"
-  compile files("../DiscordBotCore/build/libs/DiscordBotCore-0.9.0-UNSTABLE.jar")
+  compile fileTree(dir: "../DiscordBotCore/build/libs/", include: ["*.jar"])
 }
 
 jar {

@@ -24,13 +24,10 @@ public class Config {
 	private String commandPrefix;
 	private String guildId;
 	private String token;
-	private String autoJoinChannel;
 	private int defaultVolume;
-	private boolean autoPause;
 	private boolean deleteMessages;
 	private boolean deleteInvoking;
 	private int deleteTime;
-	private String messageFormat;
 	private List<Group> groups;
 	
 	public boolean isDebug() {
@@ -48,16 +45,8 @@ public class Config {
 		return token;
 	}
 	
-	public String getAutoJoinChannel() {
-		return autoJoinChannel;
-	}
-	
 	public int getDefaultVolume() {
 		return defaultVolume;
-	}
-	
-	public boolean isAutoPause() {
-		return autoPause;
 	}
 	
 	public boolean isDeleteMessages() {
@@ -70,10 +59,6 @@ public class Config {
 	
 	public int getDeleteTime() {
 		return deleteTime;
-	}
-	
-	public String getMessageFormat() {
-		return messageFormat;
 	}
 	
 	public List<Group> getGroups() {

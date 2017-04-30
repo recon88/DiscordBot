@@ -20,7 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.lxgaming.discordbot.DiscordBot;
+import io.github.lxgaming.discordbot.discord.util.DiscordUtil;
 import io.github.lxgaming.discordbot.entries.ICommand;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -29,6 +31,10 @@ public class VolumeCommand implements ICommand {
 	
 	@Override
 	public void execute(TextChannel textChannel, Member member, Message message, List<String> arguments) {
+		EmbedBuilder embedBuilder = new EmbedBuilder();
+		embedBuilder.setAuthor(textChannel.getJDA().getSelfUser().getName(), null, textChannel.getJDA().getSelfUser().getEffectiveAvatarUrl());
+		embedBuilder.setColor(DiscordUtil.DEFAULT);
+		
 		if (arguments != null && !arguments.isEmpty()) {
 			try {
 				Integer volume = Integer.parseInt(arguments.get(0));
@@ -37,13 +43,17 @@ public class VolumeCommand implements ICommand {
 				}
 				
 				DiscordBot.getInstance().getDiscord().getAudioPlayer().setVolume(volume);
+				embedBuilder.setColor(DiscordUtil.SUCCESS);
 			} catch (NumberFormatException ex) {
-				DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, "Invalid volume!");
+				embedBuilder.setColor(DiscordUtil.ERROR);
+				embedBuilder.setTitle("Invalid volume!", null);
+				DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
+				return;
 			}
 		}
 		
-		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, member.getEffectiveName(),
-				"Volume - " + DiscordBot.getInstance().getDiscord().getAudioPlayer().getVolume());
+		embedBuilder.setTitle("Volume - " + DiscordBot.getInstance().getDiscord().getAudioPlayer().getVolume(), null);
+		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
 	}
 	
 	@Override

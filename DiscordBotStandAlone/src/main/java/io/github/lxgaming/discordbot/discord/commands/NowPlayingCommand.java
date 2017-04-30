@@ -16,14 +16,13 @@
 
 package io.github.lxgaming.discordbot.discord.commands;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
 import io.github.lxgaming.discordbot.DiscordBot;
-import io.github.lxgaming.discordbot.discord.util.DiscordHelper;
+import io.github.lxgaming.discordbot.discord.util.DiscordUtil;
 import io.github.lxgaming.discordbot.entries.ICommand;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
@@ -34,17 +33,19 @@ public class NowPlayingCommand implements ICommand {
 	
 	@Override
 	public void execute(TextChannel textChannel, Member member, Message message, List<String> arguments) {
+		EmbedBuilder embedBuilder = new EmbedBuilder();
+		embedBuilder.setAuthor(textChannel.getJDA().getSelfUser().getName(), null, textChannel.getJDA().getSelfUser().getEffectiveAvatarUrl());
+		embedBuilder.setColor(DiscordUtil.DEFAULT);
+		
 		AudioTrack audioTrack = DiscordBot.getInstance().getDiscord().getAudioPlayer().getPlayingTrack();
 		if (audioTrack == null) {
-			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, member.getEffectiveName(), "Nothing is currently playing.");
+			embedBuilder.setTitle("Nothing is currently playing.", null);
+			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
 			return;
 		}
 		
-		EmbedBuilder embedBuilder = new EmbedBuilder();
-		embedBuilder.setAuthor(textChannel.getJDA().getSelfUser().getName(), null, textChannel.getJDA().getSelfUser().getEffectiveAvatarUrl());
-		embedBuilder.setColor(Color.decode("#7289DA"));
 		embedBuilder.addField("Now playing", audioTrack.getInfo().title, false);
-		embedBuilder.setFooter(DiscordHelper.getTimestamp(audioTrack.getPosition()) + " / " + DiscordHelper.getTimestamp(audioTrack.getDuration()), null);
+		embedBuilder.setFooter(DiscordUtil.getTimestamp(audioTrack.getPosition()) + " / " + DiscordUtil.getTimestamp(audioTrack.getDuration()), null);
 		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
 	}
 	

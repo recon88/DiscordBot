@@ -16,10 +16,10 @@
 
 package io.github.lxgaming.discordbot.discord.commands;
 
-import java.awt.Color;
 import java.util.List;
 
 import io.github.lxgaming.discordbot.DiscordBot;
+import io.github.lxgaming.discordbot.discord.util.DiscordUtil;
 import io.github.lxgaming.discordbot.entries.ICommand;
 import io.github.lxgaming.discordbot.util.Reference;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -33,7 +33,7 @@ public class InfoCommand implements ICommand {
 	public void execute(TextChannel textChannel, Member member, Message message, List<String> arguments) {
 		EmbedBuilder embedBuilder = new EmbedBuilder();
 		embedBuilder.setAuthor(Reference.APP_NAME + " v" + Reference.APP_VERSION, null, textChannel.getJDA().getSelfUser().getEffectiveAvatarUrl());
-		embedBuilder.setColor(Color.decode("#7289DA"));
+		embedBuilder.setColor(DiscordUtil.DEFAULT);
 		embedBuilder.addField("Author", "LX_Gaming", false);
 		embedBuilder.addField("Source", "https://github.com/LXGaming/DiscordBot/", false);
 		embedBuilder.addField("Dependencies", ""

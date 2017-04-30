@@ -24,8 +24,10 @@ import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
 import io.github.lxgaming.discordbot.DiscordBot;
+import io.github.lxgaming.discordbot.discord.util.DiscordUtil;
 import io.github.lxgaming.discordbot.entries.Audio;
 import io.github.lxgaming.discordbot.util.ConsoleOutput;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
 
@@ -50,8 +52,11 @@ public class AudioPlayerLoadResultHandler implements AudioLoadResultHandler {
 		if (DiscordBot.getInstance().getDiscord().getAudioPlayer().getPlayingTrack() == null) {
 			DiscordBot.getInstance().getDiscord().getAudioQueue().playNext();
 		} else {
-			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(audio.getTextChannel(), audio.getMember().getEffectiveName(),
-					"'" + audio.getAudioTrack().getInfo().title + "' Has been added to the queue.");
+			EmbedBuilder embedBuilder = new EmbedBuilder();
+			embedBuilder.setAuthor(textChannel.getJDA().getSelfUser().getName(), null, textChannel.getJDA().getSelfUser().getEffectiveAvatarUrl());
+			embedBuilder.setColor(DiscordUtil.SUCCESS);
+			embedBuilder.setTitle("'" + audio.getAudioTrack().getInfo().title + "' Has been added to the queue.", null);
+			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
 		}
 		audio = null;
 	}
@@ -74,20 +79,32 @@ public class AudioPlayerLoadResultHandler implements AudioLoadResultHandler {
 			audio = null;
 		}
 		ConsoleOutput.debug(audioPlaylist.getTracks().size() + " Songs have been added to the queue.");
-		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(getTextChannel(), getMember().getEffectiveName(),
-				audioPlaylist.getTracks().size() + " Songs have been added to the queue.");
+		EmbedBuilder embedBuilder = new EmbedBuilder();
+		embedBuilder.setAuthor(textChannel.getJDA().getSelfUser().getName(), null, textChannel.getJDA().getSelfUser().getEffectiveAvatarUrl());
+		embedBuilder.setColor(DiscordUtil.SUCCESS);
+		embedBuilder.setTitle(audioPlaylist.getTracks().size() + " Songs have been added to the queue.", null);
+		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
 	}
 	
 	@Override
 	public void noMatches() {
-		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(getTextChannel(), getMember().getEffectiveName(), "No matches found!");
+		EmbedBuilder embedBuilder = new EmbedBuilder();
+		embedBuilder.setAuthor(textChannel.getJDA().getSelfUser().getName(), null, textChannel.getJDA().getSelfUser().getEffectiveAvatarUrl());
+		embedBuilder.setColor(DiscordUtil.ERROR);
+		embedBuilder.setTitle("No matches found!", null);
+		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
 	}
 	
 	@Override
 	public void loadFailed(FriendlyException exception) {
-		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(getTextChannel(), getMember().getEffectiveName(), "Failed to load - " + exception.getMessage());
 		ConsoleOutput.error("Failed to load - " + exception.getMessage());
 		exception.printStackTrace();
+		
+		EmbedBuilder embedBuilder = new EmbedBuilder();
+		embedBuilder.setAuthor(textChannel.getJDA().getSelfUser().getName(), null, textChannel.getJDA().getSelfUser().getEffectiveAvatarUrl());
+		embedBuilder.setColor(DiscordUtil.ERROR);
+		embedBuilder.addField("Failed to load", exception.getMessage(), false);
+		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
 	}
 	
 	public TextChannel getTextChannel() {

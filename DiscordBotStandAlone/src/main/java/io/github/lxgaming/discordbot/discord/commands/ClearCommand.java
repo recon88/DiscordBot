@@ -19,7 +19,9 @@ package io.github.lxgaming.discordbot.discord.commands;
 import java.util.List;
 
 import io.github.lxgaming.discordbot.DiscordBot;
+import io.github.lxgaming.discordbot.discord.util.DiscordUtil;
 import io.github.lxgaming.discordbot.entries.ICommand;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -30,7 +32,12 @@ public class ClearCommand implements ICommand {
 	public void execute(TextChannel textChannel, Member member, Message message, List<String> arguments) {
 		DiscordBot.getInstance().getDiscord().getAudioQueue().getQueue().clear();
 		DiscordBot.getInstance().getDiscord().getAudioPlayer().stopTrack();
-		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, member.getEffectiveName(), "Queue cleared.");
+		
+		EmbedBuilder embedBuilder = new EmbedBuilder();
+		embedBuilder.setAuthor(textChannel.getJDA().getSelfUser().getName(), null, textChannel.getJDA().getSelfUser().getEffectiveAvatarUrl());
+		embedBuilder.setColor(DiscordUtil.DEFAULT);
+		embedBuilder.setTitle("Queue cleared.", null);
+		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
 	}
 	
 	@Override

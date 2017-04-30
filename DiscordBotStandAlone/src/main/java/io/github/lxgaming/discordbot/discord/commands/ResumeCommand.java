@@ -19,7 +19,9 @@ package io.github.lxgaming.discordbot.discord.commands;
 import java.util.List;
 
 import io.github.lxgaming.discordbot.DiscordBot;
+import io.github.lxgaming.discordbot.discord.util.DiscordUtil;
 import io.github.lxgaming.discordbot.entries.ICommand;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -28,13 +30,21 @@ public class ResumeCommand implements ICommand {
 	
 	@Override
 	public void execute(TextChannel textChannel, Member member, Message message, List<String> arguments) {
+		EmbedBuilder embedBuilder = new EmbedBuilder();
+		embedBuilder.setAuthor(textChannel.getJDA().getSelfUser().getName(), null, textChannel.getJDA().getSelfUser().getEffectiveAvatarUrl());
+		embedBuilder.setColor(DiscordUtil.DEFAULT);
+		
 		if (!DiscordBot.getInstance().getDiscord().getAudioPlayer().isPaused()) {
-			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, member.getEffectiveName(), "Player is not paused!");
+			embedBuilder.setColor(DiscordUtil.ERROR);
+			embedBuilder.setTitle("Player is not paused!", null);
+			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
 			return;
 		}
 		
 		DiscordBot.getInstance().getDiscord().getAudioPlayer().setPaused(false);
-		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, member.getEffectiveName(), "Player resumed.");
+		embedBuilder.setColor(DiscordUtil.SUCCESS);
+		embedBuilder.setTitle("Player resumed.", null);
+		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
 	}
 	
 	@Override

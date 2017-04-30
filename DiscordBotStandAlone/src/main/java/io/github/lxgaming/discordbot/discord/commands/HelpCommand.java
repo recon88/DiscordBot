@@ -16,11 +16,11 @@
 
 package io.github.lxgaming.discordbot.discord.commands;
 
-import java.awt.Color;
 import java.util.Iterator;
 import java.util.List;
 
 import io.github.lxgaming.discordbot.DiscordBot;
+import io.github.lxgaming.discordbot.discord.util.DiscordUtil;
 import io.github.lxgaming.discordbot.entries.ICommand;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
@@ -33,7 +33,7 @@ public class HelpCommand implements ICommand {
 	public void execute(TextChannel textChannel, Member member, Message message, List<String> arguments) {
 		EmbedBuilder embedBuilder = new EmbedBuilder();
 		embedBuilder.setAuthor(textChannel.getJDA().getSelfUser().getName(), null, textChannel.getJDA().getSelfUser().getEffectiveAvatarUrl());
-		embedBuilder.setColor(Color.decode("#7289DA"));
+		embedBuilder.setColor(DiscordUtil.DEFAULT);
 		embedBuilder.setTitle("Commands", null);
 		
 		for (Iterator<ICommand> iterator = DiscordBot.getInstance().getDiscord().getCommand().getRegisteredCommands().iterator(); iterator.hasNext();) {

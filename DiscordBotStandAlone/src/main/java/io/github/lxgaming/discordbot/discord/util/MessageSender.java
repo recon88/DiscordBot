@@ -16,14 +16,11 @@
 
 package io.github.lxgaming.discordbot.discord.util;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
 
 import io.github.lxgaming.discordbot.DiscordBot;
-import io.github.lxgaming.discordbot.util.ConsoleOutput;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageEmbed;
@@ -37,12 +34,8 @@ public class MessageSender {
 		messages = new LinkedList<Message>();
 	}
 	
-	public void sendMessage(TextChannel textChannel, String username, String message) {
-		sendMessage(textChannel, formatMessage(username, message));
-	}
-	
-	public void sendMessage(TextChannel textChannel, String message) {
-		sendMessage(textChannel, new MessageBuilder().append(message).build(), true);
+	public void sendMessage(TextChannel textChannel, MessageEmbed messageEmbed, boolean autoDelete) {
+		sendMessage(textChannel, new MessageBuilder().setEmbed(messageEmbed).build(), autoDelete);
 	}
 	
 	public void sendMessage(TextChannel textChannel, Message message, boolean autoDelete) {
@@ -55,31 +48,6 @@ public class MessageSender {
 				}
 			}
 		});
-	}
-	
-	public void sendMessage(TextChannel textChannel, MessageEmbed messageEmbed, boolean autoDelete) {
-		textChannel.sendMessage(messageEmbed).queue(new Consumer<Message>() {
-			
-			@Override
-			public void accept(Message message) {
-				if (DiscordBot.getInstance().getConfig().isDeleteMessages() && autoDelete) {
-					getMessages().add(message);
-				}
-			}
-		});
-	}
-	
-	private String formatMessage(String username, String message) {
-		String messageFormat = DiscordBot.getInstance().getConfig().getMessageFormat();
-		if (messageFormat.trim().equals("") || messageFormat.trim().equals("null")) {
-			ConsoleOutput.error("DiscordBot format is null!");
-			return null;
-		}
-		
-		return messageFormat
-				.replace("{TIME}", new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()))
-				.replace("{USER}", username)
-				.replace("{MESSAGE}", message);
 	}
 	
 	public void addMessage(Message message) {

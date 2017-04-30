@@ -3,13 +3,10 @@
     "commandPrefix": "!",
     "guildId": "",
     "token": "",
-    "autoJoinChannel": "",
     "defaultVolume": 25,
-    "autoPause": false,
     "deleteMessages": true,
     "deleteInvoking": false,
     "deleteTime": 60000,
-    "messageFormat": "``Time:`` **{TIME}** ``User:`` **{USER}:** {MESSAGE}",
     "groups": [
         {
             "name": "Default",

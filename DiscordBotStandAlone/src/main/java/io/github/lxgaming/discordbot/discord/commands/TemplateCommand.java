@@ -28,7 +28,6 @@ public class TemplateCommand implements ICommand {
 	
 	@Override
 	public void execute(TextChannel textChannel, Member member, Message message, List<String> arguments) {
-		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, "");
 	}
 	
 	@Override

@@ -16,10 +16,15 @@
 
 package io.github.lxgaming.discordbot.discord.util;
 
+import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DiscordHelper {
+public class DiscordUtil {
+	
+	public static final Color DEFAULT = Color.decode("#7289DA");
+	public static final Color SUCCESS = Color.decode("#00AA00");
+	public static final Color ERROR = Color.decode("#FF0000");
 	
 	public static String getTimestamp(long time) {
 		return (new SimpleDateFormat("mm'm' ss's'").format(new Date(time)));

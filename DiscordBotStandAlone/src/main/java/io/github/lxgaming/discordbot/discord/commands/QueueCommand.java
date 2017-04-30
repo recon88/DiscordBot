@@ -16,13 +16,12 @@
 
 package io.github.lxgaming.discordbot.discord.commands;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import io.github.lxgaming.discordbot.DiscordBot;
-import io.github.lxgaming.discordbot.discord.util.DiscordHelper;
+import io.github.lxgaming.discordbot.discord.util.DiscordUtil;
 import io.github.lxgaming.discordbot.entries.Audio;
 import io.github.lxgaming.discordbot.entries.ICommand;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -36,7 +35,7 @@ public class QueueCommand implements ICommand {
 	public void execute(TextChannel textChannel, Member member, Message message, List<String> arguments) {
 		EmbedBuilder embedBuilder = new EmbedBuilder();
 		embedBuilder.setAuthor(textChannel.getJDA().getSelfUser().getName(), null, textChannel.getJDA().getSelfUser().getEffectiveAvatarUrl());
-		embedBuilder.setColor(Color.decode("#7289DA"));
+		embedBuilder.setColor(DiscordUtil.DEFAULT);
 		
 		if (DiscordBot.getInstance().getDiscord().getAudioQueue().getQueue() == null || DiscordBot.getInstance().getDiscord().getAudioQueue().getQueue().isEmpty()) {
 			embedBuilder.setTitle("Nothing Queued", null);
@@ -51,7 +50,7 @@ public class QueueCommand implements ICommand {
 			if (count >= 10) {
 				break;
 			}
-			stringBuilder.append("`[ " + DiscordHelper.getTimestamp(audio.getAudioTrack().getInfo().length) + " ]` " + audio.getAudioTrack().getInfo().title + "\n");
+			stringBuilder.append("`[ " + DiscordUtil.getTimestamp(audio.getAudioTrack().getInfo().length) + " ]` " + audio.getAudioTrack().getInfo().title + "\n");
 			count++;
 		}
 		

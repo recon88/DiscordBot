@@ -19,7 +19,9 @@ package io.github.lxgaming.discordbot.discord.commands;
 import java.util.List;
 
 import io.github.lxgaming.discordbot.DiscordBot;
+import io.github.lxgaming.discordbot.discord.util.DiscordUtil;
 import io.github.lxgaming.discordbot.entries.ICommand;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -29,14 +31,22 @@ public class JoinCommand implements ICommand {
 	
 	@Override
 	public void execute(TextChannel textChannel, Member member, Message message, List<String> arguments) {
+		EmbedBuilder embedBuilder = new EmbedBuilder();
+		embedBuilder.setAuthor(textChannel.getJDA().getSelfUser().getName(), null, textChannel.getJDA().getSelfUser().getEffectiveAvatarUrl());
+		embedBuilder.setColor(DiscordUtil.DEFAULT);
+		
 		if (arguments == null || arguments.isEmpty()) {
-			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, "Invalid arguments!");
+			embedBuilder.setColor(DiscordUtil.ERROR);
+			embedBuilder.setTitle("Invalid arguments!", null);
+			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
 			return;
 		}
 		
 		List<VoiceChannel> voiceChannels = member.getGuild().getVoiceChannelsByName(arguments.get(0), false);
 		if (voiceChannels.size() < 1) {
-			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, "Unable to find specified voice channel!");
+			embedBuilder.setColor(DiscordUtil.ERROR);
+			embedBuilder.setTitle("Unable to find specified voice channel!", null);
+			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
 			return;
 		}
 		
@@ -46,9 +56,13 @@ public class JoinCommand implements ICommand {
 		
 		try {
 			member.getGuild().getAudioManager().openAudioConnection(voiceChannels.get(0));
-			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, member.getEffectiveName(), "Joining channel '" + voiceChannels.get(0).getName() + "'.");
+			embedBuilder.setColor(DiscordUtil.SUCCESS);
+			embedBuilder.setTitle("Joined channel '" + voiceChannels.get(0).getName() + "'.", null);
+			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
 		} catch (RuntimeException ex) {
-			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, "Cannot join channel '" + voiceChannels.get(0).getName() + "', " + ex.getMessage());
+			embedBuilder.setColor(DiscordUtil.ERROR);
+			embedBuilder.addField("Cannot join channel '" + voiceChannels.get(0).getName() + "'!", ex.getMessage(), false);
+			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
 		}
 	}
 	
