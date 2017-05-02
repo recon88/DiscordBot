@@ -44,7 +44,7 @@ public class InfoCommand implements ICommand {
 	
 	@Override
 	public String getName() {
-		return "Info";
+		return "DJInfo";
 	}
 	
 	@Override
@@ -54,7 +54,7 @@ public class InfoCommand implements ICommand {
 	
 	@Override
 	public String getUsage() {
-		return DiscordBot.getInstance().getConfig().getCommandPrefix() + "Info";
+		return DiscordBot.getInstance().getConfig().getCommandPrefix() + "DJInfo";
 	}
 	
 	@Override
