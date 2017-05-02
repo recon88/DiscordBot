@@ -31,12 +31,14 @@ public class DiscordUtil {
 	
 	public static String getTimestamp(long duration) {
 		PeriodFormatter periodFormatter = new PeriodFormatterBuilder()
+				.appendYears().appendSuffix("y ")
+				.appendMonths().appendSuffix("m ")
 				.appendWeeks().appendSuffix("w ")
 				.appendDays().appendSuffix("d ")
 				.appendHours().appendSuffix("h ")
 				.appendMinutes().appendSuffix("m ")
 				.appendSeconds().appendSuffix("s")
 				.toFormatter();
-		return periodFormatter.print(new Period(new Duration(duration)));
+		return periodFormatter.print(new Period(new Duration(duration)).normalizedStandard());
 	}
 }
