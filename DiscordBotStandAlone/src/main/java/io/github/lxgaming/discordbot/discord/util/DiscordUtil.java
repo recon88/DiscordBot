@@ -17,8 +17,11 @@
 package io.github.lxgaming.discordbot.discord.util;
 
 import java.awt.Color;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
+import org.joda.time.Duration;
+import org.joda.time.Period;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 
 public class DiscordUtil {
 	
@@ -26,7 +29,14 @@ public class DiscordUtil {
 	public static final Color SUCCESS = Color.decode("#00AA00");
 	public static final Color ERROR = Color.decode("#FF0000");
 	
-	public static String getTimestamp(long time) {
-		return (new SimpleDateFormat("mm'm' ss's'").format(new Date(time)));
+	public static String getTimestamp(long duration) {
+		PeriodFormatter periodFormatter = new PeriodFormatterBuilder()
+				.appendWeeks().appendSuffix("w ")
+				.appendDays().appendSuffix("d ")
+				.appendHours().appendSuffix("h ")
+				.appendMinutes().appendSuffix("m ")
+				.appendSeconds().appendSuffix("s")
+				.toFormatter();
+		return periodFormatter.print(new Period(new Duration(duration)));
 	}
 }

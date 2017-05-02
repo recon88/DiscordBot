@@ -3,7 +3,7 @@ apply plugin: "java"
 targetCompatibility = 1.8
 sourceCompatibility = 1.8
 
-version = "1.2.0-ALPHA"
+version = "1.2.1-ALPHA"
 group = "io.github.lxgaming.discordbot"
 archivesBaseName = "DiscordBotStandAlone"
 
@@ -24,6 +24,7 @@ dependencies {
   compile "com.google.code.gson:gson:2.8.0"
   compile "com.sedmelluq:lavaplayer:1.2.36"
   compile "net.dv8tion:JDA:3.0.0_185"
+  compile "joda-time:joda-time:2.9.9"
 }
 
 jar {
