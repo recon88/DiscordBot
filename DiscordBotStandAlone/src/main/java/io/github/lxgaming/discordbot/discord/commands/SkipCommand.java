@@ -16,7 +16,7 @@
 
 package io.github.lxgaming.discordbot.discord.commands;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.github.lxgaming.discordbot.DiscordBot;
@@ -31,11 +31,20 @@ public class SkipCommand implements ICommand {
 	
 	@Override
 	public void execute(TextChannel textChannel, Member member, Message message, List<String> arguments) {
-		DiscordBot.getInstance().getDiscord().getAudioQueue().playNext();
 		EmbedBuilder embedBuilder = new EmbedBuilder();
 		embedBuilder.setAuthor(textChannel.getJDA().getSelfUser().getName(), null, textChannel.getJDA().getSelfUser().getEffectiveAvatarUrl());
 		embedBuilder.setColor(DiscordUtil.DEFAULT);
-		embedBuilder.setTitle("Skipping...", null);
+		
+		if (DiscordBot.getInstance().getDiscord().getAudioQueue().isRepeatSong()) {
+			embedBuilder.setColor(DiscordUtil.WARNING);
+			DiscordBot.getInstance().getDiscord().getAudioQueue().setRepeatSong(false);
+			embedBuilder.setTitle("Repeat is now off, Skipping...", null);
+		} else {
+			embedBuilder.setColor(DiscordUtil.SUCCESS);
+			embedBuilder.setTitle("Skipping...", null);
+		}
+		
+		DiscordBot.getInstance().getDiscord().getAudioQueue().playNext();
 		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
 	}
 	
@@ -56,8 +65,6 @@ public class SkipCommand implements ICommand {
 	
 	@Override
 	public List<String> getAliases() {
-		List<String> aliases = new ArrayList<String>();
-		aliases.add("Next");
-		return aliases;
+		return Arrays.asList("Next");
 	}
 }

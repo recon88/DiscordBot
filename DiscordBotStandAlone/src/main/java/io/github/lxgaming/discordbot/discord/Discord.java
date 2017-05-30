@@ -30,7 +30,7 @@ import io.github.lxgaming.discordbot.discord.listeners.DiscordListener;
 import io.github.lxgaming.discordbot.discord.util.AudioQueue;
 import io.github.lxgaming.discordbot.discord.util.DiscordThread;
 import io.github.lxgaming.discordbot.discord.util.MessageSender;
-import io.github.lxgaming.discordbot.util.ConsoleOutput;
+import io.github.lxgaming.discordbot.util.LogHelper;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -69,9 +69,9 @@ public class Discord {
 			getAudioPlayer().addListener(new AudioListener());
 			getDiscordThread().start();
 			getCommand().registerCommands();
-			ConsoleOutput.info("Successfully loaded Discord.");
+			LogHelper.info("Successfully loaded Discord.");
 		} catch (LoginException | RateLimitedException | RuntimeException ex) {
-			ConsoleOutput.error("Exception loading Discord!");
+			LogHelper.error("Exception loading Discord!");
 			ex.printStackTrace();
 		}
 	}

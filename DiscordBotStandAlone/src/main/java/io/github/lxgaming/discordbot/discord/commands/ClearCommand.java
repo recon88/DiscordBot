@@ -16,6 +16,7 @@
 
 package io.github.lxgaming.discordbot.discord.commands;
 
+import java.util.Arrays;
 import java.util.List;
 
 import io.github.lxgaming.discordbot.DiscordBot;
@@ -30,6 +31,8 @@ public class ClearCommand implements ICommand {
 	
 	@Override
 	public void execute(TextChannel textChannel, Member member, Message message, List<String> arguments) {
+		DiscordBot.getInstance().getDiscord().getAudioQueue().setRepeatQueue(false);
+		DiscordBot.getInstance().getDiscord().getAudioQueue().setRepeatSong(false);
 		DiscordBot.getInstance().getDiscord().getAudioQueue().getQueue().clear();
 		DiscordBot.getInstance().getDiscord().getAudioPlayer().stopTrack();
 		
@@ -57,6 +60,6 @@ public class ClearCommand implements ICommand {
 	
 	@Override
 	public List<String> getAliases() {
-		return null;
+		return Arrays.asList("Wipe");
 	}
 }

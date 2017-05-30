@@ -23,42 +23,42 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 
 import io.github.lxgaming.discordbot.DiscordBot;
-import io.github.lxgaming.discordbot.util.ConsoleOutput;
+import io.github.lxgaming.discordbot.util.LogHelper;
 
 public class AudioListener extends AudioEventAdapter {
 	
 	@Override
 	public void onPlayerPause(AudioPlayer audioPlayer) {
-		ConsoleOutput.debug("Player pause.");
+		LogHelper.debug("Player pause.");
 	}
 	
 	@Override
 	public void onPlayerResume(AudioPlayer audioPlayer) {
-		ConsoleOutput.debug("Player resume.");
+		LogHelper.debug("Player resume.");
 	}
 	
 	@Override
 	public void onTrackEnd(AudioPlayer audioPlayer, AudioTrack audioTrack, AudioTrackEndReason audioTrackEndReason) {
 		if (audioTrackEndReason.equals(AudioTrackEndReason.FINISHED) && audioTrackEndReason.mayStartNext) {
-			ConsoleOutput.debug("Track Finished, Playing next.");
+			LogHelper.debug("Track Finished, Playing next.");
 			DiscordBot.getInstance().getDiscord().getAudioQueue().playNext();
 			return;
 		}
 		
 		if (audioTrackEndReason.equals(AudioTrackEndReason.STOPPED)) {
-			ConsoleOutput.debug("Track stopped.");
+			LogHelper.debug("Track stopped.");
 			return;
 		}
 		
 		if (audioTrackEndReason.equals(AudioTrackEndReason.REPLACED)) {
-			ConsoleOutput.debug("Track replaced.");
+			LogHelper.debug("Track replaced.");
 		}
 	}
 	
 	@Override
 	public void onTrackException(AudioPlayer audioPlayer, AudioTrack audioTrack, FriendlyException friendlyException) {
-		ConsoleOutput.debug("Track Exception!");
-		ConsoleOutput.error(friendlyException.getMessage());
+		LogHelper.debug("Track Exception!");
+		LogHelper.error(friendlyException.getMessage());
 		friendlyException.printStackTrace();
 		
 		DiscordBot.getInstance().getDiscord().getAudioQueue().playNext();
@@ -66,11 +66,11 @@ public class AudioListener extends AudioEventAdapter {
 	
 	@Override
 	public void onTrackStart(AudioPlayer audioPlayer, AudioTrack audioTrack) {
-		ConsoleOutput.debug("Track start!");
+		LogHelper.debug("Track start!");
 	}
 	
 	@Override
 	public void onTrackStuck(AudioPlayer audioPlayer, AudioTrack audioTrack, long time) {
-		ConsoleOutput.debug("Track stuck.");
+		LogHelper.debug("Track stuck.");
 	}
 }

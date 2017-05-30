@@ -26,8 +26,9 @@ import org.joda.time.format.PeriodFormatterBuilder;
 public class DiscordUtil {
 	
 	public static final Color DEFAULT = Color.decode("#7289DA");
-	public static final Color SUCCESS = Color.decode("#00AA00");
-	public static final Color ERROR = Color.decode("#FF0000");
+	public static final Color SUCCESS = Color.decode("#46A84B");
+	public static final Color WARNING = Color.decode("#EAA245");
+	public static final Color ERROR = Color.decode("#C13737");
 	
 	public static String getTimestamp(long duration) {
 		PeriodFormatter periodFormatter = new PeriodFormatterBuilder()

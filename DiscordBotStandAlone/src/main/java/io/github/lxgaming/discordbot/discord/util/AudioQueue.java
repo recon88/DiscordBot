@@ -26,6 +26,8 @@ import net.dv8tion.jda.core.EmbedBuilder;
 public class AudioQueue {
 	
 	private List<Audio> queue;
+	private boolean repeatQueue;
+	private boolean repeatSong;
 	
 	public AudioQueue() {
 		queue = new ArrayList<Audio>();
@@ -52,12 +54,45 @@ public class AudioQueue {
 			return null;
 		}
 		
-		Audio audio = getQueue().get(0);
-		getQueue().remove(0);
-		return audio;
+		if (getQueue().get(0).hasPlayed()) {
+			if (!isRepeatQueue() && !isRepeatSong()) {
+				getQueue().remove(0);
+			} else if (isRepeatQueue()) {
+				getQueue().add(getQueue().remove(0));
+			} else if (isRepeatSong()) {
+				getQueue().set(0, new Audio(getQueue().get(0).getTextChannel(), getQueue().get(0).getMember(), getQueue().get(0).getAudioTrack().makeClone()));
+			}
+		}
+		
+		if (getQueue().isEmpty()) {
+			return null;
+		}
+		return getQueue().get(0).setPlayed(true);
 	}
 	
 	public List<Audio> getQueue() {
 		return queue;
+	}
+	
+	public boolean isRepeatQueue() {
+		return repeatQueue;
+	}
+	
+	public void setRepeatQueue(boolean repeatQueue) {
+		this.repeatQueue = repeatQueue;
+		if (isRepeatQueue() && isRepeatSong()) {
+			setRepeatSong(false);
+		}
+	}
+	
+	public boolean isRepeatSong() {
+		return repeatSong;
+	}
+	
+	public void setRepeatSong(boolean repeatSong) {
+		this.repeatSong = repeatSong;
+		if (isRepeatSong() && isRepeatQueue()) {
+			setRepeatQueue(false);
+		}
 	}
 }

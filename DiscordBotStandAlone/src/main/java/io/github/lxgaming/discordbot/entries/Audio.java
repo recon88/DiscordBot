@@ -26,6 +26,7 @@ public class Audio {
 	private final TextChannel textChannel;
 	private final Member member;
 	private final AudioTrack audioTrack;
+	private boolean played;
 	
 	public Audio(TextChannel textChannel, Member member, AudioTrack audioTrack) {
 		this.textChannel = textChannel;
@@ -43,5 +44,14 @@ public class Audio {
 	
 	public AudioTrack getAudioTrack() {
 		return audioTrack;
+	}
+	
+	public boolean hasPlayed() {
+		return played;
+	}
+	
+	public Audio setPlayed(boolean played) {
+		this.played = played;
+		return this;
 	}
 }

@@ -16,7 +16,7 @@
 
 package io.github.lxgaming.discordbot.discord.commands;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
@@ -66,8 +66,6 @@ public class NowPlayingCommand implements ICommand {
 	
 	@Override
 	public List<String> getAliases() {
-		List<String> aliases = new ArrayList<String>();
-		aliases.add("NP");
-		return aliases;
+		return Arrays.asList("NP");
 	}
 }

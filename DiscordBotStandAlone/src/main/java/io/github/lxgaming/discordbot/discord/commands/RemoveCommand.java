@@ -16,19 +16,19 @@
 
 package io.github.lxgaming.discordbot.discord.commands;
 
-import java.util.Iterator;
+import java.util.Arrays;
 import java.util.List;
 
 import io.github.lxgaming.discordbot.DiscordBot;
-import io.github.lxgaming.discordbot.discord.handlers.AudioPlayerLoadResultHandler;
 import io.github.lxgaming.discordbot.discord.util.DiscordUtil;
+import io.github.lxgaming.discordbot.entries.Audio;
 import io.github.lxgaming.discordbot.entries.ICommand;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 
-public class PlayCommand implements ICommand {
+public class RemoveCommand implements ICommand {
 	
 	@Override
 	public void execute(TextChannel textChannel, Member member, Message message, List<String> arguments) {
@@ -36,57 +36,69 @@ public class PlayCommand implements ICommand {
 		embedBuilder.setAuthor(textChannel.getJDA().getSelfUser().getName(), null, textChannel.getJDA().getSelfUser().getEffectiveAvatarUrl());
 		embedBuilder.setColor(DiscordUtil.DEFAULT);
 		
-		if (member.getGuild().getAudioManager().getConnectedChannel() == null) {
-			embedBuilder.setColor(DiscordUtil.ERROR);
-			embedBuilder.setTitle("Not connected to voice channel!", null);
-			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
-			return;
-		}
-		
 		if (arguments == null || arguments.isEmpty()) {
-			if (DiscordBot.getInstance().getDiscord().getAudioPlayer().isPaused()) {
-				DiscordBot.getInstance().getDiscord().getAudioPlayer().setPaused(false);
-				embedBuilder.setColor(DiscordUtil.SUCCESS);
-				embedBuilder.setTitle("Playback resumed.", null);
-			} else {
-				DiscordBot.getInstance().getDiscord().getAudioPlayer().setPaused(true);
-				embedBuilder.setColor(DiscordUtil.WARNING);
-				embedBuilder.setTitle("Playback paused.", null);
-			}
+			embedBuilder.setColor(DiscordUtil.ERROR);
+			embedBuilder.setTitle("Invalid arguments!", null);
 			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
 			return;
 		}
 		
-		for (Iterator<String> iterator = arguments.iterator(); iterator.hasNext();) {
-			String string = iterator.next();
-			if (!string.startsWith("https://")) {
-				continue;
+		if (DiscordBot.getInstance().getDiscord().getAudioQueue().getQueue() == null || DiscordBot.getInstance().getDiscord().getAudioQueue().getQueue().isEmpty()) {
+			embedBuilder.setColor(DiscordUtil.ERROR);
+			embedBuilder.setTitle("Queue is empty!", null);
+			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
+			return;
+		}
+		
+		if (arguments.get(0).equalsIgnoreCase("all")) {
+			DiscordBot.getInstance().getDiscord().getAudioQueue().getQueue().clear();
+			embedBuilder.setColor(DiscordUtil.SUCCESS);
+			embedBuilder.setTitle("All songs from queue removed.", null);
+			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
+			return;
+		}
+		
+		try {
+			int index = (Integer.parseInt(arguments.get(0)) - 1);
+			if (index > DiscordBot.getInstance().getDiscord().getAudioQueue().getQueue().size() || index < 0) {
+				throw new NumberFormatException();
 			}
 			
-			DiscordBot.getInstance().getDiscord().getAudioPlayerManager().loadItem(string, new AudioPlayerLoadResultHandler(textChannel, member));
+			Audio audio = DiscordBot.getInstance().getDiscord().getAudioQueue().getQueue().remove(index);
+			
 			embedBuilder.setColor(DiscordUtil.SUCCESS);
-			embedBuilder.setTitle("Processing...", null);
+			if (audio != null && audio.getAudioTrack() != null) {
+				embedBuilder.setTitle("Removed '" + audio.getAudioTrack().getInfo().title + "'.");
+			} else {
+				embedBuilder.setTitle("Removed '" + "Unknown" + "'.");
+			}
+			
 			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
+		} catch (NumberFormatException ex) {
+			embedBuilder.setColor(DiscordUtil.ERROR);
+			embedBuilder.setTitle("Supplied value is outside the queue range!", null);
+			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
+			return;
 		}
 	}
 	
 	@Override
 	public String getName() {
-		return "Play";
+		return "Remove";
 	}
 	
 	@Override
 	public String getDescription() {
-		return "Toggles Playback state or Play specified media if URL is provided.";
+		return "Removes specific songs from queue.";
 	}
 	
 	@Override
 	public String getUsage() {
-		return DiscordBot.getInstance().getConfig().getCommandPrefix() + "Play [URL]";
+		return DiscordBot.getInstance().getConfig().getCommandPrefix() + "Remove <Number | All>";
 	}
 	
 	@Override
 	public List<String> getAliases() {
-		return null;
+		return Arrays.asList("RM");
 	}
 }

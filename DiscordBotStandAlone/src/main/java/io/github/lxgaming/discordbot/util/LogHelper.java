@@ -21,7 +21,7 @@ import java.util.Calendar;
 
 import io.github.lxgaming.discordbot.DiscordBot;
 
-public class ConsoleOutput {
+public class LogHelper {
 	
 	public static void info(String string) {
 		System.out.println("[" + new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()) + "] [Info] [" + Thread.currentThread().getName() + "]: " + string);

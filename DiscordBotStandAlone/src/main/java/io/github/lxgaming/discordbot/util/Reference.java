@@ -20,9 +20,9 @@ public class Reference {
 	
 	public static final String APP_ID = "discordbot";
 	public static final String APP_NAME = "DiscordBotStandAlone";
-	public static final String APP_VERSION = "1.2.2-ALPHA";
+	public static final String APP_VERSION = "1.2.6-ALPHA";
 	public static final String JDA_NAME = "JDA";
-	public static final String JDA_VERSION = "3.0.0_185";
+	public static final String JDA_VERSION = "3.1.1_210";
 	public static final String LAVA_NAME = "lavaplayer";
-	public static final String LAVA_VERSION = "1.2.36";
+	public static final String LAVA_VERSION = "1.2.39";
 }

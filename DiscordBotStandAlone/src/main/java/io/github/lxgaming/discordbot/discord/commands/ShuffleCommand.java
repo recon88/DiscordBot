@@ -16,7 +16,10 @@
 
 package io.github.lxgaming.discordbot.discord.commands;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import io.github.lxgaming.discordbot.DiscordBot;
 import io.github.lxgaming.discordbot.discord.util.DiscordUtil;
@@ -26,7 +29,7 @@ import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 
-public class ResumeCommand implements ICommand {
+public class ShuffleCommand implements ICommand {
 	
 	@Override
 	public void execute(TextChannel textChannel, Member member, Message message, List<String> arguments) {
@@ -34,36 +37,38 @@ public class ResumeCommand implements ICommand {
 		embedBuilder.setAuthor(textChannel.getJDA().getSelfUser().getName(), null, textChannel.getJDA().getSelfUser().getEffectiveAvatarUrl());
 		embedBuilder.setColor(DiscordUtil.DEFAULT);
 		
-		if (!DiscordBot.getInstance().getDiscord().getAudioPlayer().isPaused()) {
+		if (DiscordBot.getInstance().getDiscord().getAudioQueue().getQueue() == null || DiscordBot.getInstance().getDiscord().getAudioQueue().getQueue().size() < 2) {
 			embedBuilder.setColor(DiscordUtil.ERROR);
-			embedBuilder.setTitle("Player is not paused!", null);
+			embedBuilder.setTitle("The current queue is not big enough to shuffle!", null);
 			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
 			return;
 		}
 		
-		DiscordBot.getInstance().getDiscord().getAudioPlayer().setPaused(false);
+		Collections.shuffle(DiscordBot.getInstance().getDiscord().getAudioQueue().getQueue(), new Random(System.nanoTime()));
 		embedBuilder.setColor(DiscordUtil.SUCCESS);
-		embedBuilder.setTitle("Player resumed.", null);
+		embedBuilder.setTitle("Current queue shuffled.", null);
 		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
 	}
 	
 	@Override
 	public String getName() {
-		return "Resume";
+		return "Shuffle";
 	}
 	
 	@Override
 	public String getDescription() {
-		return "Resumes media playback.";
+		return "Shuffles all songs in current queue.";
 	}
 	
 	@Override
 	public String getUsage() {
-		return DiscordBot.getInstance().getConfig().getCommandPrefix() + "Resume";
+		return DiscordBot.getInstance().getConfig().getCommandPrefix() + "Shuffle";
 	}
 	
 	@Override
 	public List<String> getAliases() {
-		return null;
+		List<String> aliases = new ArrayList<String>();
+		aliases.add("Shake");
+		return aliases;
 	}
 }

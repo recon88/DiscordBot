@@ -29,7 +29,7 @@ import com.google.gson.JsonParser;
 
 import io.github.lxgaming.discordbot.DiscordBot;
 import io.github.lxgaming.discordbot.entries.Config;
-import io.github.lxgaming.discordbot.util.ConsoleOutput;
+import io.github.lxgaming.discordbot.util.LogHelper;
 
 public class Configuration {
 	
@@ -47,15 +47,15 @@ public class Configuration {
 				configFile.createNewFile();
 				InputStream inputStream = DiscordBot.class.getResourceAsStream("/config.json");
 				Files.copy(inputStream, configFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-				ConsoleOutput.info("Successfully created configuration file.");
+				LogHelper.info("Successfully created configuration file.");
 			}
 			
 			JsonObject jsonObject = new JsonParser().parse(new String(Files.readAllBytes(configFile.toPath()), StandardCharsets.UTF_8)).getAsJsonObject();
 			config = new Gson().fromJson(jsonObject, Config.class);
 			
-			ConsoleOutput.info("Successfully loaded configuration file.");
+			LogHelper.info("Successfully loaded configuration file.");
 		} catch (IOException | OutOfMemoryError | RuntimeException ex) {
-			ConsoleOutput.error("Exception loading configuration file!");
+			LogHelper.error("Exception loading configuration file!");
 			ex.printStackTrace();
 		}
 		return;

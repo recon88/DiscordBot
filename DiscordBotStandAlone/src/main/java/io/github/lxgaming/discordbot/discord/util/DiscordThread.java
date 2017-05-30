@@ -19,7 +19,7 @@ package io.github.lxgaming.discordbot.discord.util;
 import java.util.Iterator;
 
 import io.github.lxgaming.discordbot.DiscordBot;
-import io.github.lxgaming.discordbot.util.ConsoleOutput;
+import io.github.lxgaming.discordbot.util.LogHelper;
 import net.dv8tion.jda.core.entities.Message;
 
 public class DiscordThread extends Thread {
@@ -32,12 +32,16 @@ public class DiscordThread extends Thread {
 				Thread.sleep(5000);
 			}
 		} catch (InterruptedException ex) {
-			ConsoleOutput.error("Exception in DiscordThread!");
+			LogHelper.error("Exception in DiscordThread!");
 			ex.printStackTrace();
 		}
 	}
 	
 	private void process() {
+		if (DiscordBot.getInstance().getDiscord().getMessageSender().getMessages() == null || DiscordBot.getInstance().getDiscord().getMessageSender().getMessages().isEmpty()) {
+			return;
+		}
+		
 		for (Iterator<Message> iterator = DiscordBot.getInstance().getDiscord().getMessageSender().getMessages().iterator(); iterator.hasNext();) {
 			Message message = iterator.next();
 			if (message == null || message.getCreationTime() == null) {

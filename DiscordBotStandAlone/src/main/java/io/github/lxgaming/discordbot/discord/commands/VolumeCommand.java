@@ -16,7 +16,7 @@
 
 package io.github.lxgaming.discordbot.discord.commands;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.github.lxgaming.discordbot.DiscordBot;
@@ -37,7 +37,7 @@ public class VolumeCommand implements ICommand {
 		
 		if (arguments != null && !arguments.isEmpty()) {
 			try {
-				Integer volume = Integer.parseInt(arguments.get(0));
+				int volume = Integer.parseInt(arguments.get(0));
 				if (volume > 100 || volume < 0) {
 					volume = DiscordBot.getInstance().getDiscord().getAudioPlayer().getVolume();
 				}
@@ -73,8 +73,6 @@ public class VolumeCommand implements ICommand {
 	
 	@Override
 	public List<String> getAliases() {
-		List<String> aliases = new ArrayList<String>();
-		aliases.add("Vol");
-		return aliases;
+		return Arrays.asList("Vol");
 	}
 }

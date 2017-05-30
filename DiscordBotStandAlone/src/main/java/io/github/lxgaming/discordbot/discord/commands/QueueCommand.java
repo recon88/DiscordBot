@@ -16,7 +16,7 @@
 
 package io.github.lxgaming.discordbot.discord.commands;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -43,15 +43,51 @@ public class QueueCommand implements ICommand {
 			return;
 		}
 		
+		if (arguments != null && !arguments.isEmpty()) {
+			try {
+				int index = (Integer.parseInt(arguments.get(0)) - 1);
+				if (index > DiscordBot.getInstance().getDiscord().getAudioQueue().getQueue().size() || index < 0) {
+					throw new NumberFormatException();
+				}
+				
+				Audio audio = DiscordBot.getInstance().getDiscord().getAudioQueue().getQueue().get(index);
+				
+				embedBuilder.setColor(DiscordUtil.SUCCESS);
+				if (audio != null && audio.getAudioTrack() != null) {
+					embedBuilder.setTitle("Queued " + (index + 1) + ". '" + audio.getAudioTrack().getInfo().title + "'.");
+				} else {
+					embedBuilder.setTitle("Queued " + (index + 1) + ". 'Unknown" + "'.");
+				}
+				
+				DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
+			} catch (NumberFormatException ex) {
+				embedBuilder.setColor(DiscordUtil.ERROR);
+				embedBuilder.setTitle("Supplied value is outside the queue range!", null);
+				DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
+			}
+			return;
+		}
+		
 		StringBuilder stringBuilder = new StringBuilder();
-		int count = 0;
+		int count = 1;
 		for (Iterator<Audio> iterator = DiscordBot.getInstance().getDiscord().getAudioQueue().getQueue().iterator(); iterator.hasNext();) {
 			Audio audio = iterator.next();
-			if (count >= 10) {
+			if (count > 10) {
 				break;
 			}
-			stringBuilder.append("`[ " + DiscordUtil.getTimestamp(audio.getAudioTrack().getInfo().length) + " ]` " + audio.getAudioTrack().getInfo().title + "\n");
+			
+			if (audio.hasPlayed()) {
+				continue;
+			}
+			
+			stringBuilder.append("`" + count + ". [ " + DiscordUtil.getTimestamp(audio.getAudioTrack().getInfo().length) + " ]` " + audio.getAudioTrack().getInfo().title + "\n");
 			count++;
+		}
+		
+		if (stringBuilder.toString().trim().equals("")) {
+			embedBuilder.setTitle("Nothing Queued", null);
+			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
+			return;
 		}
 		
 		count = DiscordBot.getInstance().getDiscord().getAudioQueue().getQueue().size() - count;
@@ -75,13 +111,11 @@ public class QueueCommand implements ICommand {
 	
 	@Override
 	public String getUsage() {
-		return DiscordBot.getInstance().getConfig().getCommandPrefix() + "Queue";
+		return DiscordBot.getInstance().getConfig().getCommandPrefix() + "Queue [Index]";
 	}
 	
 	@Override
 	public List<String> getAliases() {
-		List<String> aliases = new ArrayList<String>();
-		aliases.add("List");
-		return aliases;
+		return Arrays.asList("List");
 	}
 }

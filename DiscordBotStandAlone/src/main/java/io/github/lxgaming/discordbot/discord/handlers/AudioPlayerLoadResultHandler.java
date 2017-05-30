@@ -26,7 +26,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import io.github.lxgaming.discordbot.DiscordBot;
 import io.github.lxgaming.discordbot.discord.util.DiscordUtil;
 import io.github.lxgaming.discordbot.entries.Audio;
-import io.github.lxgaming.discordbot.util.ConsoleOutput;
+import io.github.lxgaming.discordbot.util.LogHelper;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -74,11 +74,11 @@ public class AudioPlayerLoadResultHandler implements AudioLoadResultHandler {
 			if (DiscordBot.getInstance().getDiscord().getAudioPlayer().getPlayingTrack() == null) {
 				DiscordBot.getInstance().getDiscord().getAudioQueue().playNext();
 			} else {
-				ConsoleOutput.debug("'" + audio.getAudioTrack().getInfo().title + "' Has been added to the queue.");
+				LogHelper.debug("'" + audio.getAudioTrack().getInfo().title + "' Has been added to the queue.");
 			}
 			audio = null;
 		}
-		ConsoleOutput.debug(audioPlaylist.getTracks().size() + " Songs have been added to the queue.");
+		LogHelper.debug(audioPlaylist.getTracks().size() + " Songs have been added to the queue.");
 		EmbedBuilder embedBuilder = new EmbedBuilder();
 		embedBuilder.setAuthor(textChannel.getJDA().getSelfUser().getName(), null, textChannel.getJDA().getSelfUser().getEffectiveAvatarUrl());
 		embedBuilder.setColor(DiscordUtil.SUCCESS);
@@ -97,7 +97,7 @@ public class AudioPlayerLoadResultHandler implements AudioLoadResultHandler {
 	
 	@Override
 	public void loadFailed(FriendlyException exception) {
-		ConsoleOutput.error("Failed to load - " + exception.getMessage());
+		LogHelper.error("Failed to load - " + exception.getMessage());
 		exception.printStackTrace();
 		
 		EmbedBuilder embedBuilder = new EmbedBuilder();

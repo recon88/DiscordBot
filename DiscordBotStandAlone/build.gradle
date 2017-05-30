@@ -1,50 +1,76 @@
 apply plugin: "java"
 
+def signFile = "sign.gradle"
+if (file(signFile).exists()) {
+    apply from: signFile
+}
+
 targetCompatibility = 1.8
 sourceCompatibility = 1.8
 
-version = "1.2.2-ALPHA"
 group = "io.github.lxgaming.discordbot"
 archivesBaseName = "DiscordBotStandAlone"
+version = "1.2.6-ALPHA"
 
 configurations {
-  provided {
-    compile.extendsFrom(provided)
-  }
+    provided {
+        compile.extendsFrom(provided)
+    }
+
+    build {
+        if (project.tasks.findByName("signJar")) {
+            return finalizedBy(signJar)
+        }
+
+        return doLast {
+            println("========== [WARNING] ==========")
+            println()
+            println("   This build is not signed!   ")
+            println()
+            println("========== [WARNING] ==========")
+        }
+    }
 }
 
 repositories {
-  mavenCentral()
-  maven {
-    url "https://jcenter.bintray.com"
-  }
+    mavenCentral()
+    maven {
+        url("https://jcenter.bintray.com")
+    }
 }
 
 dependencies {
-  compile "com.google.code.gson:gson:2.8.0"
-  compile "com.sedmelluq:lavaplayer:1.2.36"
-  compile "net.dv8tion:JDA:3.0.0_185"
-  compile "joda-time:joda-time:2.9.9"
+    compile("com.google.code.gson:gson:2.8.0")
+    compile("com.sedmelluq:lavaplayer:1.2.39")
+    compile("net.dv8tion:JDA:3.1.1_210")
+    compile("joda-time:joda-time:2.9.9")
 }
 
 jar {
-  manifest {
-    attributes "Main-Class": "io.github.lxgaming.discordbot.Main"
-  }
-  from {
-    (configurations.compile - configurations.provided).collect {
-	  it.isDirectory() ? it : zipTree(it)
-	}
-  }
-  from {
-    ["LICENSE"]
-  }
-  exclude("natives/darwin/**")
-  exclude("natives/linux-arm/**")
-  exclude("natives/linux-x86/**")
-  //exclude("natives/linux-x86-64/**")
-  exclude("natives/win-x86/**")
-  exclude("natives/win-x86-64/**")
-  exclude("natives/win32-x86/**")
-  exclude("natives/win32-x86-64/**")
+    manifest {
+        attributes("Main-Class": "io.github.lxgaming.discordbot.Main")
+    }
+
+    from {
+        (configurations.compile - configurations.provided).collect {
+            if (it.isDirectory()) {
+                return it
+            }
+            return zipTree(it)
+        }
+    }
+
+    exclude("natives/darwin/**")
+    exclude("natives/linux-arm/**")
+    exclude("natives/linux-x86/**")
+    //exclude("natives/linux-x86-64/**")
+    exclude("natives/win-x86/**")
+    exclude("natives/win-x86-64/**")
+    exclude("natives/win32-x86/**")
+    exclude("natives/win32-x86-64/**")
+}
+
+processResources {
+    from("LICENSE")
+    rename("LICENSE", "LICENSE-" + archivesBaseName)
 }

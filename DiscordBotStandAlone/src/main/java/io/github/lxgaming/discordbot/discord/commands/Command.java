@@ -23,7 +23,7 @@ import java.util.List;
 
 import io.github.lxgaming.discordbot.DiscordBot;
 import io.github.lxgaming.discordbot.entries.ICommand;
-import io.github.lxgaming.discordbot.util.ConsoleOutput;
+import io.github.lxgaming.discordbot.util.LogHelper;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -42,10 +42,11 @@ public class Command {
 		getRegisteredCommands().add(new InfoCommand());
 		getRegisteredCommands().add(new JoinCommand());
 		getRegisteredCommands().add(new NowPlayingCommand());
-		getRegisteredCommands().add(new PauseCommand());
 		getRegisteredCommands().add(new PlayCommand());
 		getRegisteredCommands().add(new QueueCommand());
-		getRegisteredCommands().add(new ResumeCommand());
+		getRegisteredCommands().add(new RemoveCommand());
+		getRegisteredCommands().add(new RepeatCommand());
+		getRegisteredCommands().add(new ShuffleCommand());
 		getRegisteredCommands().add(new SkipCommand());
 		getRegisteredCommands().add(new StopCommand());
 		getRegisteredCommands().add(new VolumeCommand());
@@ -66,7 +67,7 @@ public class Command {
 		for (Iterator<ICommand> iterator = getRegisteredCommands().iterator(); iterator.hasNext();) {
 			ICommand command = iterator.next();
 			if (checkCommandName(arguments.get(0), command.getName()) || checkCommandAliases(arguments.get(0), command.getAliases())) {
-				ConsoleOutput.debug("Processing Command '" + message.getContent() + "' For '" + member.getEffectiveName() + "'.");
+				LogHelper.debug("Processing Command '" + message.getContent() + "' For '" + member.getEffectiveName() + "'.");
 				arguments.remove(0);
 				command.execute(textChannel, member, message, arguments);
 				DiscordBot.getInstance().getDiscord().getMessageSender().addMessage(message);
