@@ -17,11 +17,13 @@
 package io.github.lxgaming.discordbot.discord.commands;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import io.github.lxgaming.discordbot.DiscordBot;
+import io.github.lxgaming.discordbot.discord.util.DiscordUtil;
 import io.github.lxgaming.discordbot.entries.ICommand;
 import io.github.lxgaming.discordbot.util.LogHelper;
 import net.dv8tion.jda.core.entities.Member;
@@ -55,9 +57,9 @@ public class Command {
 	public void execute(TextChannel textChannel, Member member, Message message) {
 		List<String> arguments;
 		if (message.getContent().startsWith(DiscordBot.getInstance().getConfig().getCommandPrefix())) {
-			arguments = new ArrayList<String>(Arrays.asList(message.getContent().substring(DiscordBot.getInstance().getConfig().getCommandPrefix().length()).split(" ")));
+			arguments = getValidArguments(DiscordUtil.filter(message.getContent().substring(DiscordBot.getInstance().getConfig().getCommandPrefix().length())).split(" "));
 		} else {
-			arguments = new ArrayList<String>(Arrays.asList(message.getContent().substring(1).split(" ")));
+			arguments = getValidArguments(DiscordUtil.filter(message.getContent().substring(1)).split(" "));
 		}
 		
 		if (arguments == null || arguments.size() < 1) {
@@ -76,7 +78,20 @@ public class Command {
 		}
 	}
 	
-	public boolean checkCommandName(String target, String name) {
+	private List<String> getValidArguments(String... arguments) {
+		List<String> list = new ArrayList<String>();
+		
+		for (String string : arguments) {
+			if (StringUtils.isBlank(string)) {
+				continue;
+			}
+			list.add(string);
+		}
+		
+		return list;
+	}
+	
+	private boolean checkCommandName(String target, String name) {
 		if (target == null || target.equals("") || name == null || name.equals("")) {
 			return false;
 		}
@@ -87,7 +102,7 @@ public class Command {
 		return false;
 	}
 	
-	public boolean checkCommandAliases(String target, List<String> aliases) {
+	private boolean checkCommandAliases(String target, List<String> aliases) {
 		if (aliases == null || aliases.isEmpty() || target == null || target.equals("")) {
 			return false;
 		}

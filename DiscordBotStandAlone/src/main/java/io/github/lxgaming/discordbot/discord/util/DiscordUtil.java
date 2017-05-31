@@ -18,6 +18,7 @@ package io.github.lxgaming.discordbot.discord.util;
 
 import java.awt.Color;
 
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.Duration;
 import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
@@ -41,5 +42,12 @@ public class DiscordUtil {
 				.appendSeconds().appendSuffix("s")
 				.toFormatter();
 		return periodFormatter.print(new Period(new Duration(duration)).normalizedStandard());
+	}
+	
+	public static String filter(String message) {
+		if (StringUtils.isNotBlank(message)) {
+			return message.replaceAll("[^\\x20-\\x7E]", "");
+		}
+		return "Filter error!";
 	}
 }
