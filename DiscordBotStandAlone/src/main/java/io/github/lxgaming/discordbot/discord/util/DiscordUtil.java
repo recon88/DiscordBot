@@ -46,7 +46,7 @@ public class DiscordUtil {
 	
 	public static String filter(String message) {
 		if (StringUtils.isNotBlank(message)) {
-			return message.replaceAll("[^\\x20-\\x7E]", "");
+			return message.replaceAll("[^\\x20-\\x7E\\r\\n]", "");
 		}
 		return "Filter error!";
 	}
