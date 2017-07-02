@@ -51,7 +51,7 @@ public class Configuration {
 			}
 			
 			JsonObject jsonObject = new JsonParser().parse(new String(Files.readAllBytes(configFile.toPath()), StandardCharsets.UTF_8)).getAsJsonObject();
-			config = new Gson().fromJson(jsonObject, Config.class);
+			setConfig(new Gson().fromJson(jsonObject, Config.class));
 			
 			LogHelper.info("Successfully loaded configuration file.");
 		} catch (IOException | OutOfMemoryError | RuntimeException ex) {
@@ -63,5 +63,9 @@ public class Configuration {
 	
 	public Config getConfig() {
 		return config;
+	}
+	
+	private void setConfig(Config config) {
+		this.config = config;
 	}
 }

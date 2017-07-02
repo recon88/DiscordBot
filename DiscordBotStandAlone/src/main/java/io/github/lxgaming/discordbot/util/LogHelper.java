@@ -36,7 +36,7 @@ public class LogHelper {
 	}
 	
 	public static void debug(String string) {
-		if (DiscordBot.getInstance().getConfiguration() != null && DiscordBot.getInstance().getConfig().isDebug()) {
+		if (DiscordBot.getInstance().getConfig() != null && DiscordBot.getInstance().getConfig().isDebug()) {
 			System.out.println("[" + new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()) + "] [Debug] [" + Thread.currentThread().getName() + "]: " + string);
 		}
 	}

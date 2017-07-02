@@ -16,50 +16,45 @@
 
 package io.github.lxgaming.discordbot.discord.commands;
 
+import java.util.Arrays;
 import java.util.List;
 
 import io.github.lxgaming.discordbot.DiscordBot;
 import io.github.lxgaming.discordbot.discord.util.DiscordUtil;
 import io.github.lxgaming.discordbot.entries.ICommand;
-import io.github.lxgaming.discordbot.util.Reference;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 
-public class InfoCommand implements ICommand {
+public class SourcesCommand implements ICommand {
 	
 	@Override
 	public void execute(TextChannel textChannel, Member member, Message message, List<String> arguments) {
 		EmbedBuilder embedBuilder = new EmbedBuilder();
-		embedBuilder.setAuthor(Reference.APP_NAME + " v" + Reference.APP_VERSION, null, textChannel.getJDA().getSelfUser().getEffectiveAvatarUrl());
+		embedBuilder.setAuthor(textChannel.getJDA().getSelfUser().getName(), null, textChannel.getJDA().getSelfUser().getEffectiveAvatarUrl());
 		embedBuilder.setColor(DiscordUtil.DEFAULT);
-		embedBuilder.addField("Author", String.join(", ", Reference.AUTHORS), false);
-		embedBuilder.addField("Source", Reference.SOURCE, false);
-		embedBuilder.addField("Website", Reference.WEBSITE, false);
-		embedBuilder.addField("Dependencies", ""
-				+ "\n- " + Reference.JDA_NAME + " v" + Reference.JDA_VERSION
-				+ "\n- " + Reference.LAVA_NAME + " v" + Reference.LAVA_VERSION, false);
+		embedBuilder.addField("Sources", String.join(",\n", DiscordBot.getInstance().getConfig().getAllowedSources()), false);
 		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
 	}
 	
 	@Override
 	public String getName() {
-		return "DJInfo";
+		return "Sources";
 	}
 	
 	@Override
 	public String getDescription() {
-		return "Displays bot information.";
+		return "Displays allowed media sources.";
 	}
 	
 	@Override
 	public String getUsage() {
-		return DiscordBot.getInstance().getConfig().getCommandPrefix() + "DJInfo";
+		return DiscordBot.getInstance().getConfig().getCommandPrefix() + "Sources";
 	}
 	
 	@Override
 	public List<String> getAliases() {
-		return null;
+		return Arrays.asList("AllowedSources");
 	}
 }

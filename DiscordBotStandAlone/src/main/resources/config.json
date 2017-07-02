@@ -23,5 +23,9 @@
             "skipRatio": 0.5,
             "instantSkip": false
         }
+    ],
+    "allowedSources": [
+        "www.youtube.com",
+        "youtube.com"
     ]
 }

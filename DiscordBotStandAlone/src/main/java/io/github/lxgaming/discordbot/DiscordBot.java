@@ -41,12 +41,15 @@ public class DiscordBot {
 		return instance;
 	}
 	
-	public Configuration getConfiguration() {
+	private Configuration getConfiguration() {
 		return configuration;
 	}
 	
 	public Config getConfig() {
-		return getConfiguration().getConfig();
+		if (getConfiguration() != null) {
+			return getConfiguration().getConfig();
+		}
+		return null;
 	}
 	
 	public Discord getDiscord() {

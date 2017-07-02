@@ -50,6 +50,7 @@ public class Command {
 		getRegisteredCommands().add(new RepeatCommand());
 		getRegisteredCommands().add(new ShuffleCommand());
 		getRegisteredCommands().add(new SkipCommand());
+		getRegisteredCommands().add(new SourcesCommand());
 		getRegisteredCommands().add(new StopCommand());
 		getRegisteredCommands().add(new VolumeCommand());
 	}

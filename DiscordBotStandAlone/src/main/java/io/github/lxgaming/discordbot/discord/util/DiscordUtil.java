@@ -17,12 +17,16 @@
 package io.github.lxgaming.discordbot.discord.util;
 
 import java.awt.Color;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.Duration;
 import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
+
+import io.github.lxgaming.discordbot.util.LogHelper;
 
 public class DiscordUtil {
 	
@@ -49,5 +53,18 @@ public class DiscordUtil {
 			return message.replaceAll("[^\\x20-\\x7E\\r\\n]", "");
 		}
 		return "Filter error!";
+	}
+	
+	public static URL encodeURL(String url) {
+		try {
+			if (StringUtils.isBlank(url)) {
+				return null;
+			}
+			
+			return new URL(url);
+		} catch (MalformedURLException ex) {
+			LogHelper.error("Failed to encode URL!");
+		}
+		return null;
 	}
 }

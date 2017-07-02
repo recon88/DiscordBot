@@ -16,6 +16,7 @@
 
 package io.github.lxgaming.discordbot.discord.commands;
 
+import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
@@ -57,17 +58,27 @@ public class PlayCommand implements ICommand {
 			return;
 		}
 		
+		embedBuilder.setColor(DiscordUtil.SUCCESS);
 		for (Iterator<String> iterator = arguments.iterator(); iterator.hasNext();) {
 			String string = iterator.next();
-			if (!string.startsWith("https://")) {
+			
+			URL url = DiscordUtil.encodeURL(string);
+			if (url == null) {
+				embedBuilder.setColor(DiscordUtil.WARNING);
+				embedBuilder.addField("Invalid URL!", string, false);
+				continue;
+			}
+			
+			if (!DiscordBot.getInstance().getConfig().getAllowedSources().contains(url.getHost())) {
+				embedBuilder.setColor(DiscordUtil.WARNING);
+				embedBuilder.addField("This source is not allowed!", string, false);
 				continue;
 			}
 			
 			DiscordBot.getInstance().getDiscord().getAudioPlayerManager().loadItem(string, new AudioPlayerLoadResultHandler(textChannel, member));
-			embedBuilder.setColor(DiscordUtil.SUCCESS);
-			embedBuilder.setTitle("Processing...", null);
-			DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
+			embedBuilder.addField("Processing", string, false);
 		}
+		DiscordBot.getInstance().getDiscord().getMessageSender().sendMessage(textChannel, embedBuilder.build(), true);
 	}
 	
 	@Override

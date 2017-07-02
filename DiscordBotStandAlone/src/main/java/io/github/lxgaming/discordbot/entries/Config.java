@@ -29,6 +29,7 @@ public class Config {
 	private boolean deleteInvoking;
 	private int deleteTime;
 	private List<Group> groups;
+	private List<String> allowedSources;
 	
 	public boolean isDebug() {
 		return debug;
@@ -63,5 +64,9 @@ public class Config {
 	
 	public List<Group> getGroups() {
 		return groups;
+	}
+	
+	public List<String> getAllowedSources() {
+		return allowedSources;
 	}
 }
