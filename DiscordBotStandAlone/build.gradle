@@ -10,7 +10,7 @@ sourceCompatibility = 1.8
 
 group = "io.github.lxgaming.discordbot"
 archivesBaseName = "DiscordBotStandAlone"
-version = "1.3.1"
+version = "1.3.2"
 
 configurations {
     provided {
@@ -42,8 +42,9 @@ repositories {
 dependencies {
     compile("com.google.code.gson:gson:2.8.1")
     compile("com.sedmelluq:lavaplayer:1.2.42")
-    compile("net.dv8tion:JDA:3.2.0_226")
     compile("joda-time:joda-time:2.9.9")
+    compile("net.dv8tion:JDA:3.2.0_241")
+    compile("org.apache.commons:commons-lang3:3.6")
 }
 
 jar {

@@ -42,7 +42,8 @@ public class DiscordListener extends ListenerAdapter {
 		
 		if (event.getMessage().getContent().startsWith(DiscordBot.getInstance().getConfig().getCommandPrefix()) || event.getMessage().getContent().startsWith("/")) {
 			DiscordBot.getInstance().getDiscord().getCommand().execute(event.getTextChannel(), event.getMember(), event.getMessage());
-		}	
+		}
+		
 		return;
 	}
 }
