@@ -1,0 +1,31 @@
+{
+    "debug": false,
+    "commandPrefix": "!",
+    "guildId": "",
+    "token": "",
+    "defaultVolume": 25,
+    "deleteMessages": true,
+    "deleteInvoking": false,
+    "deleteTime": 60000,
+    "groups": [
+        {
+            "name": "Default",
+            "commandBlacklist": [],
+            "commandWhitelist": [],
+            "roles": [],
+            "users": [],
+            "ignoreNonVoice": false,
+            "maxSongs": 5,
+            "maxSongLength": 600,
+            "allowPlaylists": false,
+            "maxPlaylistLength": 10,
+            "skipsRequired": 5,
+            "skipRatio": 0.5,
+            "instantSkip": false
+        }
+    ],
+    "allowedSources": [
+        "www.youtube.com",
+        "youtube.com"
+    ]
+}

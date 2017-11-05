@@ -1,41 +1,58 @@
+/*
+ * Copyright 2017 Alex Thomson
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.github.lxgaming.discordbot;
 
-import org.json.JSONObject;
-
-import io.github.lxgaming.discordbot.listeners.BotListener;
-import io.github.lxgaming.discordbot.listeners.MessageListener;
-import io.github.lxgaming.discordbot.listeners.UserListener;
-import io.github.lxgaming.discordbot.listeners.VoiceListener;
-import net.dv8tion.jda.JDA;
-import net.dv8tion.jda.JDABuilder;
+import io.github.lxgaming.discordbot.configuration.Configuration;
+import io.github.lxgaming.discordbot.discord.Discord;
+import io.github.lxgaming.discordbot.entries.Config;
 
 public class DiscordBot {
 	
-	public static JSONObject config = Configuration.loadConfig();
-	public static JDA jda;
-	public static String dbVersion = "0.7.1 ('Golden Bay')";
-	public static String jdaVersion = "JDA v2.1.3 - Recompiled";
+	private static DiscordBot instance;
+	private Configuration configuration;
+	private Discord discord;
 	
-	public static void main(String[] args) {
-		System.out.println("DiscordBot v" + dbVersion);
-		System.out.println("API - " + jdaVersion);
-		System.out.println("Author - Alex Thomson");
-		loadDiscord();
+	public DiscordBot() {
+		instance = this;
+		configuration = new Configuration();
+		discord = new Discord();
 	}
 	
-	public static void loadDiscord() {
-		try {
-			jda = new JDABuilder()
-					.setBotToken(config.getString("BotToken"))
-					.addListener(new BotListener())
-					.addListener(new MessageListener())
-					.addListener(new UserListener())
-					.addListener(new VoiceListener())
-					.setAudioEnabled(false)
-					.buildAsync();
-		} catch (Exception ex) {
-			System.out.println("Connection Failed! Invaild BotToken");
-			return;
+	public void loadDiscordBot() {
+		getConfiguration().loadConfiguration();
+		getDiscord().loadDiscord();
+	}
+	
+	public static DiscordBot getInstance() {
+		return instance;
+	}
+	
+	private Configuration getConfiguration() {
+		return configuration;
+	}
+	
+	public Config getConfig() {
+		if (getConfiguration() != null) {
+			return getConfiguration().getConfig();
 		}
+		return null;
+	}
+	
+	public Discord getDiscord() {
+		return discord;
 	}
 }
